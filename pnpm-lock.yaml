@@ -1,0 +1,27 @@
+lockfileVersion: 5.4
+
+importers:
+
+  .:
+    specifiers:
+      electron-main: workspace:*
+      electron-pack: workspace:*
+      electron-preload: workspace:*
+      electron-render: workspace:*
+    devDependencies:
+      electron-main: link:packages/electron-main
+      electron-pack: link:electron-pack
+      electron-preload: link:packages/electron-preload
+      electron-render: link:packages/electron-render
+
+  electron-pack:
+    specifiers: {}
+
+  packages/electron-main:
+    specifiers: {}
+
+  packages/electron-preload:
+    specifiers: {}
+
+  packages/electron-render:
+    specifiers: {}

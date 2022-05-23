@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "module": "ESNext",
+        "target": "ES2018",
+        "noImplicitAny": false,
+        "declaration": true,
+        "sourceMap": true,
+        "moduleResolution": "Node",
+        "lib": ["ES2018", "DOM", "DOM.Iterable"],
+        "allowSyntheticDefaultImports": true
+    },
+    "include": ["packages", "typings"],
+    "exclude": [
+        "node_modules",
+        "**/dist",
+        "**/__tests__/**/*",
+        "**/test/**",
+        "**/tests/**"
+    ]
+}

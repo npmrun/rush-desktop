@@ -1,0 +1,17 @@
+{
+    "private": true,
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "electron-pack": "workspace:*",
+        "electron-main": "workspace:*",
+        "electron-preload": "workspace:*",
+        "electron-render": "workspace:*"
+    }
+}
