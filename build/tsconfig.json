@@ -1,0 +1,24 @@
+// script使用的配置
+{
+    "ts-node": {
+        "files": true
+    },
+    "compilerOptions": {
+        "target": "es5", // 最低兼容的版本
+        "strict": true, // 启用严格模式
+        "module": "CommonJS", // 指定生成什么模块的代码
+        "moduleResolution": "node",
+        "lib": ["dom", "esnext"],
+        "allowSyntheticDefaultImports": true,
+        "removeComments": true,
+        "declaration": false,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "baseUrl": ".",
+        "paths": {
+            "@/*": ["src/*"]
+        }
+    },
+    "include": ["src", "dev.ts", "build.ts", "release.ts"],
+    "exclude": ["node_modules"]
+}

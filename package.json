@@ -3,15 +3,21 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        
+        "dev": "npm run dev -C build",
+        "build": "npm run build -C build"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "electron-pack": "workspace:*",
-        "electron-main": "workspace:*",
-        "electron-preload": "workspace:*",
-        "electron-render": "workspace:*"
+        "@rush-desktop/build": "workspace:*",
+        "@rush-desktop/main": "workspace:*",
+        "@rush-desktop/common": "workspace:*",
+        "@rush-desktop/preload": "workspace:*",
+        "@rush-desktop/render": "workspace:*",
+        "@rush-desktop/share": "workspace:*"
+    },
+    "dependencies": {
+        "vite": "^2.9.9"
     }
 }
