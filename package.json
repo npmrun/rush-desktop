@@ -3,16 +3,17 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "npm run dev -C build",
-        "build": "npm run build -C build"
+        "dev": "npm run rm -C build & npm run dev -C build",
+        "build": "npm run rm -C build & npm run build -C packages/render && npm run build -C build"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
         "@rush-desktop/build": "workspace:*",
-        "@rush-desktop/main": "workspace:*",
         "@rush-desktop/common": "workspace:*",
+        "@rush-desktop/main": "workspace:*",
+        "@rush-desktop/main-tool": "workspace:*",
         "@rush-desktop/preload": "workspace:*",
         "@rush-desktop/render": "workspace:*",
         "@rush-desktop/share": "workspace:*"

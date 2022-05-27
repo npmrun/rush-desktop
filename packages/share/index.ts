@@ -5,9 +5,9 @@ export const pkgPath = resolve(__dirname, "../../packages")
 
 export const outPath = resolve(rootPath, "dist/electron")
 
-export const isVite = false
+export const isVite = true
 export const viteCMD = resolve(rootPath, "node_modules/vite/bin/vite.js")
-export const viteConfig = resolve(rootPath, "render/vite.config.ts")
+export const viteConfig = resolve(pkgPath, "render/vite.config.ts")
 
 export const electronEntry = resolve(rootPath, "dist/electron/entry.js")
 

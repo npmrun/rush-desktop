@@ -1,10 +1,10 @@
 {
-  "name": "@rush-desktop/share",
+  "name": "@rush-desktop/main-tool",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
+  "main": "index.js",
   "scripts": {
-    "build": "tsc -P tsconfig.json"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",

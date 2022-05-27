@@ -3,15 +3,12 @@ import devElectron from "./electron/run"
 import { Debug, Warnning } from "@/utils/log"
 import fs from "fs-extra"
 import { ChildProcess, execSync } from "child_process"
-import execa from "execa"
-import { whichPlatform, kill } from "@/utils"
+import { whichPlatform } from "@/utils"
 import startMain from "./main/run"
 import startPreload from "./preload/run"
 
-import path, { resolve } from "path"
-import {spawn} from "cross-spawn"
+import path from "path"
 import config from "./config"
-import ps from "ps-node"
 import { isVite } from "@rush-desktop/share"
 
 const txtPath = path.resolve(config.rootPath, "./electron-pid.txt")
@@ -21,57 +18,16 @@ function killElectron() {
         const pid = fs.readFileSync(txtPath, { encoding: "utf-8" })
         let platform = whichPlatform()
         if (pid != "exit" && !isNaN(+pid)) {
-            // if (platform === "Linux") {
-                // await kill(+pid)
-                // execSync(`kill -9 ${pid}`)
-                let process = null
-                if (platform === "Linux") {
-                    console.log("kill -9 " + pid)
-                    // process = spawn('kill', ['-9', String(pid)])
-                    execSync(`kill -9 ${pid}`)
-                    resolve()
-                }
-                if (platform === "windows") {
-                    console.log("TASKKILL /F /T /PID " + (+pid))
-                    // process = spawn('TASKKIll', ['/F', '/T', '/PID', String(pid)])
-                    execSync("TASKKILL /F /T /PID " + (+pid))
-                    resolve()
-                }
-                // ps.lookup({ pid: +pid }, function (err, resultList) {
-                //     if (err) {
-                //         resolve()
-                //         throw new Error(err.message);
-                //     }
-                //     var process = resultList[0];
-                //     if (process) {
-                //         if (platform === "Linux") {
-                //             console.log("kill -9 " + pid)
-                //             execSync(`kill -9 ${pid}`)
-                //         }
-                //         if (platform === "windows") {
-                //             console.log("TASKKILL /F /T /PID " + (+pid))
-                //             execSync("TASKKILL /F /T /PID " + (+pid))
-                //         }
-                //         resolve()
-                //     }
-                //     else {
-                //         console.log('No such process found!');
-                //         resolve()
-                //     }
-                // });
-                // await execa("kill", ["-9", pid])
-                // process.kill(+pid)
-                // await exec2(`kill -9 ${pid}`)
-            // }
-            // if (platform === "windows") {
-            //     console.log("TASKKILL /pid " + pid + " -t -f")
-            //     // await kill(+pid)
-            //     execSync("TASKKILL /pid " + pid + " -t -f")
-                // await execa("TASKKILL", ["/pid", pid, "-t", "-f"])
-                // process.kill(+pid)
-                // await exec2(`TASKKILL /pid ${pid} -t -f`)
-            // }
-            // process.kill(+pid, "SIGTERM")
+            if (platform === "Linux") {
+                console.log("kill -9 " + pid)
+                execSync(`kill -9 ${pid}`)
+                resolve()
+            }
+            if (platform === "windows") {
+                console.log("TASKKILL /F /T /PID " + +pid)
+                execSync("TASKKILL /F /T /PID " + +pid)
+                resolve()
+            }
             writeElectronPid("exit")
         }
     })
@@ -81,12 +37,12 @@ function writeElectronPid(txt: string) {
 }
 
 export default function dev() {
-    fs.ensureFileSync(txtPath);
-    ; (async () => {
-        let vitePorcess: ChildProcess|undefined = undefined
-        if(isVite){
-            vitePorcess =  await devVite()
-        } 
+    fs.ensureFileSync(txtPath)
+    ;(async () => {
+        let vitePorcess: ChildProcess | undefined = undefined
+        if (isVite) {
+            vitePorcess = await devVite()
+        }
         Debug("vite", "vite ready.")
         let child: ChildProcess | null = null
         let manualRestart = false
@@ -134,5 +90,4 @@ export default function dev() {
             }
         })
     })()
-
 }

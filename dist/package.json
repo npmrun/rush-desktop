@@ -7,13 +7,12 @@
     "keywords": [],
     "author": "TopOne",
     "license": "ISC",
-    "devDependencies": {},
     "dependencies": {
         "@commonify/lowdb": "^3.0.0",
         "@parcel/watcher": "^2.0.5",
         "compressing": "^1.5.1",
-        "node-schedule": "^2.1.0",
         "cross-spawn": "^7.0.3",
-        "fs-extra": "^10.0.0"
+        "fs-extra": "^10.0.0",
+        "node-schedule": "^2.1.0"
     }
 }

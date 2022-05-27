@@ -1,10 +1,7 @@
 // @ts-nocheck
 
-const path = require("path")
 const webpack = require("webpack")
-import { getPath } from "../utils/path"
 import { perloadWebpack } from "@/config"
-const MinifyPlugin = require("babel-minify-webpack-plugin")
 
 let mainConfig = {
     entry: {

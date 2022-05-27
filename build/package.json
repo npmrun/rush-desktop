@@ -7,6 +7,7 @@
     "description": "",
     "scripts": {
         "dev": "cross-env PORT=3344 NODE_ENV=development ts-node -r tsconfig-paths/register -P tsconfig.json ./dev.ts",
+        "rm": "ts-node -r tsconfig-paths/register -P tsconfig.json ./rm.ts",
         "build": "npm run build:main & npm run build:pack",
         "build:main": "cross-env NODE_ENV=production ts-node -r tsconfig-paths/register -P tsconfig.json ./build.ts",
         "build:pack": "cross-env NODE_ENV=production ts-node -r tsconfig-paths/register -P tsconfig.json ./release.ts"
@@ -20,7 +21,6 @@
         "@babel/preset-typescript": "^7.14.5",
         "@babel/runtime": "^7.17.2",
         "babel-loader": "^8.2.2",
-        "babel-minify-webpack-plugin": "^0.3.1",
         "cfonts": "^2.9.3",
         "chalk": "^4.1.1",
         "cross-spawn": "^7.0.3",

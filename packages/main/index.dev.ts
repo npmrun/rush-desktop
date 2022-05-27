@@ -1,9 +1,11 @@
 
 import { app, BrowserWindow } from "electron"
-
+import { getFileUrl } from "@rush-desktop/main-tool"
+import watch from "@parcel/watcher"
+console.log(watch);
 // 保持一个对于 window 对象的全局引用，不然，当 JavaScript 被 GC，
 // window 会被自动地关闭
-var mainWindow = null
+var mainWindow: null | BrowserWindow = null
 
 // 当所有窗口被关闭了，退出。
 app.on("window-all-closed", function () {
@@ -18,14 +20,16 @@ app.on("window-all-closed", function () {
 // 这个方法就被调用
 app.on("ready", function () {
     // 创建浏览器窗口。
-    mainWindow = new BrowserWindow({ width: 800, height: 600 })
+    mainWindow = new BrowserWindow({ width: 800, height: 600, webPreferences: {
+        preload: __resource + "/preload.js", // 预加载项
+    } }) 
 
     // 加载应用的 index.html
     // mainWindow.loadURL("D:\\1XYX\\pro\\rush-desktop\\packages\\main\\index.html")
-    mainWindow.loadURL(__dirname + "/index.html")
-
+    // mainWindow.loadURL(__dirname + "/index.html")
+    mainWindow.loadURL(getFileUrl())
     // 打开开发工具
-    mainWindow.openDevTools()
+    mainWindow.webContents.openDevTools()
 
     // 当 window 被关闭，这个事件会被触发
     mainWindow.on("closed", function () {

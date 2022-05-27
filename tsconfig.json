@@ -9,6 +9,6 @@
         "lib": ["ES2018", "DOM", "DOM.Iterable"],
         "allowSyntheticDefaultImports": true
     },
-    "include": ["packages", "typings"],
+    "include": ["packages"],
     "exclude": ["node_modules", "**/dist", "**/__tests__/**/*", "**/test/**", "**/tests/**"]
 }
