@@ -11,7 +11,7 @@ builder.build({
         //     await rebuild({ buildPath: appDir, electronVersion, arch })
         //     return true
         // },
-        nmpRebuild: true, // 是否在打包应用程序之前rebuild本地依赖
+        npmRebuild: true, // 是否在打包应用程序之前rebuild本地依赖
         nodeGypRebuild: false, // 是否在开始打包应用程序之前执行,用electron-builder node-gyp-rebuild 来代替
         buildDependenciesFromSource: true, // 是否从源构建应用程序本机依赖项。
         productName: setting.app_title,
@@ -56,7 +56,7 @@ builder.build({
             target: [
                 {
                     target: "nsis",
-                    arch: ["ia32"],
+                    arch: ["ia32", "x64"],
                 },
             ],
         },

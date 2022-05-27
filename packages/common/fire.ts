@@ -1,3 +1,4 @@
+
 type FireKey = string
 type FireFN = (...argu: any[]) => void
 
@@ -54,3 +55,5 @@ fire.emit("aaa", 123)
 fire.emit("aaa", 123)
 
 fire.print()
+
+export default FireEvent
