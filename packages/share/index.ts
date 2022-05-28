@@ -15,10 +15,14 @@ export const mainWebpackDevEntry = resolve(pkgPath, "main/index.dev.ts")
 export const mainWebpackBuildEntry = resolve(pkgPath, "main/index.ts")
 export const mainWebpackName = "entry.js"
 export const mainWebpackOutput = resolve(rootPath, "dist/electron")
+export const mainTsConfig = resolve(pkgPath, "main/tsconfig.json")
 
-export const preloadWebpackEntry = resolve(pkgPath, "preload/index.ts")
-export const preloadWebpackName = "preload.js"
+export const preloadWebpackEntry = {
+    preload: resolve(pkgPath, "preload/preload.ts")
+}
+export const preloadWebpackName = "[name].js"
 export const preloadWebpackOutput = resolve(rootPath, "dist/electron")
+export const preloadTsConfig = resolve(pkgPath, "preload/tsconfig.json")
 
 export const buildExternals = resolve(rootPath, "dist/package.json")
 

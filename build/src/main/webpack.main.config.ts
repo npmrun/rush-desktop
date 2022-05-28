@@ -5,6 +5,8 @@ process.env.BABEL_ENV = "main"
 const path = require("path")
 const webpack = require("webpack")
 import { mainWebpack } from "@/config"
+import { mainTsConfig } from "@rush-desktop/share"
+import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin"
 
 let mainConfig = {
     entry: {},
@@ -46,6 +48,9 @@ let mainConfig = {
     resolve: {
         alias: mainWebpack.alias,
         extensions: [".js", ".json", ".node", ".ts"],
+        plugins: [new TsconfigPathsPlugin({
+            configFile: mainTsConfig
+        })]
     },
     target: "electron-main",
 }

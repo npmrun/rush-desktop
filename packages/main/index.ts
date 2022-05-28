@@ -1,41 +1,88 @@
+import { isPromise, readCommand } from "@rush-desktop/main-tool"
+import { ipcMain, app } from "electron"
+import Shared from "@/share"
+import { showMainWindow } from "@/function/window/main"
+import { setupTray } from "@/function/window/tray"
+import { parseCommand } from "./util"
+import { init } from "@/function/menu"
 
-import { app, BrowserWindow } from "electron"
-import watch from "@parcel/watcher"
-console.log(watch);
-
-// 保持一个对于 window 对象的全局引用，不然，当 JavaScript 被 GC，
-// window 会被自动地关闭
-var mainWindow = null
-
-// 当所有窗口被关闭了，退出。
-app.on("window-all-closed", function () {
-    // 在 OS X 上，通常用户在明确地按下 Cmd + Q 之前
-    // 应用会保持活动状态
-    if (process.platform != "darwin") {
-        app.quit()
+/**
+ * 超级命令,用字符串直接调用方法
+ */
+ipcMain.addListener("command", (event, key, command: string, ...argus) => {
+    try {
+        let run = parseCommand(command)
+        if (run) {
+            let result: Promise<any> | any = run(...argus)
+            if (isPromise(result)) {
+                result
+                    .then((res: any) => {
+                        event.reply(key, null, res)
+                        event.returnValue = res
+                    })
+                    .catch((err: Error) => {
+                        event.reply(key, err)
+                        event.returnValue = null
+                    })
+            } else {
+                event.reply(key, null, result)
+                event.returnValue = result
+            }
+        } else {
+            event.reply(key, new Error("不存在该命令"))
+            event.returnValue = null
+        }
+    } catch (error) {
+        event.reply(key, error)
+        event.returnValue = null
     }
 })
 
-// 当 Electron 完成了初始化并且准备创建浏览器窗口的时候
-// 这个方法就被调用
-app.on("ready", function () {
-    // 创建浏览器窗口。
-    mainWindow = new BrowserWindow({ width: 800, height: 600, webPreferences: {
-        preload: __resource + "/preload.js", // 预加载项
-    } })
-
-    // 加载应用的 index.html
-    // mainWindow.loadURL("D:\\1XYX\\pro\\rush-desktop\\packages\\main\\index.html")
-    mainWindow.loadURL(__dirname + "/index.html")
-
-    // 打开开发工具
-    mainWindow.openDevTools()
-
-    // 当 window 被关闭，这个事件会被触发
-    mainWindow.on("closed", function () {
-        // 取消引用 window 对象，如果你的应用支持多窗口的话，
-        // 通常会把多个 window 对象存放在一个数组里面，
-        // 但这次不是。
-        mainWindow = null
-    })
+ipcMain.once("registerWeb", (event, name: string) => {
+    if(!Shared.sender[name]){
+        Shared.sender[name] = event.sender
+    }
 })
+
+function createWindow() {
+    // init()
+    // Shared.data.lastChoice = 1
+    // setupTray()
+    showMainWindow()
+}
+
+const gotTheLock = app.requestSingleInstanceLock()
+if (!gotTheLock) {
+    app.exit()
+} else {
+    app.on("second-instance", (event, commandLine, workingDirectory) => {
+        if (Shared.data.mainWindow) {
+            if (Shared.data.mainWindow.isMinimized()) Shared.data.mainWindow.restore()
+            Shared.data.mainWindow.focus()
+            Shared.data.mainWindow.show()
+        }
+    })
+
+    app.on("ready", () => setTimeout(createWindow, 500))
+
+    app.on("before-quit", event => {
+        if (Shared.data.forceClose) {
+            app.exit()
+        } else {
+            event.preventDefault()
+        }
+    })
+
+    app.on("window-all-closed", () => {
+        // 可以在这里面清理创建的子进程
+        if (process.platform !== "darwin") {
+            app.exit()
+        }
+    })
+
+    app.on("activate", () => {
+        if (Shared.data.mainWindow === null) {
+            setTimeout(createWindow, 500)
+        }
+    })
+}

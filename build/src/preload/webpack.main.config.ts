@@ -2,11 +2,11 @@
 
 const webpack = require("webpack")
 import { perloadWebpack } from "@/config"
+import { preloadTsConfig } from "@rush-desktop/share"
+import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin"
 
 let mainConfig = {
-    entry: {
-        main: perloadWebpack.entry,
-    },
+    entry: perloadWebpack.entry,
     externals: perloadWebpack.externals,
     module: {
         rules: [
@@ -45,6 +45,9 @@ let mainConfig = {
     resolve: {
         alias: perloadWebpack.alias,
         extensions: [".js", ".json", ".node", ".ts"],
+        plugins: [new TsconfigPathsPlugin({
+            configFile: preloadTsConfig
+        })]
     },
     target: "electron-main",
 }
