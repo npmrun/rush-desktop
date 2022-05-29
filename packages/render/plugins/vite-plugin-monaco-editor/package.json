@@ -1,0 +1,87 @@
+{
+  "_args": [
+    [
+      "vite-plugin-monaco-editor@1.0.10",
+      "D:\\1XYX\\pro\\gofast"
+    ]
+  ],
+  "_development": true,
+  "_from": "vite-plugin-monaco-editor@1.0.10",
+  "_id": "vite-plugin-monaco-editor@1.0.10",
+  "_inBundle": false,
+  "_integrity": "sha512-7yTAFIE0SefjCmfnjrvXOl53wkxeSASc/ZIcB5tZeEK3vAmHhveV8y3f90Vp8b+PYdbUipjqf91mbFbSENkpcw==",
+  "_location": "/vite-plugin-monaco-editor",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "vite-plugin-monaco-editor@1.0.10",
+    "name": "vite-plugin-monaco-editor",
+    "escapedName": "vite-plugin-monaco-editor",
+    "rawSpec": "1.0.10",
+    "saveSpec": null,
+    "fetchSpec": "1.0.10"
+  },
+  "_requiredBy": [
+    "#DEV:/"
+  ],
+  "_resolved": "https://registry.npmjs.org/vite-plugin-monaco-editor/-/vite-plugin-monaco-editor-1.0.10.tgz",
+  "_spec": "1.0.10",
+  "_where": "D:\\1XYX\\pro\\gofast",
+  "author": {
+    "name": "china-bin"
+  },
+  "bugs": {
+    "url": "https://github.com/vdesjs/vite-plugin-monaco-editor/issues"
+  },
+  "description": "A vite plugin for the Monaco Editor",
+  "devDependencies": {
+    "@okikio/sharedworker": "^1.0.3",
+    "@types/fs-extra": "^9.0.13",
+    "@types/node": "^16.4.13",
+    "@vitejs/plugin-vue": "^1.4.0",
+    "@vue/compiler-sfc": "^3.1.5",
+    "fs-extra": "^10.0.0",
+    "http-server": "^13.0.2",
+    "monaco-editor": "^0.29.0",
+    "monaco-graphql": "^0.4.4",
+    "typescript": "^4.3.5",
+    "vite": "^2.4.4",
+    "vue": "^3.1.5",
+    "vue-router": "^4.0.12"
+  },
+  "files": [
+    "dist",
+    "cdn"
+  ],
+  "homepage": "https://github.com/vdesjs/vite-plugin-monaco-editor#readme",
+  "keywords": [
+    "vite-plugin",
+    "monaco",
+    "editor"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "name": "vite-plugin-monaco-editor",
+  "peerDependencies": {
+    "monaco-editor": "0.29.x"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vdesjs/vite-plugin-monaco-editor.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "copy:cdn": "node script/updateCDN.js",
+    "prepublish": "npm run copy:cdn",
+    "simulator:cdn": "http-server cdn/ --port 8888",
+    "test:build": "npm run build && vite build --config test/vite.config.js",
+    "test:dev": "npm run build && vite --config test/vite.config.js",
+    "test:preview": "vite preview --config test/vite.config.js"
+  },
+  "types": "dist/index.d.ts",
+  "version": "1.0.10"
+}

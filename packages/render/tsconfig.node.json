@@ -1,9 +1,13 @@
 {
     "compilerOptions": {
+        "target": "es5", // 最低兼容的版本
+        "strict": true, // 启用严格模式
         "composite": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
         "module": "esnext",
         "moduleResolution": "node",
         "allowSyntheticDefaultImports": true
     },
-    "include": ["vite.config.ts"]
+    "include": ["vite.config.ts", "typings"]
 }
