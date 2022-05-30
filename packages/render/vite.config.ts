@@ -11,6 +11,7 @@ import { viteMockServe } from "vite-plugin-mock"
 import WindiCSS from "vite-plugin-windicss"
 import Pages from "vite-plugin-pages"
 import Layouts from "vite-plugin-vue-layouts"
+import Inspector from "vite-plugin-vue-inspector"
 import monacoEditorPlugin from "./plugins/vite-plugin-monaco-editor"
 
 // import setting from "@rush-desktop/share/setting.json"
@@ -22,14 +23,12 @@ import path from "path"
 
 // https://vitejs.dev/config/
 export default ({ command, mode }: ConfigEnv): UserConfigExport => {
-    const env = <ImportMetaEnv>loadEnv(mode, process.cwd())
-    let isProd = env.PROD
-    let isDev = env.DEV
+    const env = <ImportMetaEnv>loadEnv(mode, __dirname)
+    let isProd = mode === "production"
+    let isDev = mode === "development"
     let prodMock = true
-    console.log(env)
-    console.log(process.cwd())
     return defineConfig({
-        // root: __dirname,
+        root: __dirname,
         base: "./",
         server: {
             port: <number>(process.env.PORT ?? 3000),
@@ -42,23 +41,61 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
                 "@": path.join(__dirname, "src"),
             },
         },
+        css: {
+            preprocessorOptions: {
+                less: {
+                    additionalData: `@import (reference) "@/assets/style/global.less";`,
+                    javascriptEnabled: true,
+                },
+            },
+        },
         build: {
             outDir: path.resolve(__dirname, "../../dist/electron"),
         },
         plugins: [
             vue(),
             vueJsx(),
-            // WindiCSS({
-            //     scan: {
-            //         dirs: ["."],
-            //         fileExtensions: ["vue", "js", "jsx", "ts", "tsx"],
-            //     },
-            // }),
+            Inspector(),
+            WindiCSS({
+                scan: {
+                    dirs: ["."],
+                    fileExtensions: ["vue", "js", "jsx", "ts", "tsx"],
+                },
+            }),
             monacoEditorPlugin({
                 base: ".",
             }),
+            vueI18n({
+                compositionOnly: false,
+                include: path.resolve(__dirname, "../common/languages/**"),
+            }),
+            Pages({
+                dirs: [{ dir: path.resolve(__dirname, "src/pages"), baseRoute: "" }],
+                exclude: ["**/_components/*.vue", "**/_ui/*.vue", "**/*copy.vue"],
+            }),
+            Layouts({
+                layoutsDirs: path.resolve(__dirname, "src/layouts"),
+                defaultLayout: "base",
+            }),
+            Components({
+                dirs: [path.resolve(__dirname, "src/componentsAuto"), path.resolve(__dirname, "src/pagesUI")],
+                extensions: ["vue"],
+                dts: "components.d.ts",
+                resolvers: [NaiveUiResolver()],
+            }),
+            AutoImport({
+                include: [/\.[tj]sx?$/, /\.vue\??/],
+                imports: ["vue", "vue-router", "pinia", "@vueuse/core", "vue-i18n"],
+                dts: "auto-import.d.ts",
+            }),
+            createSvgIconsPlugin({
+                // 指定需要缓存的图标文件夹
+                iconDirs: [path.resolve(__dirname, "src/assets/icons")],
+                // 指定symbolId格式
+                symbolId: "icon-[dir]-[name]",
+            }),
             createHtmlPlugin({
-                minify: true,
+                minify: isProd,
                 pages: [
                     {
                         entry: "src/main.ts",
@@ -70,25 +107,36 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
                             },
                         },
                     },
-                    // {
-                    //     filename: "about.html",
-                    //     template: "html/about.html",
-                    //     injectOptions: {
-                    //         data: {
-                    //             title: "rush-desktop",
-                    //         },
-                    //     },
-                    // },
-                    // {
-                    //     filename: "iframe.html",
-                    //     template: "html/iframe.html",
-                    //     injectOptions: {
-                    //         data: {
-                    //             title: "rush-desktop",
-                    //         },
-                    //     },
-                    // },
+                    {
+                        filename: "about.html",
+                        template: "html/about.html",
+                        injectOptions: {
+                            data: {
+                                title: "rush-desktop",
+                            },
+                        },
+                    },
+                    {
+                        filename: "iframe.html",
+                        template: "html/iframe.html",
+                        injectOptions: {
+                            data: {
+                                title: "rush-desktop",
+                            },
+                        },
+                    },
                 ],
+            }),
+            viteMockServe({
+                // default
+                mockPath: "src/mocks/mock",
+                localEnabled: command === "serve",
+                prodEnabled: command !== "serve" && prodMock,
+                injectCode: `
+                  import { setupProdMockServer } from '@/mocks/mockProdServer';
+                  setupProdMockServer();
+                `,
+                logger: true,
             }),
         ],
     })

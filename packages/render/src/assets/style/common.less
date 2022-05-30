@@ -1,0 +1,32 @@
+@import (inline) "./css/reset.css";
+@import "./theme.less";
+// asda
+html,
+body,
+#app {
+    height: 100%;
+    user-select: none;
+    font-family: Segoe WPC, Segoe UI, Microsoft YaHei, sans-serif;
+}
+
+.app-code {
+    font-family: Cascadia Mono, monospace, Consolas, "Courier New", monospace;
+}
+
+.scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+svg {
+    pointer-events: none;
+    * {
+        pointer-events: none;
+    }
+}

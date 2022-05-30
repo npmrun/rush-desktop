@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-cn" theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src 'self' https: 'unsafe-inline'; style-src * 'unsafe-inline'; font-src * data:;img-src 'self' data: base64 raw.githubusercontent.com github.com;">
+  <meta http-equiv="X-Content-Security-Policy"
+    content="default-src 'self' https: 'unsafe-inline'; style-src * 'unsafe-inline'; font-src * data:;">
+  <title><%- title %></title>
+  <style>
+    body {
+      margin: 0;
+    }
+
+    .app-init-preloader {
+      display: none;
+    }
+
+    /* Показывать только в главном окне */
+    @media (min-width: 400px) {
+      .app-init-preloader {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .app-init-preloader p {
+        font-size: 16px;
+        margin-right: 6px;
+        color: #808080;
+      }
+
+      .spinner {
+        width: 30px;
+        height: 30px;
+
+        position: relative;
+      }
+
+      .double-bounce1,
+      .double-bounce2 {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-color: hsl(213, 81%, 67%);
+        opacity: 0.6;
+        position: absolute;
+        top: 0;
+        left: 0;
+        -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
+        animation: sk-bounce 2.0s infinite ease-in-out;
+      }
+
+      .double-bounce2 {
+        -webkit-animation-delay: -1.0s;
+        animation-delay: -1.0s;
+      }
+
+      @-webkit-keyframes sk-bounce {
+
+        0%,
+        100% {
+          -webkit-transform: scale(0.0)
+        }
+
+        50% {
+          -webkit-transform: scale(1.0)
+        }
+      }
+
+      @keyframes sk-bounce {
+
+        0%,
+        100% {
+          transform: scale(0.0);
+          -webkit-transform: scale(0.0);
+        }
+
+        50% {
+          transform: scale(1.0);
+          -webkit-transform: scale(1.0);
+        }
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="app-init-preloader">
+      <p><strong><%- title %></strong> is loading</p>
+      <div class="spinner">
+        <div class="double-bounce1"></div>
+        <div class="double-bounce2"></div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
