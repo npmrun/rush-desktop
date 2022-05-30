@@ -12,6 +12,8 @@ import WindiCSS from "vite-plugin-windicss"
 import Pages from "vite-plugin-pages"
 import Layouts from "vite-plugin-vue-layouts"
 import Inspector from "vite-plugin-vue-inspector"
+import OptimizationPersist from "vite-plugin-optimize-persist"
+import PkgConfig from "vite-plugin-package-config"
 import monacoEditorPlugin from "./plugins/vite-plugin-monaco-editor"
 
 // import setting from "@rush-desktop/share/setting.json"
@@ -53,6 +55,8 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
             outDir: path.resolve(__dirname, "../../dist/electron"),
         },
         plugins: [
+            PkgConfig(),
+            OptimizationPersist(),
             vue(),
             vueJsx(),
             Inspector(),
