@@ -8,3 +8,10 @@ interface IPopupMenuOption {
     menu_id: string
     items: IMenuItemOption[]
 }
+
+type TConfig = {
+    language: "zh" | "en"
+    backup_rule: string
+    get storagePath(): string
+    set storagePath(value: string)
+}

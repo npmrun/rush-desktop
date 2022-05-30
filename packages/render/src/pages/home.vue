@@ -1,6 +1,6 @@
 <template>
     <div>
-        divdaddas
+        divdaddas阿松大
         <div>{{ $t("title") }}</div>
     </div>
 </template>
@@ -16,4 +16,7 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
+.home{
+    @apply bg-white;
+}
 </style>

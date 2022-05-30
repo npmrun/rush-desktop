@@ -5,6 +5,11 @@ import { showMainWindow } from "@/function/window/main"
 import { setupTray } from "@/function/window/tray"
 import { parseCommand } from "./util"
 import { init } from "@/function/menu"
+import Store from "electron-store"
+
+// sotre
+Store.initRenderer()
+Shared.store = new Store()
 
 /**
  * 超级命令,用字符串直接调用方法
@@ -38,14 +43,8 @@ ipcMain.addListener("command", (event, key, command: string, ...argus) => {
     }
 })
 
-ipcMain.once("registerWeb", (event, name: string) => {
-    if(!Shared.sender[name]){
-        Shared.sender[name] = event.sender
-    }
-})
-
 function createWindow() {
-    // init()
+    init()
     // Shared.data.lastChoice = 1
     // setupTray()
     showMainWindow()

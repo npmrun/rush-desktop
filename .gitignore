@@ -25,6 +25,5 @@ dist-ssr
 electron-pid.txt
 out
 .idea
-.vscode
 dist/electron
 dist/package-lock.json

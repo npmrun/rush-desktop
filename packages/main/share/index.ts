@@ -1,4 +1,5 @@
 import { BrowserWindow, Tray, WebContents } from "electron"
+import type Store from "electron-store"
 
 interface IPayload {
     data: {
@@ -10,6 +11,7 @@ interface IPayload {
         lastChoice: number
         [propName: string]: any
     },
+    store: Store,
     sender: {
         [props: string]: WebContents
     }
@@ -24,6 +26,7 @@ const payload: IPayload = {
         forceClose: false,
         lastChoice: -1, // 做过的选择
     },
+    store: null,
     sender: {}
 }
 

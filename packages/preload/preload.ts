@@ -43,6 +43,4 @@ const _agent = {
     },
 }
 
-_agent.send("registerWeb", "main")
-
 contextBridge.exposeInMainWorld("_agent", _agent)
