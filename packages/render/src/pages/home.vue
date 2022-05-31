@@ -1,5 +1,11 @@
 <template>
-    <div>
+    <div class="m-25px">
+        <h1 class="text-size-25px text-500">功能测试</h1>
+        <ul>
+            <li>
+                大
+            </li>
+        </ul>
         <textarea class="w-1/1" name="" id="" cols="30" rows="10" v-model="msg"></textarea>
     </div>
 </template>
