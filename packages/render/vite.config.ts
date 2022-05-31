@@ -28,7 +28,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
     const env = <ImportMetaEnv>loadEnv(mode, __dirname)
     let isProd = mode === "production"
     let isDev = mode === "development"
-    let prodMock = true
+    let prodMock = false
     return defineConfig({
         root: __dirname,
         base: "./",

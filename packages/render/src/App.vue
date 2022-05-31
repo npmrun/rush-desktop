@@ -8,6 +8,3 @@ import HelloWorld from './components/HelloWorld.vue'
   <router-view></router-view>
 </template>
 
-<style lang="less">
-@import '@/assets/style/common.less';
-</style>

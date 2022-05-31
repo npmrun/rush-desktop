@@ -6,6 +6,7 @@ import i18n from "@/i18n"
 import "virtual:windi.css"
 import "virtual:windi-devtools"
 import "virtual:svg-icons-register"
+import '@/assets/style/common.less';
 
 const app = createApp(App)
 app.use(pinia)
