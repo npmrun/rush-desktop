@@ -2,15 +2,41 @@ import * as builder from "electron-builder"
 import setting from "@rush-desktop/share/setting.json"
 import { rootPath } from "@rush-desktop/share"
 import path from "path"
-// import rebuild from "electron-rebuild"
+import { homedir } from "os"
+
+const electronLanguages = ["en", "fr", "zh_CN", "de"]
+
+const TARGET_PLATFORMS_configs = {
+    mac: {
+        mac: ["default"],
+    },
+    macs: {
+        mac: ["dmg:x64", "dmg:arm64"],
+    },
+    win: {
+        win: ["nsis:ia32", "nsis:x64", "portable:ia32"],
+    },
+    all: {
+        mac: ["dmg:x64", "dmg:arm64", "dmg:universal"],
+        linux: ["AppImage:x64", "deb:x64"],
+        win: ["nsis:ia32", "nsis:x64", "portable:ia32"],
+    },
+}
+
+let targets: Record<string, string[]> = TARGET_PLATFORMS_configs.win
+if (process.env.MAKE_FOR === "dev") {
+    targets = TARGET_PLATFORMS_configs.macs
+} else if (process.env.MAKE_FOR === "mac") {
+    targets = TARGET_PLATFORMS_configs.mac
+} else if (process.env.MAKE_FOR === "win") {
+    targets = TARGET_PLATFORMS_configs.win
+} else if (process.env.MAKE_FOR === "all") {
+    targets = TARGET_PLATFORMS_configs.all
+}
 
 builder.build({
+    ...targets,
     config: {
-        // async beforeBuild(context) {
-        //     const { appDir, electronVersion, arch } = context
-        //     await rebuild({ buildPath: appDir, electronVersion, arch })
-        //     return true
-        // },
         npmRebuild: true, // 是否在打包应用程序之前rebuild本地依赖
         nodeGypRebuild: false, // 是否在开始打包应用程序之前执行,用electron-builder node-gyp-rebuild 来代替
         buildDependenciesFromSource: true, // 是否从源构建应用程序本机依赖项。
@@ -21,6 +47,27 @@ builder.build({
             output: path.resolve(rootPath, "out"),
             app: path.resolve(rootPath, "dist"),
         },
+        electronDownload: {
+            cache: path.join(homedir(), ".electron"),
+            mirror: "https://npm.taobao.org/mirrors/electron/",
+        },
+        // mac: {
+        //     type: "distribution",
+        //     category: "public.app-category.productivity",
+        //     icon: "assets/app.icns",
+        //     gatekeeperAssess: false,
+        //     electronLanguages,
+        //     identity: IDENTITY,
+        //     hardenedRuntime: true,
+        //     entitlements: "scripts/entitlements.mac.plist",
+        //     entitlementsInherit: "scripts/entitlements.mac.plist",
+        //     provisioningProfile: "scripts/app.provisionprofile",
+        //     extendInfo: {
+        //         ITSAppUsesNonExemptEncryption: false,
+        //         CFBundleLocalizations: electronLanguages,
+        //         CFBundleDevelopmentRegion: "en",
+        //     },
+        // },
         nsis: {
             oneClick: false,
             allowElevation: true,
@@ -28,6 +75,10 @@ builder.build({
             createStartMenuShortcut: true,
             allowToChangeInstallationDirectory: true,
             perMachine: true,
+            artifactName: "${productName}_installer_${arch}_${version}(${buildVersion}).${ext}",
+        },
+        portable: {
+            artifactName: "${productName}_portable_${arch}_${version}(${buildVersion}).${ext}",
         },
         dmg: {
             contents: [
@@ -43,6 +94,8 @@ builder.build({
                     type: "file",
                 },
             ],
+            sign: false,
+            artifactName: "${productName}_mac_${arch}_${version}(${buildVersion}).${ext}",
         },
         extraResources: {
             from: path.resolve(rootPath, "extra"),
@@ -53,15 +106,17 @@ builder.build({
         },
         win: {
             icon: path.resolve(rootPath, "extra/icons/1024x1024.png"),
-            target: [
-                {
-                    target: "nsis",
-                    arch: ["ia32", "x64"],
-                },
-            ],
         },
         linux: {
             icon: path.resolve(rootPath, "extra/icons/1024x1024.png"),
+            artifactName: "${productName}_linux_${arch}_${version}(${buildVersion}).${ext}",
+            category: "Utility",
+            synopsis: "An App for hosts management and switching.",
+            desktop: {
+                Name: "gofast",
+                Type: "Application",
+                GenericName: "An App for hosts management and switching.",
+            },
         },
     },
 })
