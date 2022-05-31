@@ -3,7 +3,7 @@ const funcs = {}
 modelsFile.keys().forEach(key => {
     const res = modelsFile(key)
     const module = res.default || res
-    funcs[key.replace(/(\.\/|\.ts)/g, "")] = module
+    funcs[key.replace(/(\.\/|\.ts)/g, "").split("/").filter(v=>v!="index").join("/")] = module
 })
 
 export function parseCommand(command: string): Function | undefined {

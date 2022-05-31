@@ -132,7 +132,6 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
                 ],
             }),
             viteMockServe({
-                // default
                 mockPath: "src/mocks/mock",
                 localEnabled: command === "serve",
                 prodEnabled: command !== "serve" && prodMock,

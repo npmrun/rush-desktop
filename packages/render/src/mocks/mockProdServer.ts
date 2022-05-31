@@ -7,11 +7,11 @@ import { createProdMockServer } from 'vite-plugin-mock/es/createProdMockServer'
 // You can use the import.meta.glob function to import all
 const modules = import.meta.globEager('./mock/**/*.ts')
 export function setupProdMockServer() {
-    let list = []
+    let list: any[] = []
     for (const path in modules) {
         const module = modules[path]
         let mod = module.default || module
-        list.push(mod)
+        list = list.concat(mod)
     }
     createProdMockServer(list)
 }

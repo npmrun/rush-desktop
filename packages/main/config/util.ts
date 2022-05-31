@@ -1,7 +1,7 @@
 import fs from "fs-extra"
 import Shared from "@/share"
 import { mainConfig, PathMgr } from "./index"
-import { ConfigEvent } from "@/core/mitt"
+import { Mitt } from "@/core/mitt"
 
 /**
  * 保存配置文件到本地
@@ -22,10 +22,10 @@ export function saveConfig(config: TConfig) {
  */
 export function readConfig(): TConfig {
     fs.ensureFileSync(PathMgr.configPath)
-    const data = fs.readJSONSync(PathMgr.configPath, { throws: false }) as TConfig
-    if (data) {
-        walkConfig(data)
-    }
+    fs.readJSONSync(PathMgr.configPath, { throws: false }) as TConfig
+    // if (data) {
+    //     walkConfig(data)
+    // }
     return mainConfig
 }
 
@@ -34,7 +34,7 @@ export function readConfig(): TConfig {
  * @param _config 通用配置
  * @param _mainConfig 主进程配置
  */
-export function walkConfig(_config: TConfig, notFirst:boolean = true) {
+export function walkConfig(_config: TConfig) {
     let oldMainConfig = Object.assign({}, mainConfig)
     let isChange = false
     ;(Object.keys(_config) as [keyof TConfig]).forEach(key => {
@@ -44,7 +44,7 @@ export function walkConfig(_config: TConfig, notFirst:boolean = true) {
             isChange = true
         }
     })
-    if(isChange && notFirst){
-        ConfigEvent.emit("config-changed", oldMainConfig)
+    if(isChange){
+        Mitt.emit("config-changed", oldMainConfig)
     }
 }

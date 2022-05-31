@@ -1,16 +1,11 @@
+import "./init"
+
 import { isPromise, readCommand } from "@rush-desktop/main-tool"
 import { ipcMain, app } from "electron"
 import Shared from "@/share"
 import { showMainWindow } from "@/function/window/main"
 import { setupTray } from "@/function/window/tray"
 import { parseCommand } from "./util"
-import { init } from "@/function/menu"
-import Store from "electron-store"
-
-// sotre
-Store.initRenderer()
-Shared.store = new Store()
-
 /**
  * 超级命令,用字符串直接调用方法
  */
@@ -44,7 +39,6 @@ ipcMain.addListener("command", (event, key, command: string, ...argus) => {
 })
 
 function createWindow() {
-    init()
     // Shared.data.lastChoice = 1
     // setupTray()
     showMainWindow()

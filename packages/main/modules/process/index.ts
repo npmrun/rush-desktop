@@ -4,6 +4,7 @@ import kill from "./kill"
 
 interface IProcessChild {
     key: number | string
+    command: string
     status: EProcessStatus
     instance: null | ChildProcessWithoutNullStreams
 }
@@ -39,8 +40,11 @@ class ProcessManager {
         if (pro) {
             return false
         }
+        console.log(command);
+        
         let oneProcess: IProcessChild = {
             key: -1,
+            command,
             status: EProcessStatus.Normal,
             instance: null,
         }

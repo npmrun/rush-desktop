@@ -150,7 +150,7 @@ let template = [
     },
 ]
 
-export function init() {
+export function initMenu(oldMainConfig?: TConfig) {
     const menu = Menu.buildFromTemplate(<any>template)
     Menu.setApplicationMenu(menu)
 }

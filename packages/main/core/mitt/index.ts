@@ -7,13 +7,9 @@ export enum EType {
 
 type Events = {
     "event:process": { type: EType; data: any; message: string }
+    "config-changed"?: TConfig
 }
 
-const Fire: Emitter<Events> = mitt<Events>()
+const Mitt: Emitter<Events> = mitt<Events>()
 
-export { Fire, Msg, ConfigEvent }
-
-type ConfigEvent = {
-    "config-changed": TConfig
-}
-const ConfigEvent: Emitter<ConfigEvent> = mitt<ConfigEvent>()
+export { Mitt, Msg }
