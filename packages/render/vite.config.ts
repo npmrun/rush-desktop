@@ -82,7 +82,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
                 defaultLayout: "base",
             }),
             Components({
-                dirs: [path.resolve(__dirname, "src/componentsAuto"), path.resolve(__dirname, "src/pagesUI")],
+                dirs: [path.resolve(__dirname, "src/componentsAuto"), path.resolve(__dirname, "src/pagesUIAuto")],
                 extensions: ["vue"],
                 dts: "components.d.ts",
                 resolvers: [NaiveUiResolver()],

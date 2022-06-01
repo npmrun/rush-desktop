@@ -1,17 +1,17 @@
+import { Mitt, Msg } from "@/core/mitt"
 import { ChildProcessWithoutNullStreams } from "child_process"
 import { execa } from "./execa"
 import kill from "./kill"
+import { iGetInnerText } from "@rush-desktop/common/util"
+import { EProcessStatus } from "@rush-desktop/common/process"
+import { broadcast } from "@rush-desktop/main-tool"
 
 interface IProcessChild {
     key: number | string
     command: string
     status: EProcessStatus
+    log: string[]
     instance: null | ChildProcessWithoutNullStreams
-}
-enum EProcessStatus {
-    Normal = "normal",
-    Running = "running",
-    Complete = "complete",
 }
 
 class ProcessManager {
@@ -35,32 +35,57 @@ class ProcessManager {
         return array
     }
 
+    getProcess(key: string | number) {
+        let array = this._processlist.filter(v => {
+            return v.key === key
+        })
+        let instance = array[0]
+        if (instance) {
+            let obj = Object.assign({}, instance) as any
+            delete obj.instance
+            return obj
+        }
+    }
+
     createProcess(key: string | number, command: string, args: string[] = []): boolean {
         let pro = this._processlist.filter(v => v.key === key)[0]
         if (pro) {
             return false
         }
-        console.log(command);
-        
         let oneProcess: IProcessChild = {
             key: -1,
             command,
+            log: [],
             status: EProcessStatus.Normal,
             instance: null,
         }
+        oneProcess.status = EProcessStatus.Starting
+        broadcast("event:process", { key: key, status: oneProcess.status })
         let p = execa(command, args, (err, data, isComplete) => {
             if (isComplete) {
-                oneProcess.status = EProcessStatus.Complete
+                oneProcess.status = EProcessStatus.Exit
+                broadcast("event:process", {
+                    key: key,
+                    status: oneProcess.status,
+                    message: iGetInnerText(`${data}`),
+                })
+                oneProcess.log.push(`${data}`)
                 this.clearOneDeath(p)
                 return
             }
             if (err) {
+                broadcast("event:process", { key: key, status: oneProcess.status, message: err })
+                oneProcess.log.push(err)
             } else {
+                broadcast("event:process", { key: key, status: oneProcess.status, message: iGetInnerText(data) })
+                oneProcess.log.push(iGetInnerText(data))
             }
+        })
+        p.on("spawn", () => {
             oneProcess.status = EProcessStatus.Running
+            broadcast("event:process", { key: key, status: oneProcess.status })
         })
         oneProcess.key = key
-        oneProcess.status = EProcessStatus.Running
         oneProcess.instance = p
         this._processlist.push(oneProcess)
         return true
@@ -72,7 +97,24 @@ class ProcessManager {
             const process = list[i]
             const instance = process.instance
             if (instance) {
+                process.status = EProcessStatus.Stopping
+                broadcast("event:process", { key: process.key, status: process.status })
                 kill(process.instance)
+            }
+        }
+    }
+    kill(key: string | number) {
+        let list = this._processlist
+        for (let i = 0; i < list.length; i++) {
+            const process = list[i]
+            if (process.key === key) {
+                const instance = process.instance
+                if (instance) {
+                    process.status = EProcessStatus.Stopping
+                    broadcast("event:process", { key: process.key, status: process.status })
+                    kill(process.instance)
+                }
+                break
             }
         }
     }
@@ -83,8 +125,13 @@ class ProcessManager {
             const process = list[i]
             const instance = process.instance
             if (instance === p) {
-                kill(process.instance)
-                this._processlist.splice(i, 1)
+                if (process.status === EProcessStatus.Exit || process.status === EProcessStatus.Normal) {
+                    kill(process.instance)
+                    this._processlist.splice(i, 1)
+                }
+                if (instance?.killed) {
+                    this._processlist.splice(i, 1)
+                }
                 break
             }
         }
@@ -96,7 +143,7 @@ class ProcessManager {
         for (let i = len - 1; i >= 0; i--) {
             const process = list[i]
             const instance = process.instance
-            if ((process.status === EProcessStatus.Complete || process.status === EProcessStatus.Normal) && instance) {
+            if ((process.status === EProcessStatus.Exit || process.status === EProcessStatus.Normal) && instance) {
                 kill(process.instance)
                 count++
                 this._processlist.splice(i, 1)

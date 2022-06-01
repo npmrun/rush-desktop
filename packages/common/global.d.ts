@@ -15,3 +15,23 @@ type TConfig = {
     get storagePath(): string
     set storagePath(value: string)
 }
+
+
+type TAgent<T = (event: Electron.IpcRendererEvent, ...args: any[]) => void> = {
+    preloadPath: string;
+    iframePath: string;
+    extraPath: string;
+    call: (command: string, ...args: any[]) => Promise<any>;
+    callLong: (command: string, ...args: any[]) => Promise<any>;
+    callSync: (command: string, ...args: any[]) => any;
+    send: (command: string, ...argu: any[]) => void;
+    sendSync: (command: string, ...argu: any[]) => void;
+    on: (command: string, cb: T) => () => Electron.IpcRenderer;
+    once: (command: string, cb: T) => () => Electron.IpcRenderer;
+    off: (command: string, cb: T) => Electron.IpcRenderer;
+    offAll: (command: string) => Electron.IpcRenderer;
+    popupMenu: (options: IPopupMenuOption) => void;
+}
+
+declare const _agent: TAgent
+

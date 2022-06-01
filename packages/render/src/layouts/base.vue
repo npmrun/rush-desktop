@@ -19,7 +19,7 @@
         <div class="bottom">
             <div class="bottom-item">{{ route.fullPath }}
             </div>
-            <div class="bottom-item right">en
+            <div class="bottom-item right" title="english">en
             </div>
         </div>
     </div>

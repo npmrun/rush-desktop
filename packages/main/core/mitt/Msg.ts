@@ -1,10 +1,10 @@
-import { EType } from "."
 
+type IName = string | number;
 
-function Msg(type: EType, data?: any): void
-function Msg(type: EType, message: string, data?: any): void
-function Msg(type: EType, messageOrData?: any, data?: any): void {
-    this.type = type
+function Msg(name: IName, data?: any): void
+function Msg(name: IName, message: string, data?: any): void
+function Msg(name: IName, messageOrData?: any, data?: any): void {
+    this.name = name
     if (arguments.length == 2) {
         this.data = messageOrData
     }
@@ -14,10 +14,10 @@ function Msg(type: EType, messageOrData?: any, data?: any): void {
     }
 }
 
-function create(type: EType, data?: any): void
-function create(type: EType, message: string, data?: any): void
-function create(type: EType, messageOrData?: any, data?: any): void {
-    return new Msg(type, messageOrData, data)
+function create(name: IName, data?: any): void
+function create(name: IName, message: string, data?: any): void
+function create(name: IName, messageOrData?: any, data?: any): void {
+    return new Msg(name, messageOrData, data)
 }
 Msg.create = create
 
