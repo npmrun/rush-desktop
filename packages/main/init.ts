@@ -5,6 +5,7 @@ import fs from "fs-extra"
 import path from "path"
 import { readConfig, walkConfig } from "./config/util"
 import Shared from "@/share"
+import processManager from "./modules/process"
 
 // sotre
 Store.initRenderer()
@@ -41,3 +42,17 @@ if (storePath) {
         watch()
     })
 }
+
+process
+
+    // Handle normal exits
+    .on("exit", code => {
+        processManager.killAll()
+        process.exit(code)
+    })
+
+    // Handle CTRL+C
+    .on("SIGINT", () => {
+        processManager.killAll()
+        process.exit(0)
+    })
