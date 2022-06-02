@@ -47,7 +47,7 @@ export const mainWebpack = {
         // __public: `require("path").join(__dirname).replace(/\\\\/g, "\\\\\\\\")`,
         __extra: `require("path").join(__dirname, "../..").replace(/\\\\/g, "\\\\\\\\")`,
         __resource: `require("path").join(__dirname).replace(/\\\\/g, "\\\\\\\\")`,
-        __appPath: `require("path").join(__dirname, "../").replace(/\\\\/g, "\\\\\\\\")`,
+        __appPath: `require("path").join(__dirname, "..").replace(/\\\\/g, "\\\\\\\\")`,
     },
 }
 export const perloadWebpack = {
