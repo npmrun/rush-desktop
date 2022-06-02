@@ -62,6 +62,8 @@ class ProcessManager {
         oneProcess.status = EProcessStatus.Starting
         broadcast("event:process", { key: key, status: oneProcess.status })
         let p = execa(command, args, (err, data, isComplete) => {
+            console.log(err, data);
+            
             if (isComplete) {
                 oneProcess.status = EProcessStatus.Exit
                 broadcast("event:process", {

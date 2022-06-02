@@ -66,7 +66,7 @@ async function click() {
     isExecing = true
     try {
         if (status.value === EProcessStatus.Normal || status.value === EProcessStatus.Exit) {
-            await _agent.call("process.createProcess", "live", "live-server --port=3333 " + chooseDir.value)
+            await _agent.call("process.createProcess", "live", "node", ["./node_modules/live-server/live-server.js","--port=3333", chooseDir.value])
         } else if (status.value === EProcessStatus.Running) {
             await _agent.call("process.kill", "live")
         }

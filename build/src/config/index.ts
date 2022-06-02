@@ -14,6 +14,7 @@ import {
     mainWebpackName,
     mainWebpackOutput,
     buildExternals,
+    pkgPath,
 } from "@rush-desktop/share"
 
 const config = {
@@ -35,16 +36,18 @@ export const mainWebpack = {
     outputPath: mainWebpackOutput,
     externals: externals,
     devVariable: {
-        __static: `"${genPathRoot("public/static").replace(/\\/g, "\\\\")}"`,
-        __public: `"${genPathRoot("public").replace(/\\/g, "\\\\")}"`,
+        // __static: `"${genPathRoot("public/static").replace(/\\/g, "\\\\")}"`,
+        // __public: `"${genPathRoot("public").replace(/\\/g, "\\\\")}"`,
         __extra: `"${genPathRoot("extra").replace(/\\/g, "\\\\")}"`,
         __resource: `"${genPathRoot("dist/electron").replace(/\\/g, "\\\\")}"`,
+        __appPath: `"${genPathRoot(pkgPath, "main").replace(/\\/g, "\\\\")}"`
     },
     prodVariable: {
-        __static: `require("path").join(__dirname, "/static").replace(/\\\\/g, "\\\\\\\\")`,
-        __public: `require("path").join(__dirname).replace(/\\\\/g, "\\\\\\\\")`,
+        // __static: `require("path").join(__dirname, "/static").replace(/\\\\/g, "\\\\\\\\")`,
+        // __public: `require("path").join(__dirname).replace(/\\\\/g, "\\\\\\\\")`,
         __extra: `require("path").join(__dirname, "../..").replace(/\\\\/g, "\\\\\\\\")`,
         __resource: `require("path").join(__dirname).replace(/\\\\/g, "\\\\\\\\")`,
+        __appPath: `require("path").join(__dirname, "../").replace(/\\\\/g, "\\\\\\\\")`,
     },
 }
 export const perloadWebpack = {

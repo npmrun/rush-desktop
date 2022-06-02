@@ -1,4 +1,5 @@
-import { spawn } from "cross-spawn"
+// import { spawn } from "cross-spawn"
+import { spawn } from "child_process"
 
 export function execa(
     command: string,
@@ -6,9 +7,12 @@ export function execa(
     callback?: (err?: any, data?: any, isComplete?: boolean) => void,
     env?: {},
 ) {
+    console.log(__appPath);
+    console.log(command, argu);
     let myProcess = spawn(command, argu, {
+        cwd: __appPath,
         stdio: "pipe",
-        env: env,
+        env: env
     })
     myProcess.stdout.on("data", data => {
         callback && callback(null, `${data}`)
