@@ -1,6 +1,6 @@
 import { whichPlatform } from "@rush-desktop/main-tool"
 import { ChildProcess, ChildProcessWithoutNullStreams, execSync } from "child_process"
-import { spawn } from "cross-spawn"
+import { spawn } from "child_process"
 
 const platform = whichPlatform()
 

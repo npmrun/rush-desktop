@@ -1,14 +1,19 @@
-import { Mitt, Msg } from "@/core/mitt"
 import { ChildProcessWithoutNullStreams } from "child_process"
 import { execa } from "./execa"
+import { forkFn } from "./fork"
 import kill from "./kill"
 import { iGetInnerText } from "@rush-desktop/common/util"
 import { EProcessStatus } from "@rush-desktop/common/process"
 import { broadcast } from "@rush-desktop/main-tool"
+import { checkCommand } from "./script"
 
 interface IProcessChild {
     key: number | string
     command: string
+    execCommand: {
+        cmd: string
+        argu: string[]
+    }
     status: EProcessStatus
     log: string[]
     instance: null | ChildProcessWithoutNullStreams
@@ -47,23 +52,29 @@ class ProcessManager {
         }
     }
 
-    createProcess(key: string | number, command: string, args: string[] = []): boolean {
+    createProcess(key: string | number, command: string): boolean {
         let pro = this._processlist.filter(v => v.key === key)[0]
         if (pro) {
             return false
         }
+        const commandArray = command.split(" ")
+        let execCommand = checkCommand(commandArray[0])
+        let exec = !!execCommand ? forkFn : execa
+        let args = commandArray.slice(1)
         let oneProcess: IProcessChild = {
             key: -1,
             command,
+            execCommand: {
+                cmd: execCommand,
+                argu: args,
+            },
             log: [],
             status: EProcessStatus.Normal,
             instance: null,
         }
         oneProcess.status = EProcessStatus.Starting
         broadcast("event:process", { key: key, status: oneProcess.status })
-        let p = execa(command, args, (err, data, isComplete) => {
-            console.log(err, data);
-            
+        let p = exec(execCommand, args, (err, data, isComplete) => {
             if (isComplete) {
                 oneProcess.status = EProcessStatus.Exit
                 broadcast("event:process", {

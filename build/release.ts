@@ -43,6 +43,7 @@ builder.build({
         productName: setting.app_title,
         appId: "com.dash." + setting.app_title,
         copyright: "Copyright © 2022 Dash.All Rights Reserved.",
+        // asarUnpack: ["**/node_modules/live-server/**/*"],
         directories: {
             output: path.resolve(rootPath, "out"),
             app: path.resolve(rootPath, "dist"),

@@ -6,6 +6,9 @@ export const appIconPath = path.join(__extra, "/icons/180x180.png")
 
 export { broadcast }
 
+export const isDev = process.env.NODE_ENV === "development"
+export const isProd = !isDev
+
 export function getFileUrl(app: string = "", route: string = "") {
     const winURL =
         process.env.NODE_ENV === "development"

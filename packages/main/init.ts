@@ -5,7 +5,7 @@ import fs from "fs-extra"
 import path from "path"
 import { readConfig, walkConfig } from "./config/util"
 import Shared from "@/share"
-import processManager from "./modules/process"
+import processManager from "@rush-desktop/main-tool/process"
 
 // sotre
 Store.initRenderer()

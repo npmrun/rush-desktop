@@ -32,7 +32,7 @@ export function showMainWindow(opts = {}) {
                 webviewTag: false,
                 nodeIntegration: true,
                 contextIsolation: true,
-                preload: __resource + "/preload.js", // 预加载项
+                preload: __appStatic + "/preload.js", // 预加载项
             },
             ...opts,
         })

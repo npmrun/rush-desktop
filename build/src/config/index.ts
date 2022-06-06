@@ -39,15 +39,13 @@ export const mainWebpack = {
         // __static: `"${genPathRoot("public/static").replace(/\\/g, "\\\\")}"`,
         // __public: `"${genPathRoot("public").replace(/\\/g, "\\\\")}"`,
         __extra: `"${genPathRoot("extra").replace(/\\/g, "\\\\")}"`,
-        __resource: `"${genPathRoot("dist/electron").replace(/\\/g, "\\\\")}"`,
-        __appPath: `"${genPathRoot(pkgPath, "main").replace(/\\/g, "\\\\")}"`
+        __appStatic: `"${genPathRoot("dist/electron").replace(/\\/g, "\\\\")}"`,
     },
     prodVariable: {
         // __static: `require("path").join(__dirname, "/static").replace(/\\\\/g, "\\\\\\\\")`,
         // __public: `require("path").join(__dirname).replace(/\\\\/g, "\\\\\\\\")`,
         __extra: `require("path").join(__dirname, "../..").replace(/\\\\/g, "\\\\\\\\")`,
-        __resource: `require("path").join(__dirname).replace(/\\\\/g, "\\\\\\\\")`,
-        __appPath: `require("path").join(__dirname, "..").replace(/\\\\/g, "\\\\\\\\")`,
+        __appStatic: `require("path").join(__dirname).replace(/\\\\/g, "\\\\\\\\")`,
     },
 }
 export const perloadWebpack = {

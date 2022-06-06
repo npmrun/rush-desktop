@@ -1,4 +1,4 @@
-import { Mitt } from "@/core/mitt"
+import { Mitt } from "@rush-desktop/main-tool/mitt"
 import { initMenu } from "./menu"
 import { initBackupJob } from "./schedule"
 

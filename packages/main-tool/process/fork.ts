@@ -1,7 +1,4 @@
 import { fork } from "child_process"
-import path from "path"
-
-let scriptPath = path.join(__resource, "app.asar/node_modules/live-server/live-server.js")
 
 export function forkFn(
     file: string,
@@ -9,7 +6,7 @@ export function forkFn(
     callback?: (err?: any, data?: any, isComplete?: boolean) => void,
     env?: {},
 ) {
-    let myProcess = fork(path.join(__dirname), argu, {
+    let myProcess = fork(file, argu, {
         stdio: "pipe",
         env: env,
     })
