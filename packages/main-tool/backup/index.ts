@@ -7,7 +7,6 @@
  * 5. 如果文件未修改，则不备份
  */
 
-import { mainConfig } from "@/config"
 import compressing from "compressing"
 import path from "path"
 import fs from "fs-extra"
@@ -25,9 +24,9 @@ function timeStamp2String(time: number): string {
     return year + "-" + month + "-" + date + "_" + hour + "-" + minute + "-" + second
 }
 
-export async function backup() {
-    const backupDir = path.resolve(mainConfig.storagePath, "backup/note")
-    const sourceDir = path.resolve(mainConfig.storagePath, "db/note")
+export async function backup(storagePath) {
+    const backupDir = path.resolve(storagePath, "backup/note")
+    const sourceDir = path.resolve(storagePath, "db/note")
     try {
         const t = path.resolve(backupDir, `note_backup_${timeStamp2String(new Date().getTime())}.zip`)
         if (fs.existsSync(sourceDir) && !fs.existsSync(t)) {

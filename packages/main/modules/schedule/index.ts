@@ -1,5 +1,5 @@
 import { validateCron } from "@rush-desktop/common/util"
-import { backup } from "@/core/backup"
+import { backup } from "@rush-desktop/main-tool/backup"
 import { mainConfig } from "@/config"
 import schedule, { Job } from "node-schedule"
 // import watcher, { AsyncSubscription } from "@parcel/watcher"
@@ -27,7 +27,7 @@ export async function initBackupJob(oldMainConfig?: TConfig) {
         job = schedule.scheduleJob(mainConfig.backup_rule, async function () {
             console.log("备份测试");
             // if (canBackup) {
-            //     await backup()
+            //     await backup(mainConfig.storagePath)
             //     canBackup = false
             // } else {
             //     console.log("该文件没有过更新，暂不备份")

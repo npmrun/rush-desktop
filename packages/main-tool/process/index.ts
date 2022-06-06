@@ -40,6 +40,10 @@ class ProcessManager {
         return array
     }
 
+    send(key: string | number, status: EProcessStatus, message?: string){
+        broadcast("event:process", { key: key, status: status, message: message })
+    }
+
     getProcess(key: string | number) {
         let array = this._processlist.filter(v => {
             return v.key === key
@@ -73,30 +77,26 @@ class ProcessManager {
             instance: null,
         }
         oneProcess.status = EProcessStatus.Starting
-        broadcast("event:process", { key: key, status: oneProcess.status })
+        this.send(key, oneProcess.status)
         let p = exec(execCommand, args, (err, data, isComplete) => {
             if (isComplete) {
                 oneProcess.status = EProcessStatus.Exit
-                broadcast("event:process", {
-                    key: key,
-                    status: oneProcess.status,
-                    message: iGetInnerText(`${data}`),
-                })
+                this.send(key, oneProcess.status, iGetInnerText(`${data}`))
                 oneProcess.log.push(`${data}`)
                 this.clearOneDeath(p)
                 return
             }
             if (err) {
-                broadcast("event:process", { key: key, status: oneProcess.status, message: err })
+                this.send(key, oneProcess.status, err)
                 oneProcess.log.push(err)
             } else {
-                broadcast("event:process", { key: key, status: oneProcess.status, message: iGetInnerText(data) })
+                this.send(key, oneProcess.status, iGetInnerText(`${data}`))
                 oneProcess.log.push(iGetInnerText(data))
             }
         })
         p.on("spawn", () => {
             oneProcess.status = EProcessStatus.Running
-            broadcast("event:process", { key: key, status: oneProcess.status })
+            this.send(key, oneProcess.status)
         })
         oneProcess.key = key
         oneProcess.instance = p
@@ -111,7 +111,7 @@ class ProcessManager {
             const instance = process.instance
             if (instance) {
                 process.status = EProcessStatus.Stopping
-                broadcast("event:process", { key: process.key, status: process.status })
+                this.send(process.key, process.status)
                 kill(process.instance)
             }
         }
@@ -124,7 +124,7 @@ class ProcessManager {
                 const instance = process.instance
                 if (instance) {
                     process.status = EProcessStatus.Stopping
-                    broadcast("event:process", { key: process.key, status: process.status })
+                    this.send(process.key, process.status)
                     kill(process.instance)
                 }
                 break
