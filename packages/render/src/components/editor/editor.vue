@@ -1,6 +1,6 @@
 <template>
-    <div class="h-1/1 flex flex-col relative">
-        <div class="flex-1" ref="editorRef"></div>
+    <div class="h-1/1 relative">
+        <div class="h-1/1" ref="editorRef"></div>
         <div
             class="absolute top-1/2 left-1/2 transform  -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-10">
             <img src="./120x120.png" alt="">
@@ -69,6 +69,7 @@ onBeforeUnmount(() => {
         editor = null
     }
 })
+
 useResizeObserver(editorRef, () => {
     if (editor) {
         editor.layout()
