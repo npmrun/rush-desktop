@@ -1,17 +1,49 @@
 <template>
     <div ref="elRef" class="niu-scrollbar component">
-        <div ref="scrollWrapperRef" class="niu-scrollbar__wrapper niu-scrollbar--none" @mousewheel="handleScroll">
+        <div ref="scrollWrapperRef" :class="{ dragging: isDragging }" class="niu-scrollbar__wrapper niu-scrollbar--none"
+            @mousewheel="handleScroll">
             <div ref="scrollRef" class="niu-scrollbar__inner">
                 <slot></slot>
             </div>
             <div class="niu-scrollbar__bar__wrapper" v-if="showBar">
-                <div ref="scrollbarRef" class="niu-scrollbar__bar"></div>
+                <div ref="scrollbarRef" class="niu-scrollbar__bar" @mousedown="handleTouchStart"></div>
             </div>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
+const isDragging = ref(false)
+let startX: number | void = undefined
+let scrollLeft: number | void = undefined
+let oldMouseMove: any
+let oldMouseUp: any
+function handleTouchStart(e: MouseEvent) {
+    startX = e.clientX
+    scrollLeft = scrollWrapperRef.value?.scrollLeft ?? 0
+    oldMouseMove = document.onmousemove
+    oldMouseUp = document.onmouseup
+    isDragging.value = true
+    document.onmousemove = function (e: MouseEvent) {
+        if (startX === undefined) return
+        isDragging.value = true
+        if (scrollbarRef.value && scrollWrapperRef.value && scrollRef.value && scrollLeft != undefined) {
+            let moveX = scrollLeft + e.clientX - startX
+            const totalWidth = scrollRef.value?.offsetWidth ?? 0
+            if (moveX < 0) moveX = 0
+            if (moveX > totalWidth - scrollWrapperRef.value.offsetWidth) moveX = totalWidth - scrollWrapperRef.value.offsetWidth
+            scrollWrapperRef.value.scrollLeft = moveX
+            scrollbarRef.value.style.marginLeft = ((moveX / totalWidth) * 100) + '%'
+        }
+    }
+    document.onmouseup = function (e: MouseEvent) {
+        isDragging.value = false
+        startX = undefined
+        document.onmousemove = oldMouseMove
+        document.onmouseup = oldMouseUp
+    }
+}
+
 function handleScroll(e: any) {
     var scrollNum = e.currentTarget as HTMLDivElement
     //deltaY属性在向下滚动时返回正值，向上滚动时返回负值，否则为0
@@ -35,8 +67,6 @@ async function check() {
     if (scrollWrapperWidth != 0) {
         rate = scrollWrapperWidth / totalWidth
     }
-    console.log(rate);
-
     if (rate < 1) {
         showBar.value = true
     } else {
@@ -55,10 +85,6 @@ useResizeObserver(elRef, async () => {
     check()
 })
 onMounted(() => {
-    check()
-})
-onUpdated(async () => {
-    await nextTick()
     check()
 })
 </script>
@@ -84,6 +110,12 @@ onUpdated(async () => {
         }
 
         &:hover {
+            .niu-scrollbar__bar__wrapper {
+                display: block;
+            }
+        }
+
+        &.dragging {
             .niu-scrollbar__bar__wrapper {
                 display: block;
             }
