@@ -37,7 +37,7 @@ const initBottom = [
     {
         icon: "setting",
         title: "编辑器",
-        path: "/home",
+        path: "/setting",
     },
 ]
 export default defineStore("action", {
