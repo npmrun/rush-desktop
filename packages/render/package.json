@@ -21,6 +21,8 @@
     "unplugin-auto-import": "^0.8.6",
     "vite-plugin-html": "3.0.6",
     "vite-plugin-mock": "^2.9.6",
+    "vite-plugin-monaco-editor": "link:plugins\\vite-plugin-monaco-editor",
+    "vite-plugin-monaco-editor-nls": "link:plugins\\vite-plugin-monaco-editor-nls",
     "vite-plugin-optimize-persist": "^0.1.2",
     "vite-plugin-package-config": "^0.1.1",
     "vite-plugin-pages": "^0.23.0",

@@ -8,7 +8,6 @@ declare module '@vue/runtime-core' {
     NiuScrollbar: typeof import('./src/componentsAuto/niu-scrollbar/niu-scrollbar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Scrollbar: typeof import('./src/componentsAuto/Scrollbar/Scrollbar.vue')['default']
     SvgIcon: typeof import('./src/componentsAuto/SvgIcon/SvgIcon.vue')['default']
     Tabs: typeof import('./src/componentsAuto/Tabs/Tabs.vue')['default']
   }

@@ -1,16 +1,25 @@
 <template>
     <div class="h-1/1 flex flex-col">
         <Tabs :tabs="tabs" v-model="active"></Tabs>
-        <div class="flex-1 h-0">
-            asd
+        <div class="flex-1 h-0 content">
+            {{activeBg}}
+            <input type="text" v-model="state.backup_rule.value">
         </div>
-        <!-- <editor name="index.ts" v-model="text"></editor> -->
     </div>
 </template>
 <script lang="ts" setup>
-import editor from '@/components/editor/editor.vue';
+import ConfigStore from "@/store/module/config"
+import { storeToRefs } from 'pinia'
+
+const configStore = ConfigStore()
+const state = storeToRefs(configStore)
+console.log(state)
+
 const text = ref(`const a = 123`)
 const active = ref(0)
+const activeBg = computed(()=>{
+    return tabs[active.value].bg
+})
 const tabs = shallowReactive([
     {
         key: 0,
@@ -39,5 +48,8 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-
+.content{
+    // transition: background .3s ease-in-out;
+    // background-color: v-bind(activeBg);
+}   
 </style>

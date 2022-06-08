@@ -9,14 +9,9 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "@parcel/watcher": "^2.0.5",
-    "electron-store": "^8.0.1",
-    "lodash": "^4.17.21",
-    "node-schedule": "^2.1.0"
-},
-"devDependencies": {
-    "electron-debug": "^3.2.0",
-    "@types/node-schedule": "^2.1.0"
+  "devDependencies": {
+    "@types/node-schedule": "^2.1.0",
+    "@types/webpack-env": "^1.17.0",
+    "electron-debug": "^3.2.0"
   }
 }

@@ -14,8 +14,8 @@ import Layouts from "vite-plugin-vue-layouts"
 import Inspector from "vite-plugin-vue-inspector"
 import OptimizationPersist from "vite-plugin-optimize-persist"
 import PkgConfig from "vite-plugin-package-config"
-import monacoEditorPlugin from "./plugins/vite-plugin-monaco-editor"
-
+import monacoEditorPlugin from "vite-plugin-monaco-editor"
+import MonacoEditorNlsPlugin, { esbuildPluginMonacoEditorNls, Languages } from "vite-plugin-monaco-editor-nls"
 // import setting from "@rush-desktop/share/setting.json"
 
 // console.log(setting)
@@ -54,6 +54,15 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
         build: {
             outDir: path.resolve(__dirname, "../../dist/electron"),
         },
+        optimizeDeps: {
+            esbuildOptions: {
+                plugins: [
+                    esbuildPluginMonacoEditorNls({
+                        locale: Languages.zh_hans,
+                    }),
+                ],
+            },
+        },
         plugins: [
             PkgConfig(),
             OptimizationPersist(),
@@ -66,6 +75,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
                     fileExtensions: ["vue", "js", "jsx", "ts", "tsx"],
                 },
             }),
+            MonacoEditorNlsPlugin({ locale: Languages.zh_hans }),
             monacoEditorPlugin({
                 base: ".",
             }),
@@ -91,6 +101,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
                 include: [/\.[tj]sx?$/, /\.vue\??/],
                 imports: ["vue", "vue-router", "pinia", "@vueuse/core", "vue-i18n"],
                 dts: "auto-import.d.ts",
+                dirs: ["src/hooksAuto"],
             }),
             createSvgIconsPlugin({
                 // 指定需要缓存的图标文件夹

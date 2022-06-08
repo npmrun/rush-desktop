@@ -92,7 +92,7 @@ onMounted(() => {
 <style lang="less" scoped>
 .niu-scrollbar.component {
     position: relative;
-
+    overflow: hidden;
     .niu-scrollbar__wrapper {
         &::after {
             clear: both;
@@ -111,31 +111,30 @@ onMounted(() => {
 
         &:hover {
             .niu-scrollbar__bar__wrapper {
-                display: block;
+                bottom: 0;
             }
         }
 
         &.dragging {
             .niu-scrollbar__bar__wrapper {
-                display: block;
+                bottom: 0;
             }
         }
     }
 
     .niu-scrollbar__bar__wrapper {
-        display: none;
+        // display: none;
         position: absolute;
-        bottom: 0;
+        transition: bottom .2s linear;
+        bottom: -4px;
         left: 0;
         right: 0;
         height: 4px;
-        background-color: rgba(255, 0, 0, 0.199);
-
         .niu-scrollbar__bar {
             cursor: pointer;
             height: 100%;
             width: 0;
-            background-color: aqua;
+            background-color: #7c7c7c8a;
         }
     }
 }

@@ -8,13 +8,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@commonify/lowdb": "^3.0.0",
-    "compressing": "^1.5.1",
-    "fs-extra": "^10.0.0",
-    "live-server": "^1.2.2",
-    "lodash": "^4.17.21",
-    "mitt": "^3.0.0"
-  }
+  "license": "ISC"
 }

@@ -10,6 +10,7 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "vite": "^2.9.9",
         "@rush-desktop/build": "workspace:*",
         "@rush-desktop/common": "workspace:*",
         "@rush-desktop/main": "workspace:*",
@@ -19,6 +20,14 @@
         "@rush-desktop/share": "workspace:*"
     },
     "dependencies": {
-        "vite": "^2.9.9"
+        "electron-store": "^8.0.1",
+        "live-server": "^1.2.2",
+        "mitt": "^3.0.0",
+        "@commonify/lowdb": "^3.0.0",
+        "@parcel/watcher": "^2.0.5",
+        "compressing": "^1.5.1",
+        "cross-spawn": "^7.0.3",
+        "fs-extra": "^10.0.0",
+        "node-schedule": "^2.1.0"
     }
 }
