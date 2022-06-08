@@ -31,7 +31,6 @@ importers:
       live-server: 1.2.2
       mitt: 3.0.0
       node-schedule: 2.1.0
-      vite: 2.9.9
     devDependencies:
       '@rush-desktop/build': link:build
       '@rush-desktop/common': link:packages/common
@@ -40,6 +39,7 @@ importers:
       '@rush-desktop/preload': link:packages/preload
       '@rush-desktop/render': link:packages/render
       '@rush-desktop/share': link:packages/share
+      vite: 2.9.9
 
   build:
     specifiers:
@@ -214,6 +214,7 @@ importers:
   packages/render:
     specifiers:
       '@intlify/vite-plugin-vue-i18n': ^3.4.0
+      '@monaco-editor/loader': ^1.3.2
       '@types/lodash': ^4.14.182
       '@vitejs/plugin-vue': ^2.3.3
       '@vitejs/plugin-vue-jsx': ^1.3.10
@@ -232,7 +233,6 @@ importers:
       vite-plugin-html: 3.0.6
       vite-plugin-mock: ^2.9.6
       vite-plugin-monaco-editor: link:plugins\vite-plugin-monaco-editor
-      vite-plugin-monaco-editor-nls: link:plugins\vite-plugin-monaco-editor-nls
       vite-plugin-optimize-persist: ^0.1.2
       vite-plugin-package-config: ^0.1.1
       vite-plugin-pages: ^0.23.0
@@ -247,6 +247,7 @@ importers:
       windicss: ^3.5.4
     dependencies:
       '@intlify/vite-plugin-vue-i18n': 3.4.0_vite@2.9.9+vue-i18n@9.1.10
+      '@monaco-editor/loader': 1.3.2_monaco-editor@0.33.0
       '@vitejs/plugin-vue-jsx': 1.3.10
       '@vueuse/core': 8.6.0_vue@3.2.37
       less: 4.1.2
@@ -259,7 +260,6 @@ importers:
       vite-plugin-html: 3.0.6_vite@2.9.9
       vite-plugin-mock: 2.9.6_ntf4wqmko4pzpv4whiuqthj42q
       vite-plugin-monaco-editor: link:plugins/vite-plugin-monaco-editor
-      vite-plugin-monaco-editor-nls: link:plugins/vite-plugin-monaco-editor-nls
       vite-plugin-optimize-persist: 0.1.2_m6vzlljmm4uked2kz7j5yokgb4
       vite-plugin-package-config: 0.1.1_vite@2.9.9
       vite-plugin-pages: 0.23.0_vite@2.9.9
@@ -1991,6 +1991,15 @@ packages:
       - supports-color
     dev: false
 
+  /@monaco-editor/loader/1.3.2_monaco-editor@0.33.0:
+    resolution: {integrity: sha512-BTDbpHl3e47r3AAtpfVFTlAi7WXv4UQ/xZmz8atKl4q7epQV5e7+JbigFDViWF71VBi4IIBdcWP57Hj+OWuc9g==}
+    peerDependencies:
+      monaco-editor: '>= 0.21.0 < 1'
+    dependencies:
+      monaco-editor: 0.33.0
+      state-local: 1.0.7
+    dev: false
+
   /@nodelib/fs.scandir/2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
     engines: {node: '>= 8'}
@@ -2173,6 +2182,7 @@ packages:
 
   /@types/estree/0.0.51:
     resolution: {integrity: sha512-CuPgU6f3eT/XgKKPqKd/gLZV1Xmvf1a2R5POBOGQa6uv82xpls89HU5zKeVoyR8XzHd1RGNOlQlvUe3CFkjWNQ==}
+    dev: false
 
   /@types/fs-extra/8.1.2:
     resolution: {integrity: sha512-SvSrYXfWSc7R4eqnOzbQF4TZmfpNSM9FrSWLU3EUnWBuyZqNBOrv1B1JA3byUDPUl9z4Ab3jeZG2eDdySlgNMg==}
@@ -3180,7 +3190,6 @@ packages:
 
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
-    requiresBuild: true
     dev: false
 
   /basic-auth/2.0.1:
@@ -6513,7 +6522,7 @@ packages:
   /is-reference/1.2.1:
     resolution: {integrity: sha512-U82MsXXiFIrjCK4otLT+o2NA2Cd2g5MLoOVXUZjIOhLurrRxpEXzI8O0KZHr3IjLvlAH1kTPYSuqer5T9ZVBKQ==}
     dependencies:
-      '@types/estree': 0.0.51
+      '@types/estree': 0.0.39
     dev: true
 
   /is-regex/1.1.4:
@@ -8938,6 +8947,10 @@ packages:
     engines: {node: '>= 6'}
     dev: false
 
+  /state-local/1.0.7:
+    resolution: {integrity: sha512-HTEHMNieakEnoe33shBYcZ7NX83ACUjCu8c40iOGEZsngj9zRnkqS9j1pqQPXwobB0ZcVTk27REb7COQ0UR59w==}
+    dev: false
+
   /static-extend/0.1.2:
     resolution: {integrity: sha512-72E9+uLc27Mt718pMHt9VMNiAL4LMsmDbBva8mxWUCkT07fSzEGMYUCk0XWY6lp0j6RBAG4cJ3mWuZv2OE3s0g==}
     engines: {node: '>=0.10.0'}
@@ -10044,7 +10057,7 @@ packages:
       rollup: 2.75.5
     optionalDependencies:
       fsevents: 2.3.2
-    dev: false
+    dev: true
 
   /vite/2.9.9_less@4.1.2+sass@1.52.2:
     resolution: {integrity: sha512-ffaam+NgHfbEmfw/Vuh6BHKKlI/XIAhxE5QSS7gFLIngxg171mg1P3a4LSRME0z2ZU1ScxoKzphkipcYwSD5Ew==}
@@ -10373,7 +10386,6 @@ packages:
   /xmlbuilder/9.0.7:
     resolution: {integrity: sha512-7YXTQc3P2l9+0rjaUbLwMKRhtmwg1M1eDf6nag7urC7pIPYLD9W/jmzQ4ptRSUbodw5S0jfoGTflLemQibSpeQ==}
     engines: {node: '>=4.0'}
-    requiresBuild: true
     dev: false
 
   /xtend/4.0.2:

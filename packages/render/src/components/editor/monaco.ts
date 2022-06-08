@@ -8,6 +8,16 @@
 // import 'monaco-editor/esm/vs/basic-languages/css/css.contribution.js';
 
 // 导入全部特性
-import * as monaco from 'monaco-editor'
+import * as monaco from "monaco-editor"
+// import loader from "@monaco-editor/loader"
 
-export { monaco };
+// loader.config({
+//     // monaco,
+//     "vs/nls": {
+//         availableLanguages: {
+//             "*": "zh-cn", // on the editor, press right click to see the German words
+//         },
+//     },
+// })
+// export default () => loader.init()
+export { monaco }

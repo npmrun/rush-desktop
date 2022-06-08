@@ -15,7 +15,6 @@ import Inspector from "vite-plugin-vue-inspector"
 import OptimizationPersist from "vite-plugin-optimize-persist"
 import PkgConfig from "vite-plugin-package-config"
 import monacoEditorPlugin from "vite-plugin-monaco-editor"
-import MonacoEditorNlsPlugin, { esbuildPluginMonacoEditorNls, Languages } from "vite-plugin-monaco-editor-nls"
 // import setting from "@rush-desktop/share/setting.json"
 
 // console.log(setting)
@@ -54,15 +53,6 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
         build: {
             outDir: path.resolve(__dirname, "../../dist/electron"),
         },
-        optimizeDeps: {
-            esbuildOptions: {
-                plugins: [
-                    esbuildPluginMonacoEditorNls({
-                        locale: Languages.zh_hans,
-                    }),
-                ],
-            },
-        },
         plugins: [
             PkgConfig(),
             OptimizationPersist(),
@@ -75,7 +65,6 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
                     fileExtensions: ["vue", "js", "jsx", "ts", "tsx"],
                 },
             }),
-            MonacoEditorNlsPlugin({ locale: Languages.zh_hans }),
             monacoEditorPlugin({
                 base: ".",
             }),
