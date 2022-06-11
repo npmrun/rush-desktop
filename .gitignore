@@ -26,4 +26,5 @@ electron-pid.txt
 out
 .idea
 dist/electron
+dist/scripts
 dist/package-lock.json

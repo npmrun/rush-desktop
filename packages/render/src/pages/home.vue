@@ -31,10 +31,13 @@ onBeforeMount(() => {
         }
     })()
     _agent.on("event:process", (ev, data: any) => {
-        status.value = data.status
-        if (data.message) {
-            messages.value.push(data.message)
-        }
+        // if (data.key === "live") {
+            status.value = data.status
+            if (data.message) {
+                if (data.status === "exit") data.message = "退出码: " + data.message
+                messages.value.push(data.message)
+            }
+        // }
     })
 })
 onBeforeUnmount(() => {
@@ -66,7 +69,7 @@ async function click() {
     isExecing = true
     try {
         if (status.value === EProcessStatus.Normal || status.value === EProcessStatus.Exit) {
-            await _agent.call("process.createProcess", "live", "live-server -q --port=3333 "+ chooseDir.value)
+            await _agent.call("process.createProcess", "live", "live-server -q --port=3333 " + chooseDir.value)
         } else if (status.value === EProcessStatus.Running) {
             await _agent.call("process.kill", "live")
         }

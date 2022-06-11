@@ -3,6 +3,7 @@ import { resolve } from "path"
 export const rootPath = resolve(__dirname, "../../")
 export const pkgPath = resolve(__dirname, "../../packages")
 
+export const distPath = resolve(rootPath, "dist")
 export const outPath = resolve(rootPath, "dist/electron")
 
 export const isVite = true

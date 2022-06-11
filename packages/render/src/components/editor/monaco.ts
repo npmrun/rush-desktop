@@ -9,15 +9,5 @@
 
 // 导入全部特性
 import * as monaco from "monaco-editor"
-// import loader from "@monaco-editor/loader"
 
-// loader.config({
-//     // monaco,
-//     "vs/nls": {
-//         availableLanguages: {
-//             "*": "zh-cn", // on the editor, press right click to see the German words
-//         },
-//     },
-// })
-// export default () => loader.init()
 export { monaco }

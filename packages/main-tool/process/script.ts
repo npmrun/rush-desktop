@@ -1,5 +1,5 @@
 import { isDev, isProd } from "@rush-desktop/main-tool"
-import { pkgPath } from "@rush-desktop/share"
+import { pkgPath, distPath } from "@rush-desktop/share"
 import { app } from "electron"
 import path from "path"
 
@@ -10,9 +10,16 @@ const resolvePath = (...argu: string[]) => {
     }
     return path.resolve(p, ...argu)
 }
-
+const resolveDist = (...argu: string[]) => {
+    let p = app.getAppPath()
+    if (isDev) {
+        p = distPath
+    }
+    return path.resolve(p, ...argu)
+}
 const commands = {
     "live-server": resolvePath("node_modules/live-server/live-server.js"),
+    show: resolveDist("scripts/main.js"),
 }
 
 export function checkCommand(str: string) {

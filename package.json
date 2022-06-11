@@ -3,31 +3,34 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "dev": "npm run rm -C build & npm run dev -C build",
-        "build": "npm run rm -C build & npm run build -C packages/render && npm run build -C build"
+        "dev": "npm run rm -C build & npm run build -C packages/main-script & npm run dev -C build",
+        "build": "npm run rm -C build & npm run build -C packages/main-script & npm run build -C packages/render && npm run build -C build"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "vite": "^2.9.9",
         "@rush-desktop/build": "workspace:*",
         "@rush-desktop/common": "workspace:*",
         "@rush-desktop/main": "workspace:*",
+        "@rush-desktop/main-script": "workspace:*",
         "@rush-desktop/main-tool": "workspace:*",
         "@rush-desktop/preload": "workspace:*",
         "@rush-desktop/render": "workspace:*",
-        "@rush-desktop/share": "workspace:*"
+        "@rush-desktop/share": "workspace:*",
+        "@types/node": "^16.10.1",
+        "electron": "18.0.3",
+        "vite": "^2.9.9"
     },
     "dependencies": {
-        "electron-store": "^8.0.1",
-        "live-server": "^1.2.2",
-        "mitt": "^3.0.0",
         "@commonify/lowdb": "^3.0.0",
         "@parcel/watcher": "^2.0.5",
         "compressing": "^1.5.1",
         "cross-spawn": "^7.0.3",
+        "electron-store": "^8.0.1",
         "fs-extra": "^10.0.0",
+        "live-server": "^1.2.2",
+        "mitt": "^3.0.0",
         "node-schedule": "^2.1.0"
     }
 }

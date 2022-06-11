@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 import { judgeFile } from "./util"
-import init , { monaco } from "./monaco"
+import { monaco } from "./monaco"
 
 const editorRef = ref<HTMLDivElement>()
 let editor: monaco.editor.IStandaloneCodeEditor | null = null
@@ -34,7 +34,6 @@ onMounted(() => {
         () => props.name,
         async name => {
             if (editorRef.value && !editor) {
-                // const monaco = await init()
                 editor = monaco.editor.create(editorRef.value, {
                     theme: "vs-light",
                     fontFamily: 'Cascadia Mono, Consolas, "Courier New", monospace',
