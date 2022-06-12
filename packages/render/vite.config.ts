@@ -19,7 +19,7 @@ import monacoEditorPlugin from "vite-plugin-monaco-editor"
 
 // console.log(setting)
 
-import _ from "lodash"
+import _ from "lodash-es"
 import path from "path"
 
 // https://vitejs.dev/config/

@@ -23,6 +23,11 @@ function killElectron() {
                 execSync(`kill -9 ${pid}`)
                 resolve()
             }
+            if (platform === "MacOS") {
+                console.log("kill -9 " + pid)
+                execSync(`kill -9 ${pid}`)
+                resolve()
+            }
             if (platform === "windows") {
                 console.log("TASKKILL /F /T /PID " + +pid)
                 execSync("TASKKILL /F /T /PID " + +pid)

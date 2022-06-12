@@ -1,12 +1,12 @@
 import { isDev, isProd } from "@rush-desktop/main-tool"
-import { pkgPath, distPath } from "@rush-desktop/share"
+import { rootPath, distPath } from "@rush-desktop/share"
 import { app } from "electron"
 import path from "path"
 
 const resolvePath = (...argu: string[]) => {
     let p = app.getAppPath()
     if (isDev) {
-        p = path.resolve(pkgPath, "./main-tool")
+        p = rootPath
     }
     return path.resolve(p, ...argu)
 }
