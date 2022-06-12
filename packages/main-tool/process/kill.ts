@@ -1,8 +1,6 @@
-import { whichPlatform } from "@rush-desktop/main-tool"
+import { platform } from "@rush-desktop/main-tool"
 import { ChildProcess, ChildProcessWithoutNullStreams, execSync } from "child_process"
 import { spawn } from "child_process"
-
-const platform = whichPlatform()
 
 export default function kill(process: ChildProcessWithoutNullStreams | null) {
     if (!process) return

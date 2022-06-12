@@ -3,6 +3,7 @@ import path from "path"
 
 declare const __extra: string
 export const appIconPath = path.join(__extra, "/icons/180x180.png")
+export const appTrayPath = path.join(__extra, "/icons/120x120.png")
 
 export { broadcast }
 
@@ -17,7 +18,7 @@ export function getFileUrl(app: string = "", route: string = "") {
     return winURL
 }
 
-export function whichPlatform() {
+function whichPlatform() {
     var platform = process.platform
     switch (platform) {
         case "aix":
@@ -38,6 +39,7 @@ export function whichPlatform() {
             return "unknown"
     }
 }
+export const platform = whichPlatform()
 
 // 超级命令：从对象中解析出函数
 export function readCommand(func: Record<any, any>, command: string): Function | undefined {

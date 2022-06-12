@@ -2,7 +2,7 @@ import Shared from "@/share"
 import path from "path"
 import { app, Menu, Tray } from "electron"
 import { hideMainWindow, showMainWindow } from "./main"
-import { appIconPath } from "@rush-desktop/main-tool"
+import { appTrayPath } from "@rush-desktop/main-tool"
 
 let textHolder = {
     openWindow: "打开窗口",
@@ -67,13 +67,13 @@ export function setupTray(isHide: boolean = true) {
     // 设置系统托盘图标
     let iconPath = ""
     if (process.platform == "darwin") {
-        iconPath = appIconPath
+        iconPath = appTrayPath
     }
     if (process.platform == "win32") {
-        iconPath = appIconPath
+        iconPath = appTrayPath
     }
     if (process.platform == "linux") {
-        iconPath = appIconPath
+        iconPath = appTrayPath
     }
 
     Shared.data.trayWindow = new Tray(iconPath)
