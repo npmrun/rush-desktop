@@ -18,6 +18,11 @@ const initTop = [
         path: "/home",
     },
     {
+        icon: "source",
+        title: "ICON",
+        path: "/tool/icon",
+    },
+    {
         icon: "files",
         title: "代码片段",
         path: "/about",
