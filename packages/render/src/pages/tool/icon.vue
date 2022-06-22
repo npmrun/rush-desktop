@@ -2,6 +2,7 @@
     <div>
         <file-upload @change="changeFile"></file-upload>
         <img :src="src" />
+        <ps-captcha border @send="send" :duration="5">sada</ps-captcha>
     </div>
 </template>
 <script lang="ts" setup>
@@ -9,6 +10,13 @@ import FileUpload from "./_ui/fileupload.vue"
 
 function changeFile(files: File[]) {
     console.log(files)
+}
+
+function send(start: () => void, done: (isDone: boolean) => void) {
+    start()
+    setTimeout(() => {
+        done(true)
+    }, 2500);
 }
 
 const src = ref("")

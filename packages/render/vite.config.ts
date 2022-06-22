@@ -15,6 +15,8 @@ import Inspector from "vite-plugin-vue-inspector"
 import OptimizationPersist from "vite-plugin-optimize-persist"
 import PkgConfig from "vite-plugin-package-config"
 import monacoEditorPlugin from "vite-plugin-monaco-editor"
+// @ts-ignore
+import PrincessResolver from "princess-ui/PrincessResolver"
 // import setting from "@rush-desktop/share/setting.json"
 
 // console.log(setting)
@@ -84,7 +86,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
                 dirs: [path.resolve(__dirname, "src/componentsAuto"), path.resolve(__dirname, "src/pagesUIAuto")],
                 extensions: ["vue"],
                 dts: "components.d.ts",
-                resolvers: [NaiveUiResolver()],
+                resolvers: [NaiveUiResolver(), PrincessResolver()],
             }),
             AutoImport({
                 include: [/\.[tj]sx?$/, /\.vue\??/],

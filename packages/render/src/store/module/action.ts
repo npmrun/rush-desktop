@@ -27,6 +27,11 @@ const initTop = [
         title: "代码片段",
         path: "/about",
     },
+    {
+        icon: "code",
+        title: "笔记本",
+        path: "/snippet/snippet",
+    }
     // {
     //     icon: 'code', // 'files'
     //     title: '编辑器',
