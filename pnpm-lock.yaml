@@ -231,13 +231,14 @@ importers:
       '@types/uuid': ^8.3.4
       '@vitejs/plugin-vue': ^2.3.3
       '@vitejs/plugin-vue-jsx': ^1.3.10
+      '@vue/runtime-core': ^3.2.37
       '@vueuse/core': ^8.5.0
       less: ^4.1.2
       lodash-es: ^4.17.21
       mockjs: ^1.1.0
       monaco-editor: ^0.33.0
       pinia: ^2.0.14
-      princess-ui: link:D:/1XYX/demo/pnpm-workspace-demo/packages/princess-ui
+      princess-ui: link:D:/@world/@project/princess-ui/packages/princess-ui
       rollup: ^2.57.0
       sass: ^1.52.1
       typescript: ^4.5.4
@@ -269,7 +270,7 @@ importers:
       mockjs: 1.1.0
       monaco-editor: 0.33.0
       pinia: 2.0.14_vcmyupim4cga7k7f5hngmth5py
-      princess-ui: link:../../../../demo/pnpm-workspace-demo/packages/princess-ui
+      princess-ui: link:../../../princess-ui/packages/princess-ui
       rollup: 2.75.5
       unplugin-auto-import: 0.8.7_fhnnjigwjohdyme5cfootzocza
       uuid: 8.3.2
@@ -291,6 +292,7 @@ importers:
       '@types/lodash-es': 4.17.6
       '@types/uuid': 8.3.4
       '@vitejs/plugin-vue': 2.3.3_vite@2.9.9+vue@3.2.37
+      '@vue/runtime-core': 3.2.37
       sass: 1.52.2
       typescript: 4.7.3
       unplugin-vue-components: 0.19.6_7kxcjehs6akpwyxt7biogg27fm
@@ -2549,7 +2551,6 @@ packages:
     dependencies:
       '@vue/reactivity': 3.2.37
       '@vue/shared': 3.2.37
-    dev: false
 
   /@vue/runtime-dom/3.2.37:
     resolution: {integrity: sha512-HimKdh9BepShW6YozwRKAYjYQWg9mQn63RGEiSswMbW+ssIht1MILYlVGkAGGQbkhSh31PCdoUcfiu4apXJoPw==}
@@ -3204,6 +3205,7 @@ packages:
 
   /base64-js/1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
+    requiresBuild: true
     dev: false
 
   /basic-auth/2.0.1:
@@ -10397,6 +10399,7 @@ packages:
   /xmlbuilder/9.0.7:
     resolution: {integrity: sha512-7YXTQc3P2l9+0rjaUbLwMKRhtmwg1M1eDf6nag7urC7pIPYLD9W/jmzQ4ptRSUbodw5S0jfoGTflLemQibSpeQ==}
     engines: {node: '>=4.0'}
+    requiresBuild: true
     dev: false
 
   /xtend/4.0.2:

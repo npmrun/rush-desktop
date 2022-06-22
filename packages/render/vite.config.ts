@@ -77,6 +77,13 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
             Pages({
                 dirs: [{ dir: path.resolve(__dirname, "src/pages"), baseRoute: "" }],
                 exclude: ["**/_components/*.vue", "**/_ui/*.vue", "**/*copy.vue"],
+                onRoutesGenerated(routes) {
+                    routes.push({
+                        path: "",
+                        redirect: "/home"
+                    } )
+                    return routes
+                },
             }),
             Layouts({
                 layoutsDirs: path.resolve(__dirname, "src/layouts"),

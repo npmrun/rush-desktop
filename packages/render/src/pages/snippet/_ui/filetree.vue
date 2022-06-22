@@ -1,11 +1,19 @@
 <template>
-    <div>
-        <ps-tree v-bind="props">
+    <div ref="filetree">
+        <ps-tree v-bind="props" @itemDragstart="onItemDragstart">
             <template #default="data">
-                <item @click.stop="clickNode($event, data.data)" @change="() => emit('change')"
-                    :active-keys="activeKeys" :open-key="openKey" v-bind="data" :list="list"
-                    @create-one="handleCreateOne" v-model:focus-key="focusKey" :isFocus="isFocus">
-                </item>
+                <item
+                    @click.stop="clickNode($event, data.data)"
+                    @change="() => emit('change')"
+                    @contextmenu.stop="onContextMenu($event, data.data)"
+                    :active-keys="activeKeys"
+                    :open-key="openKey"
+                    v-bind="{ ...data, ...$attrs }"
+                    :list="list"
+                    @create-one="handleCreateOne"
+                    v-model:focus-key="focusKey"
+                    :isFocus="isFocus"
+                ></item>
             </template>
         </ps-tree>
     </div>
@@ -66,24 +74,28 @@ function usePropsUpdate<T extends any>(propsValue: keyof typeof props, initValue
         {
             immediate: true,
             deep: true,
-        }
+        },
     )
     watch(
         () => refValue.value,
         () => {
-            emit("update:" + propsValue as any, refValue.value as any)
+            emit(("update:" + propsValue) as any, refValue.value as any)
         },
         {
             immediate: true,
             deep: true,
-        }
+        },
     )
     return refValue
 }
 
-const activeKeys = usePropsUpdate<INiuTreeKey[]>('activeKeys', [])
-const focusKey = usePropsUpdate<INiuTreeKey | undefined>('focusKey', undefined)
-const isFocus = usePropsUpdate<boolean>('isFocus', false)
+const activeKeys = usePropsUpdate<INiuTreeKey[]>("activeKeys", [])
+const focusKey = usePropsUpdate<INiuTreeKey | undefined>("focusKey", undefined)
+const isFocus = usePropsUpdate<boolean>("isFocus", false)
+
+function onItemDragstart() {
+    isFocus.value = false
+}
 
 watch(
     () => props.openKey,
@@ -150,7 +162,7 @@ defineExpose({
 function onContextMenu(e: Event, data: INiuTreeData) {
     isFocus.value = true
     focusKey.value = data.key
-    emit('contextmenu', data)
+    emit("contextmenu", data)
 }
 function clickNode(e: Event, data: INiuTreeData) {
     e.stopPropagation()
