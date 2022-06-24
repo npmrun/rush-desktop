@@ -15,7 +15,7 @@ import Inspector from "vite-plugin-vue-inspector"
 import OptimizationPersist from "vite-plugin-optimize-persist"
 import PkgConfig from "vite-plugin-package-config"
 import monacoEditorPlugin from "vite-plugin-monaco-editor"
-// @ts-ignore
+
 import PrincessResolver from "princess-ui/PrincessResolver"
 // import setting from "@rush-desktop/share/setting.json"
 
