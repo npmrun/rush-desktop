@@ -17,6 +17,6 @@
             "@/*": ["src/*"]
         }
     },
-    "include": ["src", "components.d.ts", "auto-import.d.ts", "../common/**/*.ts", "typings"],
+    "include": ["src", "components.d.ts", "auto-import.d.ts", "../common", "typings"],
     "references": [{ "path": "./tsconfig.node.json" }]
 }

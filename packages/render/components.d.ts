@@ -6,6 +6,7 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     NiuScrollbar: typeof import('./src/componentsAuto/niu-scrollbar/niu-scrollbar.vue')['default']
+    PsCaptcha: typeof import('princess-ui')['PsCaptcha']
     PsTree: typeof import('princess-ui')['PsTree']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
