@@ -1,6 +1,7 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from "electron"
 import { callMethod, callMethodLong, callMethodSync } from "./call"
 import path from "path"
+import * as file from "./file"
 
 let preloadPath = path.join(__dirname, "preload.js")
 let iframePath = `http://localhost:${process.env.PORT}/iframe.html`
@@ -15,6 +16,7 @@ const _agent = {
     preloadPath: preloadPath,
     iframePath: iframePath,
     extraPath: extraPath,
+    file: file,
     call: callMethod,
     callLong: callMethodLong,
     callSync: callMethodSync,

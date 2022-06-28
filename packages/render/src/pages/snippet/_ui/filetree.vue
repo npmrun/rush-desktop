@@ -10,7 +10,6 @@
                     :open-key="openKey"
                     v-bind="{ ...data, ...$attrs }"
                     :list="list"
-                    @create-one="handleCreateOne"
                     v-model:focus-key="focusKey"
                     :isFocus="isFocus"
                 ></item>
@@ -31,6 +30,7 @@ import { INiuTreeData, INiuTreeKey } from "princess-ui"
 import { convert, removeByKey, findByKey } from "princess-ui"
 import { v4 } from "uuid"
 import { Ref, UnwrapRef } from "vue"
+import { Status } from "@vueuse/core"
 
 const props = withDefaults(
     defineProps<{
@@ -124,12 +124,6 @@ onClickOutside(filetree, () => {
     isFocus.value = false
     focusKey.value = undefined
 })
-
-function handleCreateOne(key: INiuTreeKey) {
-    emit("update:openKey", key)
-    isFocus.value = true
-    activeKeys.value = [key]
-}
 
 function delArray(array: INiuTreeKey[]) {
     for (let i = array.length - 1; i >= 0; i--) {
