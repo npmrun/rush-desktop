@@ -15,6 +15,7 @@ import Inspector from "vite-plugin-vue-inspector"
 import OptimizationPersist from "vite-plugin-optimize-persist"
 import PkgConfig from "vite-plugin-package-config"
 import monacoEditorPlugin from "vite-plugin-monaco-editor"
+import ViteRestart from 'vite-plugin-restart'
 
 import PrincessResolver from "princess-ui/PrincessResolver"
 // import setting from "@rush-desktop/share/setting.json"
@@ -56,6 +57,11 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
             outDir: path.resolve(__dirname, "../../dist/electron"),
         },
         plugins: [
+            ViteRestart({
+                restart: [
+                  'vite.config.[jt]s',
+                ]
+            }),
             PkgConfig(),
             OptimizationPersist(),
             vue(),
@@ -149,7 +155,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
                   setupProdMockServer();
                 `,
                 logger: true,
-            }),
+            })
         ],
     })
 }

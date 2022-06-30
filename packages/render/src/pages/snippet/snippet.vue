@@ -2,7 +2,7 @@
     <div class="h-1/1">
         <div class="w-250px h-1/1" v-loading="isLoading">
             <div class="h-1/1 py-5px bg-light-600 relative" @contextmenu="onGlobalContextmenu">
-                <filetree :list="list" @clickNode="handleClickNode" v-model:activeKeys="activeKeys"
+                <filetree :dropFn="dropFn" :list="list" @clickNode="handleClickNode" v-model:activeKeys="activeKeys"
                     v-model:openKey="openKey" v-model:focusKey="focusKey" v-model:isFocus="isFocus"
                     @contextmenu="onContextmenu" @itemDragover="onDragover" @rename="handleRename"
                     @itemDragleave="onDragleave" @itemDrop="onDrop" @create-one="handleCreateOne"></filetree>
@@ -12,7 +12,7 @@
 </template>
 <script lang="ts" setup>
 import { PopupMenu } from "@/bridge/PopupMenu";
-import { convert, convertTreeData, findByKey, INiuTreeData, INiuTreeKey, removeByKey } from "princess-ui"
+import { convert, convertTreeData, ENiuTreeStatus, findByKey, INiuTreeData, INiuTreeKey, removeByKey } from "princess-ui"
 import { v4 } from "uuid"
 import filetree from "./_ui/filetree.vue"
 
@@ -110,7 +110,16 @@ function onContextmenu(data: INiuTreeData) {
     menu.show()
 }
 // TODO 处理移动文件或文件夹回调， 处理节点在某个节点上方，内部，下方
-
+const dropFn = (status: ENiuTreeStatus, data: INiuTreeData<any>, targetData: INiuTreeData<any>): Promise<boolean> => {
+    console.log(status);
+    return new Promise((resolve) => {
+        isLoading.value = true
+        setTimeout(() => {
+            isLoading.value = false
+            resolve(true)
+        }, 2000);
+    })
+}
 function handleDelete() {
     if (!focusKey.value) return
     const data = findByKey(focusKey.value, list.value)

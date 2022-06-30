@@ -41,6 +41,7 @@ const props = withDefaults(
         isFocus?: boolean
         justOpen?: boolean
         justOpenOne?: boolean
+        dropFn?: any
     }>(),
     {
         justOpen: false,
