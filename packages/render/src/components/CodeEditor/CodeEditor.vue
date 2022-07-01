@@ -3,7 +3,8 @@
         <div class="h-1/1" ref="editorRef"></div>
         <div
             class="absolute top-1/2 left-1/2 transform  -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-10">
-            <img src="./120x120.png" alt="">
+            <img v-if="logo" :src="logo" alt="">
+            <img v-else src="./120x120.png" alt="">
         </div>
     </div>
 </template>
@@ -19,6 +20,7 @@ const props = withDefaults(
     defineProps<{
         modelValue?: string
         name?: string
+        logo?: string
     }>(),
     {
         modelValue: "",

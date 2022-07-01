@@ -1,6 +1,6 @@
 <template>
     <div ref="filetree">
-        <ps-tree v-bind="props" @itemDragstart="onItemDragstart">
+        <ps-tree v-bind="props" @expand="$attrs.onExpand as any" @itemDragstart="onItemDragstart" auto-expand>
             <template #default="data">
                 <item
                     @click.stop="clickNode($event, data.data)"
@@ -50,6 +50,7 @@ const props = withDefaults(
         justOpenOne: false,
     },
 )
+
 const emit = defineEmits<{
     (e: "update:activeKeys", keys: INiuTreeKey[]): void
     (e: "update:focusKey", key?: INiuTreeKey): void

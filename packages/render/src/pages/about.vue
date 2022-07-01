@@ -1,10 +1,10 @@
 <template>
     <div class="h-1/1">
-        <editor name="index.ts" v-model="text"></editor>
+        <CodeEditor name="index.ts" v-model="text"></CodeEditor>
     </div>
 </template>
 <script lang="ts" setup>
-import editor from '@/components/editor/editor.vue';
+import CodeEditor from '@/components/CodeEditor/CodeEditor.vue';
 const text = ref(`const a = 123`)
 
 </script>

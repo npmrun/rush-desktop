@@ -15,20 +15,39 @@ body,
     font-family: Cascadia Mono, monospace, Consolas, "Courier New", monospace;
 }
 
-.scrollbar::-webkit-scrollbar {
-    display: none;
-}
+// .scrollbar::-webkit-scrollbar {
+//     display: none;
+// }
 
-.scrollbar {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    overflow-x: hidden;
-    overflow-y: auto;
-}
+// .scrollbar {
+//     scrollbar-width: none;
+//     -ms-overflow-style: none;
+//     overflow-x: hidden;
+//     overflow-y: auto;
+// }
 
 svg {
     pointer-events: none;
     * {
         pointer-events: none;
     }
+}
+
+.scrollbar:hover::-webkit-scrollbar-thumb{
+    background: rgba(100,100,100,.3);
+}
+.scrollbar::-webkit-scrollbar-track {
+    border: none;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0);
+    transition: background linear 1s;
+    border-radius: 5px;
+}
+.scrollbar::-webkit-scrollbar-corner {
+    background: none;
+}
+.scrollbar::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
 }

@@ -57,6 +57,7 @@
                         :value="data.title"
                     />
                 </form>
+                <!-- <div class="ml-5px">运行</div> -->
                 <svg-icon
                     v-if="openKey === data.key"
                     name="code-active"
@@ -153,7 +154,7 @@ export default defineComponent({
 <script lang="ts" setup>
 // import { judgeFile } from '@common/util/file'
 import { Ref } from "vue"
-import { isChildOf, removeByKey } from "princess-ui"
+import { findByKeyParent, isChildOf, removeByKey } from "princess-ui"
 import type { INiuTreeKey, INiuTreeData, ENiuTreeStatus } from "princess-ui"
 import { trim } from "lodash"
 import { emit } from "process";
@@ -164,7 +165,7 @@ const emits = defineEmits<{
     (e: "rename", date: INiuTreeData, done: (status?: boolean) => void): void
     (e: "click", ev: any): void
     (e: "contextmenu", ev: any): void
-    (e: "createOne", key: INiuTreeKey, done: (status?: boolean) => void): void
+    (e: "createOne", data: INiuTreeData, parent: INiuTreeData | undefined, done: (status?: boolean) => void): void
     (e: "itemDragover", ev: DragEvent, active: (status: boolean) => void): void
     (e: "itemDragleave", ev: DragEvent, active: (status: boolean) => void): void
     (e: "itemDrop", ev: DragEvent, active: (status: boolean) => void): void
@@ -286,7 +287,11 @@ function onSubmit(e: Event, data: INiuTreeData) {
         removeByKey(data.key, props.list)
     } else if (value != data.title) {
         if (data.isNew) {
-            emits("createOne", data.key, (status: boolean = true)=>{
+            data.title = trim(value)
+            data.isNew = false
+            data.isEdit = false
+            const parent = findByKeyParent(data.key, props.list)
+            emits("createOne", data, parent, (status: boolean = true)=>{
                 if(status){
                     emits("change")
                 }else{
@@ -294,12 +299,11 @@ function onSubmit(e: Event, data: INiuTreeData) {
                     removeByKey(data.key, props.list)
                 }
             })
-            data.title = trim(value)
-            data.isNew = false
-            data.isEdit = false
         }else{
             if(value && data.isFolder){
                 const oldTitle = data.title
+                data.title = trim(value)
+                data.isEdit = false
                 emits("rename", data, (status: boolean = true)=>{
                     if(status){
                         emits("change")
@@ -307,8 +311,6 @@ function onSubmit(e: Event, data: INiuTreeData) {
                         data.title = oldTitle
                     }
                 })
-                data.title = trim(value)
-                data.isEdit = false
             }else if(value && data.isFile){
                 let curFile = judgeFile(value)
                 if (data.isFile && curFile) {
@@ -318,6 +320,7 @@ function onSubmit(e: Event, data: INiuTreeData) {
                         let t = value.slice(0, index)
                         if(t){
                             const oldTitle = data.title
+                            t && (data.title = trim(t)+curFile.ext)
                             emits("rename", data, (status: boolean = true)=>{
                                 if(status){
                                     emits("change")
@@ -325,13 +328,13 @@ function onSubmit(e: Event, data: INiuTreeData) {
                                     data.title = oldTitle
                                 }
                             })
-                            t && (data.title = trim(t)+curFile.ext)
                         }
                     }
                     if (curFile.pre) {
                         let t = value.slice(index + 1, value.length)
                         if(t){
                             const oldTitle = data.title
+                            t && (data.title = curFile.pre + trim(t))
                             emits("rename", data, (status: boolean = true)=>{
                                 if(status){
                                     emits("change")
@@ -339,12 +342,13 @@ function onSubmit(e: Event, data: INiuTreeData) {
                                     data.title = oldTitle
                                 }
                             })
-                            t && (data.title = curFile.pre + trim(t))
                         }
                     }
                     data.isEdit = false
                 } else {
                     const oldTitle = data.title
+                    data.title = trim(value)
+                    data.isEdit = false
                     emits("rename", data, (status: boolean = true)=>{
                         if(status){
                             emits("change")
@@ -352,9 +356,6 @@ function onSubmit(e: Event, data: INiuTreeData) {
                             data.title = oldTitle
                         }
                     })
-                    data.title = trim(value)
-                    data.isEdit = false
-                    emits("change")
                 }
             }else{
                 data.isEdit = false
