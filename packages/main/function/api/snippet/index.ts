@@ -1,16 +1,10 @@
 import { filter, filterNext, findNode } from "@rush-desktop/common/util/treeHelper"
 import { getData, saveData } from "@rush-desktop/main-tool/db"
 import { clone, cloneDeep } from "lodash"
+import { flushData, allData, storeData } from "./data"
 
-let allSnippet = [] // 真实
-let tempSnippet = [] // 临时操作
-/**
- * 刷新数据
- */
-export async function flushData() {
-    allSnippet = await getData("snippet")
-    tempSnippet = cloneDeep(allSnippet)
-}
+let tempFolder = [] // 临时操作
+
 /**
  * 包裹方法，使其自动错误重试
  * 只能包裹返回Promise的方法
@@ -52,10 +46,10 @@ const storageData = autoRetry(_storageData, 3)
  * 保存数据到本地
  * @param data 需要存储的数据
  */
-async function _storageData(data) {
-    allSnippet = data
-    tempSnippet = data
-    await saveData("snippet", data)
+async function _storageData(tempFolder) {
+    const data = cloneDeep(allData)
+    data.allFolder = tempFolder
+    await storeData(data)
 }
 export { storageData }
 /**
@@ -63,13 +57,14 @@ export { storageData }
  */
 export async function readData() {
     await flushData()
-    return allSnippet
+    tempFolder = cloneDeep(allData.allFolder)
+    return allData.allFolder || []
 }
 export async function add(data, parentKey) {
     try {
         if (parentKey) {
             const node = findNode(
-                tempSnippet,
+                tempFolder,
                 node => {
                     if (node.key === parentKey) {
                         return true
@@ -82,12 +77,12 @@ export async function add(data, parentKey) {
             )
             node.children.push(data)
         } else {
-            tempSnippet.push(data)
+            tempFolder.push(data)
         }
-        await storageData(tempSnippet)
-        allSnippet = cloneDeep(tempSnippet)
+        await storageData(tempFolder)
+        allData.allFolder = cloneDeep(tempFolder)
     } catch (error) {
-        tempSnippet = cloneDeep(allSnippet)
+        tempFolder = cloneDeep(allData.allFolder)
         throw error
     }
 }
@@ -95,10 +90,10 @@ export async function expand(key, isExpand) {
     try {
         const node = findByKey(key)
         node.isExpand = isExpand
-        await storageData(tempSnippet)
-        allSnippet = cloneDeep(tempSnippet)
+        await storageData(tempFolder)
+        allData.allFolder = cloneDeep(tempFolder)
     } catch (error) {
-        tempSnippet = cloneDeep(allSnippet)
+        tempFolder = cloneDeep(allData.allFolder)
         throw error
     }
 }
@@ -110,7 +105,7 @@ export async function expand(key, isExpand) {
 export async function rename(key, newName: string) {
     try {
         const data = findNode(
-            tempSnippet,
+            tempFolder,
             node => {
                 if (node.key === key) {
                     return true
@@ -123,10 +118,10 @@ export async function rename(key, newName: string) {
         )
         data.title = newName
         // 找到节点，修改名称
-        await storageData(tempSnippet)
-        allSnippet = cloneDeep(tempSnippet)
+        await storageData(tempFolder)
+        allData.allFolder = cloneDeep(tempFolder)
     } catch (error) {
-        tempSnippet = cloneDeep(allSnippet)
+        tempFolder = cloneDeep(allData.allFolder)
         throw error
     }
 }
@@ -134,8 +129,8 @@ export async function rename(key, newName: string) {
 // 删除节点回调
 export async function del(key) {
     try {
-        tempSnippet = filterNext(
-            tempSnippet,
+        tempFolder = filterNext(
+            tempFolder,
             node => {
                 if (node.key === key) {
                     return false
@@ -147,16 +142,16 @@ export async function del(key) {
             },
         )
         // 找到节点，修改名称
-        await storageData(tempSnippet)
-        allSnippet = cloneDeep(tempSnippet)
+        await storageData(tempFolder)
+        allData.allFolder = cloneDeep(tempFolder)
     } catch (error) {
-        tempSnippet = cloneDeep(allSnippet)
+        tempFolder = cloneDeep(allData.allFolder)
         throw error
     }
 }
 function findByKey(key) {
     return findNode(
-        tempSnippet,
+        tempFolder,
         node => {
             if (node.key === key) {
                 return true
@@ -169,8 +164,8 @@ function findByKey(key) {
     )
 }
 function removeByKey(key) {
-    tempSnippet = filterNext(
-        tempSnippet,
+    tempFolder = filterNext(
+        tempFolder,
         node => {
             if (node.key === key) {
                 return false
@@ -188,7 +183,7 @@ export async function move(type, key, targetKey) {
         if (type == "drag-up") {
             const sourceData = findByKey(key)
             removeByKey(key)
-            insertBeforeByKey(targetKey, sourceData, tempSnippet)
+            insertBeforeByKey(targetKey, sourceData, tempFolder)
         }
         if (type == "drag-in") {
             const sourceData = findByKey(key)
@@ -200,12 +195,12 @@ export async function move(type, key, targetKey) {
         if (type == "drag-down") {
             const sourceData = findByKey(key)
             removeByKey(key)
-            insertAfterByKey(targetKey, sourceData, tempSnippet)
+            insertAfterByKey(targetKey, sourceData, tempFolder)
         }
-        await storageData(tempSnippet)
-        allSnippet = cloneDeep(tempSnippet)
+        await storageData(tempFolder)
+        allData.allFolder = cloneDeep(tempFolder)
     } catch (error) {
-        tempSnippet = cloneDeep(allSnippet)
+        tempFolder = cloneDeep(allData.allFolder)
         throw error
     }
 }
