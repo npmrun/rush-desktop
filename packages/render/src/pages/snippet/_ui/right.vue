@@ -1,0 +1,208 @@
+<template>
+    <div v-if="currentNote" class="h-1/1 w-1/1 flex flex-col">
+        <div class="mt-8px mx-5px flex">
+            <div class="group flex-1 w-0 border rounded-6px px-10px bg-white flex items-center">
+                <input
+                    v-model="currentNote.title"
+                    placeholder="请输入片段标题"
+                    class="w-1/1 h-30px leading-30px outline-0"
+                    type="text"
+                />
+            </div>
+            <div class="border flex items-center ml-8px rounded-10px">
+                <button class="h-1/1 px-15px flex items-center" @click="createFile">新增文件</button>
+            </div>
+        </div>
+        <div class="my-8px mx-5px">
+            <textarea
+                class="border w-1/1 max-h-80px min-h-80px outline-0 p-6px rounded-6px"
+                resize="none"
+                v-model="currentNote.desc"
+                placeholder="请输入描述"
+                cols="30"
+                rows="10"
+            ></textarea>
+            <!-- <n-input v-model:value="currentNote.desc"  type="textarea" placeholder="请输入描述"></n-input> -->
+        </div>
+        <!-- <div class="my-8px mx-5px">
+            <n-dynamic-tags v-model:value="currentNote.label" />
+        </div> -->
+        <div class="my-8px flex border-b border-t app-code">
+            <div
+                class="group flex-1 pl-8px py-3px border-l border-r cursor-pointer flex max-w-200px"
+                v-for="(item, index) in currentNote.files"
+                :key="index"
+                @click="clickFile(item, index)"
+                @contextmenu="contextmenuFile(item, index)"
+                :style="{
+                    backgroundColor: currentNote?.activeFileIndex === index ? '' : '#ebebeb87',
+                }"
+            >
+                <div class="flex-1 w-0 flex items-center">
+                    <div class="flex-1 w-0" v-if="editTitleIndex !== index">{{ item.title }}</div>
+                    <form action="#" class="flex-1 w-0" @submit.prevent="editTitleIndex = -1">
+                        <input
+                            class="w-1/1"
+                            @blur.prevent="editTitleIndex = -1"
+                            v-focus="item"
+                            v-if="editTitleIndex === index"
+                            type="text"
+                            :value="item.title"
+                            :placeholder="item.title"
+                        />
+                    </form>
+                </div>
+                <div
+                    v-if="editTitleIndex == -1"
+                    class="ml-15px h-14px w-14px inline text-size-12px group-hover:inline hidden"
+                    @click="onCopy"
+                >
+                    <svg-icon name="copy" class="h-1/1 w-1/1"></svg-icon>
+                </div>
+                <div class="h-1/1 w-25px px-10px">
+                    <div class="hidden group-hover:block h-1/1 w-1/1" @click.stop="removeFile(item, index)">x</div>
+                </div>
+            </div>
+        </div>
+        <div class="flex-1 h-0 app-code">
+            <!-- curLanugage != 'markdown' && -->
+            <editor
+                :key="currentNote.key"
+                v-if="currentNote && currentNote.activeFileIndex > -1 && currentNote.files[currentNote.activeFileIndex]"
+                :name="currentNote.files[currentNote.activeFileIndex].title"
+                v-model="currentNote.files[currentNote.activeFileIndex].content"
+            ></editor>
+            <!-- <MyEditor
+                class="h-1/1"
+                v-if="curLanugage == 'markdown'"
+                v-model="currentNote.files[currentNote.activeFileIndex].content"
+            /> -->
+        </div>
+        <div class="py-10px border-t flex items-center px-10px border-l">
+            <div class="flex-1 w-0 app-code text-20px">{{ curLanugage }}</div>
+        </div>
+    </div>
+</template>
+<script lang="ts" setup>
+import { PopupMenu } from "@/bridge/PopupMenu"
+import { judgeFile } from "@/components/CodeEditor/util"
+import { ISnip, ISnipCode } from "../type"
+import Editor from "@/components/CodeEditor/CodeEditor.vue"
+import { cloneDeep } from "lodash"
+
+const props = defineProps<{
+    currentNote?: ISnip
+}>()
+const emits = defineEmits<{
+    (ev: "save", data: ISnip): void
+}>()
+const currentNote = ref<ISnip>()
+
+watch(
+    () => props.currentNote,
+    () => {
+        if (!currentNote.value) {
+            currentNote.value = cloneDeep(props.currentNote)
+        }
+        if (currentNote.value?.key !== props.currentNote?.key) {
+            currentNote.value = cloneDeep(props.currentNote)
+        }
+    },
+    { immediate: true, deep: true },
+)
+watch(
+    () => currentNote.value,
+    () => {
+        if (currentNote.value) {
+            emits("save", toRaw(currentNote.value))
+        }
+    },
+    { deep: true },
+)
+
+const editTitleIndex = ref(-1)
+
+async function onCopy() {
+    if (currentNote.value && currentNote.value.activeFileIndex > -1) {
+        const data = currentNote.value.files[currentNote.value.activeFileIndex]
+        await _agent.call("func.copyText", data.content)
+    }
+}
+
+const curLanugage = computed(() => {
+    if (!currentNote.value) return
+    if (!currentNote.value.files[currentNote.value.activeFileIndex]) return ""
+    let title = currentNote.value.files[currentNote.value.activeFileIndex].title
+    const file = judgeFile(title)
+    return file?.language ?? "txt"
+})
+
+function createFile() {
+    if (!currentNote.value) return
+    if (currentNote.value) {
+        currentNote.value.activeFileIndex = currentNote.value.files.length
+        currentNote.value.files.push({
+            title: "文件" + (currentNote.value.files.length + 1),
+            content: "",
+        })
+    }
+}
+function clickFile(item: ISnipCode, index: number) {
+    if (!currentNote.value) return
+    currentNote.value.activeFileIndex = index
+}
+function removeFile(item: ISnipCode, index: number) {
+    if (!currentNote.value) return
+    currentNote.value.files.splice(index, 1)
+    if (index - 1 >= 0 && !currentNote.value.files[index]) {
+        currentNote.value.activeFileIndex = index - 1
+    }
+}
+const vFocus = {
+    beforeUnmount(el: HTMLInputElement, binding: any) {
+        let data = binding.value
+        data.title = el.value
+    },
+    mounted(el: HTMLInputElement, binding: any) {
+        let data = binding.value
+        let curFile = judgeFile(data.title)
+        if (curFile) {
+            let index = curFile.index
+            if (curFile.ext && index != undefined) {
+                el.setSelectionRange(0, index)
+            }
+            if (curFile.pre && index != undefined) {
+                el.setSelectionRange(index + 1, data.title.length)
+            }
+        } else {
+            el.select()
+        }
+        el.focus()
+    },
+}
+
+function contextmenuFile(item: ISnipCode, index: number) {
+    let menusArray: IMenuItemOption[] = []
+    menusArray.push({
+        label: "重命名",
+        click() {
+            editTitleIndex.value = index // 设置编辑标题的索引
+        },
+    })
+    menusArray.push({
+        label: "删除",
+        click() {
+            removeFile(item, index)
+        },
+    })
+    const menus = new PopupMenu(menusArray)
+    menus.show()
+}
+</script>
+<script lang="ts">
+export default defineComponent({
+    name: "",
+})
+</script>
+
+<style lang="less" scoped></style>

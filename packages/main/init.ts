@@ -1,11 +1,15 @@
 import { init, watch } from "@/modules"
 import Store from "electron-store"
-import { app, dialog } from "electron"
+import { app, dialog, crashReporter } from "electron"
 import fs from "fs-extra"
 import path from "path"
 import { readConfig, walkConfig } from "./config/util"
 import Shared from "@/share"
 import processManager from "@rush-desktop/main-tool/process"
+
+crashReporter.start({
+    uploadToServer: false
+});
 
 // sotre
 Store.initRenderer()

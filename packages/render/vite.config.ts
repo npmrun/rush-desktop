@@ -57,7 +57,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
             outDir: path.resolve(__dirname, "../../dist/electron"),
         },
         plugins: [
-            ViteRestart({
+            isDev && ViteRestart({
                 restart: [
                   'vite.config.[jt]s',
                 ]
@@ -86,7 +86,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
                 onRoutesGenerated(routes) {
                     routes.push({
                         path: "",
-                        redirect: "/home"
+                        redirect: "/snippet/snippet"
                     } )
                     return routes
                 },

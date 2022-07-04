@@ -166,9 +166,9 @@ const emits = defineEmits<{
     (e: "click", ev: any): void
     (e: "contextmenu", ev: any): void
     (e: "createOne", data: INiuTreeData, parent: INiuTreeData | undefined, done: (status?: boolean) => void): void
-    (e: "itemDragover", ev: DragEvent, active: (status: boolean) => void): void
-    (e: "itemDragleave", ev: DragEvent, active: (status: boolean) => void): void
-    (e: "itemDrop", ev: DragEvent, active: (status: boolean) => void): void
+    (e: "itemDragover", ev: DragEvent, active: (status: boolean) => void, data: INiuTreeData): void
+    (e: "itemDragleave", ev: DragEvent, active: (status: boolean) => void, data: INiuTreeData): void
+    (e: "itemDrop", ev: DragEvent, active: (status: boolean) => void, data: INiuTreeData): void
 }>()
 
 const isDragging = ref(false)
@@ -176,19 +176,19 @@ function onDragover(ev: DragEvent) {
     if(props.dataSourceKey) return
     emits("itemDragover", ev, (status: boolean) => {
         isDragging.value = status
-    })
+    }, props.data)
 }
 function onDragleave(ev: DragEvent) {
     if(props.dataSourceKey) return
     emits("itemDragleave", ev, (status: boolean) => {
         isDragging.value = status
-    })
+    }, props.data)
 }
 function onDrop(ev: DragEvent) {
     if(props.dataSourceKey) return
     emits("itemDrop", ev, (status: boolean) => {
         isDragging.value = status
-    })
+    }, props.data)
 }
 
 function onExpand(data: INiuTreeData) {
@@ -361,7 +361,7 @@ function onSubmit(e: Event, data: INiuTreeData) {
                 data.isEdit = false
             }
         }
-            
+
     } else {
         data.isEdit = false
     }

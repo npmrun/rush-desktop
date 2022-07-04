@@ -2,6 +2,7 @@ import { filter, filterNext, findNode } from "@rush-desktop/common/util/treeHelp
 import { getData, saveData } from "@rush-desktop/main-tool/db"
 import { clone, cloneDeep } from "lodash"
 import { flushData, allData, storeData } from "./data"
+import { setValue, tempSnippet } from "./snip"
 
 let tempFolder = [] // 临时操作
 
@@ -14,9 +15,14 @@ let tempFolder = [] // 临时操作
  * @param retryMax
  * @returns {funcR}
  */
-function autoRetry(func, retryMax) {
+export function autoRetry(func, retryMax) {
     let retryNum = 0
-    let funcName = func.toString().match(/function (\w+)\(/)[1]
+    let funcName =  'anonymous'
+    try {
+        funcName = func.name || func.toString().match(/function (\w+)\(/)[1]
+    } catch (error) {
+        console.error(error)
+    }
     return function funcR(...params: any[]) {
         return new Promise((resolve, reject) => {
             func(...params)
@@ -42,13 +48,15 @@ function autoRetry(func, retryMax) {
 }
 
 const storageData = autoRetry(_storageData, 3)
+
 /**
  * 保存数据到本地
  * @param data 需要存储的数据
  */
-async function _storageData(tempFolder) {
+async function _storageData(tempFolder, tempSnippet) {
     const data = cloneDeep(allData)
-    data.allFolder = tempFolder
+    tempFolder && (data.allFolder = tempFolder)
+    tempSnippet && (data.allSnippet = tempSnippet)
     await storeData(data)
 }
 export { storageData }
@@ -125,7 +133,31 @@ export async function rename(key, newName: string) {
         throw error
     }
 }
-
+export async function dels(keys: string[]) {
+    try {
+        tempFolder = filterNext(
+            tempFolder,
+            node => {
+                if (keys.includes(node.key)) {
+                    return false
+                }
+                return true
+            },
+            {
+                id: "key",
+            },
+        )
+        let list = setValue(tempSnippet.filter(v => !keys.includes(v.from)))
+        // 找到节点，修改名称
+        await storageData(tempFolder, list)
+        allData.allFolder = cloneDeep(tempFolder)
+        allData.allSnippet = cloneDeep(tempSnippet)
+    } catch (error) {
+        tempFolder = cloneDeep(allData.allFolder)
+        setValue(cloneDeep(allData.allSnippet))
+        throw error
+    }
+}
 // 删除节点回调
 export async function del(key) {
     try {
@@ -141,11 +173,14 @@ export async function del(key) {
                 id: "key",
             },
         )
+        let list = setValue(tempSnippet.filter(v => v.from !== key))
         // 找到节点，修改名称
-        await storageData(tempFolder)
+        await storageData(tempFolder, list)
         allData.allFolder = cloneDeep(tempFolder)
+        allData.allSnippet = cloneDeep(tempSnippet)
     } catch (error) {
         tempFolder = cloneDeep(allData.allFolder)
+        setValue(cloneDeep(allData.allSnippet))
         throw error
     }
 }

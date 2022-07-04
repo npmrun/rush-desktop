@@ -1,9 +1,9 @@
 <template>
     <div class="h-1/1 flex flex-col">
         <div class="layout">
-            <div class="left" v-if="route.meta.activebar === undefined || route.meta.activebar">
+            <!-- <div class="left" v-if="route.meta.activebar === undefined || route.meta.activebar">
                 <actions-bar></actions-bar>
-            </div>
+            </div> -->
             <div class="right">
                 <router-view v-slot="{ Component, route: route }">
                     <transition :name="getTransitionName(route)" mode="out-in" appear>
@@ -16,12 +16,12 @@
             <!-- <float-button>首页{{$t("title")}}</float-button> -->
 
         </div>
-        <div class="bottom">
+        <!-- <div class="bottom">
             <div class="bottom-item">{{ route.fullPath }}
             </div>
             <div class="bottom-item right" title="english">en
             </div>
-        </div>
+        </div> -->
     </div>
 </template>
 

@@ -41,6 +41,7 @@ svg {
 }
 .scrollbar::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0);
+
     transition: background linear 1s;
     border-radius: 5px;
 }
@@ -50,4 +51,8 @@ svg {
 .scrollbar::-webkit-scrollbar {
     width: 7px;
     height: 7px;
+    display: none;
+}
+.scrollbar:hover::-webkit-scrollbar {
+    display: block;
 }
