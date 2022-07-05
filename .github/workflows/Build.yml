@@ -14,25 +14,44 @@ jobs:
     # 步骤
     steps:
     # 使用预制action：拉取最新的代码
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+      with:
+          ref: feat
+    - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.5.0
     # https://pnpm.io/zh/continuous-integration/#github-actions
     - uses: pnpm/action-setup@v2.2.2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7.1.0
+          run_install: false
+
+    - name: Get pnpm store directory
+      id: pnpm-cache
+      run: |
+        echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+
+    - uses: actions/cache@v3
+      name: Setup pnpm cache
       with:
-        version: 7
-    # - name: Use Node.js ${{ matrix.node-version }}
-    #   uses: actions/setup-node@v2
-    #   with:
-    #     node-version: ${{ matrix.node-version }}
-    #     cache: 'pnpm'
+        path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-
+
+    - name: Install dependencies
+      run: pnpm install
     # 步骤一的名称：
-    - name: Install and Build
-      # 该步骤运行的终端命令，进入仓库的src目录，安装依赖，运行编译命令
-      run:
-        pnpm install && npm run build
+    - name: Build
+      # 该步骤运行的终端命令，运行编译命令
+      run: npm run build
     # 步骤二的名称：将编译后的结果上传
     - name: Upload File
       # 使用预制action：上传文件，可以将执行路径打包成zip上传
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         # 上传后文件的名称
         name: windows
