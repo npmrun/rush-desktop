@@ -12,21 +12,21 @@ const initTop = [
     //     title: "编辑器",
     //     path: "/note/note",
     // },
-    {
-        icon: "files",
-        title: "代码片段",
-        path: "/home",
-    },
-    {
-        icon: "source",
-        title: "ICON",
-        path: "/tool/icon",
-    },
-    {
-        icon: "files",
-        title: "代码片段",
-        path: "/about",
-    },
+    // {
+    //     icon: "files",
+    //     title: "代码片段",
+    //     path: "/home",
+    // },
+    // {
+    //     icon: "source",
+    //     title: "ICON",
+    //     path: "/tool/icon",
+    // },
+    // {
+    //     icon: "files",
+    //     title: "代码片段",
+    //     path: "/about",
+    // },
     {
         icon: "code",
         title: "笔记本",

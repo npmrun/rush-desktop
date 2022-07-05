@@ -1,23 +1,58 @@
 <template>
     <div class="h-1/1 flex flex-col">
         <Tabs :tabs="tabs" v-model="active"></Tabs>
-        <div class="flex-1 h-0 content">
-            {{activeBg}}
-            <input type="text" v-model="state.backup_rule.value">
+        <div class="flex-1 h-0 mx-auto w-650px mt-15px text-size-18px leading-35px">
+            <form action="£" @submit="onSubmit">
+                <div class="flex items-center justify-center">
+                    <input class="block flex-1 w-0 border leading-35px rounded-5px px-5px" :value="configStore.storagePath" @click="click" readonly @keydown.enter.prevent />
+                    <button class="ml-10px" @click="chooseLoc">选择地址</button>
+                </div>
+                <div :style="{ color: configStore.isSame ? '' : 'red' }" class="float-right mt-15px">
+                    <button class="border rounded-5px px-15px text-size-16px py-8px" @click="save" type="submit">保存</button>
+                </div>
+            </form>
         </div>
     </div>
 </template>
 <script lang="ts" setup>
 import ConfigStore from "@/store/module/config"
-import { storeToRefs } from 'pinia'
+import Toastify from "toastify-js";
+
+function click() {
+    Toastify({
+        text: "请选择路径",
+        style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+        }
+    }).showToast();
+}
 
 const configStore = ConfigStore()
-const state = storeToRefs(configStore)
-console.log(state)
+function onSubmit(e: Event) {
+    e.preventDefault()
+    return false
+}
+async function chooseLoc() {
+    try {
+        const newPath = await _agent.callLong("dialog.chooseDir", configStore.storagePath)
+        console.log(newPath)
+        configStore.setStorePath(newPath)
+    } catch (error) {
+        console.log(error)
+    }
+}
 
-const text = ref(`const a = 123`)
+async function save() {
+    try {
+        await configStore.saveConfig()
+        console.log("保存成功")
+    } catch (e) {
+        console.log(e)
+    }
+}
+
 const active = ref(0)
-const activeBg = computed(()=>{
+const activeBg = computed(() => {
     return tabs[active.value].bg
 })
 const tabs = shallowReactive([
@@ -25,31 +60,14 @@ const tabs = shallowReactive([
         key: 0,
         color: "white",
         bg: "#d1ba74",
-        label: "通用选项1"
-    },
-    {
-        key: 1,
-        color: "white",
-        bg: "#f4606c",
-        label: "通用"
-    },
-    {
-        key: 2,
-        color: "white",
-        bg: "#19caad",
-        label: "外观"
+        label: "通用选项",
     },
 ])
 </script>
 <script lang="ts">
 export default defineComponent({
-    name: ""
+    name: "",
 })
 </script>
 
-<style lang="less" scoped>
-.content{
-    // transition: background .3s ease-in-out;
-    // background-color: v-bind(activeBg);
-}   
-</style>
+<style lang="less" scoped></style>

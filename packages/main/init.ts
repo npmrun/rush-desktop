@@ -6,13 +6,13 @@ import path from "path"
 import { readConfig, walkConfig } from "./config/util"
 import Shared from "@/share"
 import processManager from "@rush-desktop/main-tool/process"
-import updateElectronApp from "update-electron-app"
+// import updateElectronApp from "update-electron-app"
 
-updateElectronApp({
-    repo: 'npmrun/rush-desktop',
-    updateInterval: '1 hour',
-    // logger: require('electron-log')
-})
+// updateElectronApp({
+//     repo: 'npmrun/rush-desktop',
+//     updateInterval: '1 hour',
+//     // logger: require('electron-log')
+// })
 
 crashReporter.start({
     uploadToServer: false
