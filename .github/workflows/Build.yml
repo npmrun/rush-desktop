@@ -1,3 +1,4 @@
+# https://cloud.tencent.com/developer/article/1949574
 # 此工作流的名字
 name: Build 
 # 工作流的执行时机，可以设定为定时执行，每次push后执行，手动执行等
@@ -14,14 +15,15 @@ jobs:
     steps:
     # 使用预制action：拉取最新的代码
     - uses: actions/checkout@v2
+    # https://pnpm.io/zh/continuous-integration/#github-actions
     - uses: pnpm/action-setup@v2.2.2
       with:
         version: 7
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'pnpm'
+    # - name: Use Node.js ${{ matrix.node-version }}
+    #   uses: actions/setup-node@v2
+    #   with:
+    #     node-version: ${{ matrix.node-version }}
+    #     cache: 'pnpm'
     # 步骤一的名称：
     - name: Install and Build
       # 该步骤运行的终端命令，进入仓库的src目录，安装依赖，运行编译命令
