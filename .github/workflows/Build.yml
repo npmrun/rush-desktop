@@ -9,8 +9,8 @@ on:
 jobs:
   # 工作的名称“编译windows版”
   buildwin:
-    # 运行的操作系统 windows server 2017
-    runs-on: windows-2017
+    # 运行的操作系统 windows server 2022
+    runs-on: windows-2022
     # 步骤
     steps:
       # 使用预制action：拉取最新的代码
@@ -21,6 +21,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.5.0
+      - name: Use Python 3.8
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.8
+        env:
+          PYTHON_VERSION: 3.8
+      - name: Set Windows environment
+        run: |
+          echo 'GYP_MSVS_VERSION=2017' >> $Env:GITHUB_ENV
+          echo 'GYP_MSVS_OVERRIDE_PATH=C:\\Dummy' >> $Env:GITHUB_ENV
       # https://pnpm.io/zh/continuous-integration/#github-actions
       - uses: pnpm/action-setup@v2.2.2
         name: Install pnpm
