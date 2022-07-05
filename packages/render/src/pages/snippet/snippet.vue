@@ -34,6 +34,7 @@
     </div>
 </template>
 <script lang="ts" setup>
+import Toastify from 'toastify-js' 
 import { PopupMenu } from "@/bridge/PopupMenu"
 import { INiuTreeData, INiuTreeKey } from "princess-ui"
 import { v4 } from "uuid"
@@ -43,6 +44,15 @@ import Right from "./_ui/right.vue"
 
 const LeftEl = ref()
 const RightEl = ref()
+
+function toast(text: string) {
+    Toastify({
+        text: text,
+        style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+        }
+    }).showToast();
+}
 
 const curSnip = ref<string>()
 const curSnipData = computed(() => {
@@ -58,6 +68,7 @@ const localData = localStorage.getItem("fuckSnip")
 if (localData) {
     curSnip.value = localData
 }
+
 watch(
     () => curSnip.value,
     () => {
@@ -90,6 +101,7 @@ function handleContextMenu(item: ISnip) {
             async click() {
                 await _agent.call("api.snippet.snip.del", item.key)
                 snippetList.value = snippetList.value.filter(v => v.key !== item.key)
+                toast("删除片段成功")
             },
         },
     ]
@@ -108,6 +120,7 @@ function onDel(keys: INiuTreeKey[], state: any) {
     } else {
         snippetList.value = snippetList.value.filter(v => !keys.includes(v.from))
     }
+    toast("笔记本已清空并删除")
 }
 
 async function onRename(key: INiuTreeKey, title: string, state: any) {
@@ -147,6 +160,7 @@ async function onClearSnip(key: INiuTreeKey, data: INiuTreeData, state: any) {
     if (key === state.openKey) {
         snippetList.value = []
     }
+    toast("笔记本已清空")
 }
 async function onCreateSnip(key: INiuTreeKey, data: INiuTreeData, state: any) {
     const snip: ISnip = {

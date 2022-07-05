@@ -8,6 +8,7 @@ declare module '@vue/runtime-core' {
     NiuAdjustWidth: typeof import('./src/componentsAuto/niu-adjust-width/niu-adjust-width.vue')['default']
     NiuScrollbar: typeof import('./src/componentsAuto/niu-scrollbar/niu-scrollbar.vue')['default']
     PsCaptcha: typeof import('princess-ui')['PsCaptcha']
+    PsTree: typeof import('princess-ui')['PsTree']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SvgIcon: typeof import('./src/componentsAuto/SvgIcon/SvgIcon.vue')['default']

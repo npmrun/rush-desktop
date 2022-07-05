@@ -160,38 +160,44 @@ function onContextmenu(data: INiuTreeData) {
         {
             label: "删除",
             async click() {
-                if (state.activeKeys?.includes(data.key)) {
-                    try {
-                        isLoading.value = true
-                        let r: INiuTreeKey[] = []
-                        for (let i = 0; i < state.activeKeys.length; i++) {
-                            const key = state.activeKeys[i]
-                            r = r.concat(...readKeys(key))
-                        }
-                        await _agent.call("api.snippet.dels", r)
-                        for (let i = 0; i < r.length; i++) {
-                            const key = r[i]
-                            const data = findByKey(key, list.value)
-                            if (data) {
-                                data.isDel = true
-                                removeByKey(data.key, list.value)
+                const res = await _agent.call("dialog.confrim", {title: "是否删除？", message: "将删除其所有碎片"})
+                if(res==1){
+                    if (state.activeKeys?.includes(data.key)) {
+                        try {
+                            isLoading.value = true
+                            let r: INiuTreeKey[] = []
+                            for (let i = 0; i < state.activeKeys.length; i++) {
+                                const key = state.activeKeys[i]
+                                r = r.concat(...readKeys(key))
                             }
+                            await _agent.call("api.snippet.dels", r)
+                            for (let i = 0; i < r.length; i++) {
+                                const key = r[i]
+                                const data = findByKey(key, list.value)
+                                if (data) {
+                                    data.isDel = true
+                                    removeByKey(data.key, list.value)
+                                }
+                            }
+                            emits("del", state.activeKeys, state)
+                            isLoading.value = false
+                        } catch (error) {
+                            console.error(error)
+                            isLoading.value = false
                         }
-                        emits("del", state.activeKeys, state)
-                        isLoading.value = false
-                    } catch (error) {
-                        console.error(error)
-                        isLoading.value = false
+                    } else {
+                        handleDelete(data)
                     }
-                } else {
-                    handleDelete(data)
                 }
             },
         },
         {
             label: "清空所有片段",
-            click() {
-                emits("clearSnip", data.key, data, state)
+            async click() {
+                const res = await _agent.call("dialog.confrim", {title: "是否清空？", message: "将清空其所有碎片"})
+                if(res==1){
+                    emits("clearSnip", data.key, data, state)
+                }
             },
         },
     ]
