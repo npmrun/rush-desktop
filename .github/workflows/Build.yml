@@ -51,7 +51,8 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
-
+      - name: Install windows-build-tools
+        run: npm install --global --production windows-build-tools --vs2017
       - name: Install dependencies
         run: pnpm install
       # 步骤一的名称：
