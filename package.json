@@ -32,11 +32,11 @@
         "compressing": "^1.5.1",
         "cross-spawn": "^7.0.3",
         "electron-store": "^8.0.1",
+        "electron-updater": "^5.0.5",
         "fs-extra": "^10.0.0",
         "live-server": "^1.2.2",
         "lodash": "^4.17.21",
         "mitt": "^3.0.0",
-        "node-schedule": "^2.1.0",
-        "update-electron-app": "^2.0.1"
+        "node-schedule": "^2.1.0"
     }
 }

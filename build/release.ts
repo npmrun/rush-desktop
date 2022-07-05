@@ -52,6 +52,12 @@ builder.build({
             cache: path.join(homedir(), ".electron"),
             mirror: "https://npm.taobao.org/mirrors/electron/",
         },
+        publish: [
+            {
+                provider: "generic",
+                url: "http://update.xieyaxin.top/electron/",//隐藏版本服务器地址
+            }
+        ],
         // mac: {
         //     type: "distribution",
         //     category: "public.app-category.productivity",

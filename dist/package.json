@@ -17,6 +17,6 @@
         "lodash": "^4.17.21",
         "fs-extra": "^10.0.0",
         "node-schedule": "^2.1.0",
-        "update-electron-app": "^2.0.1"
+        "electron-updater": "^5.0.5"
     }
 }
