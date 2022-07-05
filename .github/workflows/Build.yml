@@ -9,8 +9,8 @@ on:
 jobs:
   # 工作的名称“编译windows版”
   buildwin:
-    # 运行的操作系统 windows server 2022
-    runs-on: windows-2022
+    # 运行的操作系统 windows server 2017
+    runs-on: windows-2017
     # 步骤
     steps:
       # 使用预制action：拉取最新的代码
