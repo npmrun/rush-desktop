@@ -16,7 +16,7 @@ jobs:
       # 使用预制action：拉取最新的代码
       - uses: actions/checkout@v3
         with:
-            ref: feat
+          ref: feat
       - name: Install Node.js
           uses: actions/setup-node@v3
           with:
