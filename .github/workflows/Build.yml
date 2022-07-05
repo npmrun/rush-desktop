@@ -18,16 +18,16 @@ jobs:
         with:
           ref: feat
       - name: Install Node.js
-          uses: actions/setup-node@v3
-          with:
-            node-version: 16.5.0
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.5.0
       # https://pnpm.io/zh/continuous-integration/#github-actions
       - uses: pnpm/action-setup@v2.2.2
-          name: Install pnpm
-          id: pnpm-install
-          with:
-            version: 7.1.0
-            run_install: false
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 7.1.0
+          run_install: false
 
       - name: Get pnpm store directory
         id: pnpm-cache
