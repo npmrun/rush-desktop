@@ -2,7 +2,7 @@ import path from 'path'
 import { app } from 'electron'
 import fs from 'fs-extra'
 import Shared from '@/share'
-import setting from "@rush-desktop/share/setting.json"
+import setting from "@rush-desktop/share/setting"
 
 // 判断是否是空文件夹
 function isEmptyDir(fPath: string) {

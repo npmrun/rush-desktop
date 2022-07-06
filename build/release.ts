@@ -1,5 +1,5 @@
 import * as builder from "electron-builder"
-import setting from "@rush-desktop/share/setting.json"
+import setting from "@rush-desktop/share/setting"
 import { rootPath } from "@rush-desktop/share"
 import path from "path"
 import fs from "fs-extra"
