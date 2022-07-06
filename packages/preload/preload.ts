@@ -13,6 +13,11 @@ if (__dirname.split(path.sep).indexOf("app.asar") >= 0) {
 }
 
 const _agent = {
+    info: {
+        chrome: process.versions["chrome"],
+        node: process.versions["node"],
+        electron: process.versions["electron"],
+    },
     preloadPath: preloadPath,
     iframePath: iframePath,
     extraPath: extraPath,

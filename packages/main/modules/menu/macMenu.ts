@@ -1,8 +1,9 @@
 import * as MenuFunc from "./func"
+import setting from "@rush-desktop/share/setting.json"
 
 MenuFunc.setMenuListData([
     {
-        label: "gofast",
+        label: setting.app_title,
         submenu: [
             {
                 label: "关于",

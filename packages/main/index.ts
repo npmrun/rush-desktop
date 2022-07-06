@@ -6,6 +6,7 @@ import Shared from "@/share"
 import { showMainWindow } from "@/function/window/main"
 import { setupTray } from "@/function/window/tray"
 import { parseCommand } from "./util"
+import updater from "@rush-desktop/main-tool/updater"
 /**
  * 超级命令,用字符串直接调用方法
  */
@@ -42,6 +43,7 @@ function createWindow() {
     // Shared.data.lastChoice = 1
     // setupTray()
     showMainWindow()
+    updater(Shared.data.mainWindow)
 }
 
 const gotTheLock = app.requestSingleInstanceLock()

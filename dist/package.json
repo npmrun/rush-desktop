@@ -1,6 +1,5 @@
 {
-    "name": "gofast",
-    "version": "0.0.1",
+    "name": "rush-desktop",
     "description": "it is a good story!",
     "main": "./electron/entry.js",
     "scripts": {},
@@ -18,5 +17,6 @@
         "fs-extra": "^10.0.0",
         "node-schedule": "^2.1.0",
         "electron-updater": "^5.0.5"
-    }
+    },
+    "version": "0.0.3"
 }

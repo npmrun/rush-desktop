@@ -2,6 +2,7 @@ import path from 'path'
 import { app } from 'electron'
 import fs from 'fs-extra'
 import Shared from '@/share'
+import setting from "@rush-desktop/share/setting.json"
 
 // 判断是否是空文件夹
 function isEmptyDir(fPath: string) {
@@ -16,7 +17,7 @@ function isEmptyDir(fPath: string) {
 declare const __extra: string
 export const appIconPath =  path.join(__extra, '/icons/180x180.png')
 
-let storagePath = path.join(app.getPath('documents'), 'gofast')
+let storagePath = path.join(app.getPath('documents'), setting.app_title)
 export let mainConfig: TConfig = {
     language: 'zh',
     backup_rule: "0 0/30 * * * ?",

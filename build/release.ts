@@ -2,6 +2,7 @@ import * as builder from "electron-builder"
 import setting from "@rush-desktop/share/setting.json"
 import { rootPath } from "@rush-desktop/share"
 import path from "path"
+import fs from "fs-extra"
 import { homedir } from "os"
 
 const electronLanguages = ["en", "fr", "zh_CN", "de"]
@@ -34,6 +35,14 @@ if (process.env.MAKE_FOR === "dev") {
     targets = TARGET_PLATFORMS_configs.all
 }
 
+const pkgInfo = fs.readJSONSync(path.resolve(rootPath, "dist/package.json"))
+pkgInfo.name = setting.app_title
+pkgInfo.version = setting.app_version
+fs.writeJSONSync(path.resolve(rootPath, "dist/package.json"), pkgInfo, {
+    spaces: 4,
+    EOL: '\n'
+})
+
 builder.build({
     ...targets,
     config: {
@@ -42,7 +51,7 @@ builder.build({
         buildDependenciesFromSource: true, // 是否从源构建应用程序本机依赖项。
         productName: setting.app_title,
         appId: "com.dash." + setting.app_title,
-        copyright: "Copyright © 2022 Dash.All Rights Reserved.",
+        copyright: `Copyright © ${new Date().getFullYear()} Dash.All Rights Reserved.`,
         // asarUnpack: ["**/node_modules/live-server/**/*"],
         directories: {
             output: path.resolve(rootPath, "out"),
@@ -120,7 +129,7 @@ builder.build({
             category: "Utility",
             synopsis: "An App for hosts management and switching.",
             desktop: {
-                Name: "gofast",
+                Name: setting.app_version,
                 Type: "Application",
                 GenericName: "An App for hosts management and switching.",
             },
