@@ -149,7 +149,12 @@ async function onDropSnip(event: DragEvent, data: INiuTreeData, state: any) {
         d.from = data.key
         d.fromText = data.title
         await _agent.call("api.snippet.snip.modify", d.key, d)
-        if(data.key !== state.openKey){
+        snippetList.value.forEach(v=>{
+            if(v.key === d.key){
+                Object.assign(v, d)
+            }
+        })
+        if(state.openKey != undefined && data.key !== state.openKey){
             snippetList.value = snippetList.value.filter(v => v.key !== d.key)
         }
     }
