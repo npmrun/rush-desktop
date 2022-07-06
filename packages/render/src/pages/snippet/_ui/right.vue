@@ -23,10 +23,10 @@
                 @contextmenu="contextmenuFile(item, index)" :style="{
                     backgroundColor: currentNote?.activeFileIndex === index ? '' : '#ebebeb87',
                 }">
-                <div class="flex-1 w-0 flex items-center">
-                    <div class="flex-1 w-0" v-if="editTitleIndex !== index">{{ item.title }}</div>
-                    <form action="#" class="flex-1 w-0" @submit.prevent="editTitleIndex = -1">
-                        <input class="w-1/1" @blur.prevent="editTitleIndex = -1" v-focus="item"
+                <div class="flex-1 w-0">
+                    <div v-if="editTitleIndex !== index">{{ item.title }}</div>
+                    <form action="#" class="w-1/1" @submit.prevent="editTitleIndex = -1">
+                        <input @click.stop class="w-1/1" @blur.prevent="editTitleIndex = -1" v-focus="item"
                             v-if="editTitleIndex === index" type="text" :value="item.title" :placeholder="item.title" />
                     </form>
                 </div>
@@ -48,8 +48,11 @@
             <MdEditor class="h-1/1" v-if="curLanugage == 'markdown'"
                 v-model="currentNote.files[currentNote.activeFileIndex].content" />
         </div>
-        <div class="py-10px border-t flex items-center px-10px border-l">
-            <div class="flex-1 w-0 app-code text-20px">{{ curLanugage }}</div>
+        <div class="py-5px flex text-gray-400 items-center px-10px border-l text-14px" :class="[curLanugage != 'markdown'?'border-t':'']">
+            <div class="flex-1 w-0" :title="curLanugage">
+                <div>{{ curLanugage }}</div>
+            </div>
+            <div v-if="currentNote">words: {{currentNote.files[currentNote.activeFileIndex].content.length}}</div>
         </div>
     </div>
 </template>

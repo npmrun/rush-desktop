@@ -33,6 +33,9 @@ onMounted(() => {
             },
         }
     });
+    watch(()=>props.modelValue, ()=>{
+        instance?.setMarkdown(props.modelValue)
+    })
     instance.on("keyup", (e, b) => {
         emits("update:modelValue", instance?.getMarkdown())
     })

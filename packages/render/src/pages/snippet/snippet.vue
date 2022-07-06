@@ -34,7 +34,7 @@
     </div>
 </template>
 <script lang="ts" setup>
-import Toastify from 'toastify-js' 
+import Toastify from 'toastify-js'
 import { PopupMenu } from "@/bridge/PopupMenu"
 import { INiuTreeData, INiuTreeKey } from "princess-ui"
 import { v4 } from "uuid"
@@ -184,6 +184,9 @@ async function onCreateSnip(key: INiuTreeKey, data: INiuTreeData, state: any) {
 async function onLeftChange(key?: INiuTreeKey, data?: INiuTreeData) {
     const res = await _agent.call("api.snippet.snip.readData", key)
     snippetList.value = res
+    if(curSnip.value && snippetList.value.length && !snippetList.value.map(v=>v.key).includes(curSnip.value)){
+        curSnip.value = snippetList.value[0].key
+    }
 }
 </script>
 <style lang="less" scoped>
