@@ -1,4 +1,4 @@
 export default {
     "app_title": "rush-desktop",
-    "app_version": "0.0.5"
+    "app_version": "0.0.6"
 }

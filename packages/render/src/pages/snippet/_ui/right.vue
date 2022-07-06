@@ -45,7 +45,7 @@
                 v-if="curLanugage != 'markdown' && currentNote && currentNote.activeFileIndex > -1 && currentNote.files[currentNote.activeFileIndex]"
                 :name="currentNote.files[currentNote.activeFileIndex].title"
                 v-model="currentNote.files[currentNote.activeFileIndex].content"></CodeEditor>
-            <MdEditor class="h-1/1" v-if="curLanugage == 'markdown'"
+            <MdEditor :key="currentNote.activeFileIndex" class="h-1/1" v-if="curLanugage == 'markdown'"
                 v-model="currentNote.files[currentNote.activeFileIndex].content" />
         </div>
         <div class="py-5px flex text-gray-400 items-center px-10px border-l text-14px" :class="[curLanugage != 'markdown'?'border-t':'']">
