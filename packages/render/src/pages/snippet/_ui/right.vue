@@ -2,37 +2,62 @@
     <div v-if="currentNote" class="h-1/1 w-1/1 flex flex-col">
         <div class="mt-8px mx-5px flex">
             <div class="group flex-1 w-0 border rounded-6px px-10px bg-white flex items-center">
-                <input v-model="currentNote.title" placeholder="请输入片段标题" class="w-1/1 h-30px leading-30px outline-0"
-                    type="text" />
+                <input
+                    v-model="currentNote.title"
+                    placeholder="请输入片段标题"
+                    class="w-1/1 h-30px leading-30px outline-0"
+                    type="text"
+                />
             </div>
             <div class="border flex items-center ml-8px rounded-10px">
                 <button class="h-1/1 px-15px flex items-center" @click="createFile">新增文件</button>
             </div>
         </div>
         <div class="my-8px mx-5px">
-            <textarea class="border w-1/1 max-h-80px min-h-80px outline-0 p-6px rounded-6px" resize="none"
-                v-model="currentNote.desc" placeholder="请输入描述" cols="30" rows="10"></textarea>
+            <textarea
+                class="border w-1/1 max-h-80px min-h-80px outline-0 p-6px rounded-6px"
+                resize="none"
+                v-model="currentNote.desc"
+                placeholder="请输入描述"
+                cols="30"
+                rows="10"
+            ></textarea>
             <!-- <n-input v-model:value="currentNote.desc"  type="textarea" placeholder="请输入描述"></n-input> -->
         </div>
         <!-- <div class="my-8px mx-5px">
             <n-dynamic-tags v-model:value="currentNote.label" />
         </div> -->
         <div class="my-8px flex border-b border-t app-code">
-            <div class="group flex-1 pl-8px py-3px border-l border-r cursor-pointer flex max-w-200px"
-                v-for="(item, index) in currentNote.files" :key="index" @click="clickFile(item, index)"
-                @contextmenu="contextmenuFile(item, index)" :style="{
+            <div
+                class="group flex-1 pl-8px py-3px border-l border-r cursor-pointer flex max-w-200px"
+                v-for="(item, index) in currentNote.files"
+                :key="index"
+                @click="clickFile(item, index)"
+                @contextmenu="contextmenuFile(item, index)"
+                :style="{
                     backgroundColor: currentNote?.activeFileIndex === index ? '' : '#ebebeb87',
-                }">
+                }"
+            >
                 <div class="flex-1 w-0">
                     <div v-if="editTitleIndex !== index">{{ item.title }}</div>
                     <form action="#" class="w-1/1" @submit.prevent="editTitleIndex = -1">
-                        <input @click.stop class="w-1/1" @blur.prevent="editTitleIndex = -1" v-focus="item"
-                            v-if="editTitleIndex === index" type="text" :value="item.title" :placeholder="item.title" />
+                        <input
+                            @click.stop
+                            class="w-1/1"
+                            @blur.prevent="editTitleIndex = -1"
+                            v-focus="item"
+                            v-if="editTitleIndex === index"
+                            type="text"
+                            :value="item.title"
+                            :placeholder="item.title"
+                        />
                     </form>
                 </div>
-                <div v-if="editTitleIndex == -1"
+                <div
+                    v-if="editTitleIndex == -1"
                     class="ml-15px h-14px w-14px inline text-size-12px group-hover:inline hidden"
-                    @click.stop="onCopy(currentNote && currentNote.files[index])">
+                    @click.stop="onCopy(currentNote && currentNote.files[index])"
+                >
                     <svg-icon name="copy" class="h-1/1 w-1/1"></svg-icon>
                 </div>
                 <div class="h-1/1 w-25px px-10px">
@@ -41,18 +66,40 @@
             </div>
         </div>
         <div class="flex-1 h-0 app-code">
-            <CodeEditor :key="currentNote.key"
-                v-if="curLanugage != 'markdown' && currentNote && currentNote.activeFileIndex > -1 && currentNote.files[currentNote.activeFileIndex]"
+            <CodeEditor
+                :key="currentNote.key"
+                v-if="
+                    curLanugage != 'markdown' &&
+                    currentNote &&
+                    currentNote.activeFileIndex > -1 &&
+                    currentNote.files[currentNote.activeFileIndex]
+                "
                 :name="currentNote.files[currentNote.activeFileIndex].title"
-                v-model="currentNote.files[currentNote.activeFileIndex].content"></CodeEditor>
-            <MdEditor :key="currentNote.activeFileIndex" class="h-1/1" v-if="curLanugage == 'markdown'"
-                v-model="currentNote.files[currentNote.activeFileIndex].content" />
+                v-model="currentNote.files[currentNote.activeFileIndex].content"
+            ></CodeEditor>
+            <MdEditor
+                class="h-1/1"
+                v-if="
+                    currentNote &&
+                    currentNote.activeFileIndex > -1 &&
+                    currentNote.files[currentNote.activeFileIndex] &&
+                    curLanugage == 'markdown'
+                "
+                v-model="currentNote.files[currentNote.activeFileIndex].content"
+            />
         </div>
-        <div class="py-5px flex text-gray-400 items-center px-10px border-l text-14px" :class="[curLanugage != 'markdown'?'border-t':'']">
+        <div
+            class="py-5px flex text-gray-400 items-center px-10px border-l text-14px"
+            :class="[curLanugage != 'markdown' ? 'border-t' : '']"
+        >
             <div class="flex-1 w-0" :title="curLanugage">
                 <div>{{ curLanugage }}</div>
             </div>
-            <div v-if="currentNote">words: {{currentNote.files[currentNote.activeFileIndex].content.length}}</div>
+            <div
+                v-if="currentNote && currentNote.activeFileIndex > -1 && currentNote.files[currentNote.activeFileIndex]"
+            >
+                words: {{ currentNote.files[currentNote.activeFileIndex].content.length }}
+            </div>
         </div>
     </div>
 </template>
@@ -70,10 +117,9 @@ function toast(text: string) {
         text: text,
         style: {
             background: "linear-gradient(to right, #00b09b, #96c93d)",
-        }
-    }).showToast();
+        },
+    }).showToast()
 }
-
 
 const props = defineProps<{
     currentNote?: ISnip
@@ -190,5 +236,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped>
-</style>
+<style lang="less" scoped></style>

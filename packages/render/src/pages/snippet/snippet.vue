@@ -12,12 +12,12 @@
         >
             <niu-adjust-width :target="LeftEl"></niu-adjust-width>
         </Left>
-        <div class="w-250px min-w-250px bg-light-400 overflow-x-hidden overflow-y-auto scrollbar">
+        <div @contextmenu="handleSnipContextMenu" class="w-250px min-w-250px bg-light-400 overflow-x-hidden overflow-y-auto scrollbar">
             <template v-for="(item, index) in snippetList" :key="index">
                 <div
                     draggable="true"
                     @click="handleClick(item)"
-                    @contextmenu="handleContextMenu(item)"
+                    @contextmenu.stop="handleContextMenu(item)"
                     @dragstart="onDragStart($event, item)"
                     :class="[curSnip === item.key ? 'bg-light-800' : '']"
                     class="leading-25px px-5px py-5px border-b cursor-pointer"
@@ -92,6 +92,40 @@ async function onSave(data: ISnip) {
 
 function handleClick(item: ISnip) {
     curSnip.value = item.key
+}
+
+const openData = ref<INiuTreeData>()
+function handleSnipContextMenu() {
+    const list: IMenuItemOption[] = [
+        {
+            label: "新建片段",
+            async click() {
+                if(openData.value){
+                    console.log(openData.value);
+                    const snip: ISnip = {
+                        key: v4(),
+                        title: "无标题",
+                        activeFileIndex: 0,
+                        from: openData.value.key,
+                        fromText: openData.value.title,
+                        files: [],
+                    }
+                    await _agent.call("api.snippet.snip.add", snip)
+                    snippetList.value.push(snip)
+                }
+            },
+        },
+        {
+            label: "清空片段",
+            async click() {
+                await _agent.call("api.snippet.snip.delByFrom", openData.value?.key)
+                snippetList.value = []
+                toast("笔记本已清空")
+            },
+        },
+    ]
+    const menus = new PopupMenu(list)
+    menus.show()
 }
 
 function handleContextMenu(item: ISnip) {
@@ -182,6 +216,7 @@ async function onCreateSnip(key: INiuTreeKey, data: INiuTreeData, state: any) {
     snippetList.value.push(snip)
 }
 async function onLeftChange(key?: INiuTreeKey, data?: INiuTreeData) {
+    openData.value = data
     const res = await _agent.call("api.snippet.snip.readData", key)
     snippetList.value = res
     if(curSnip.value && snippetList.value.length && !snippetList.value.map(v=>v.key).includes(curSnip.value)){
