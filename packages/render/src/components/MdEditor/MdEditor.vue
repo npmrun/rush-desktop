@@ -1,5 +1,6 @@
 <template>
-    <div ref="editorEl"></div>
+    <!-- 去除拼写检查 -->
+    <div ref="editorEl" spellcheck="false"></div>
 </template>
 <script lang="ts" setup>
 import Editor from '@toast-ui/editor';

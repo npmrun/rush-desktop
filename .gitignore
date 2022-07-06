@@ -29,3 +29,4 @@ out
 dist/electron
 dist/scripts
 dist/package-lock.json
+files
