@@ -32,29 +32,45 @@ const emit = defineEmits<{
 }>()
 
 onMounted(() => {
+    if (editorRef.value && !editor) {
+        editor = monaco.editor.create(editorRef.value, {
+            theme: "vs-light",
+            fontFamily: 'Cascadia Mono, Consolas, "Courier New", monospace',
+        }) as monaco.editor.IStandaloneCodeEditor
+        editor.onDidChangeModelContent(e => {
+            if (editor) {
+                let code = editor.getValue()
+                emit("update:modelValue", code)
+            }
+        })
+    }
+    function updateModel(name: string, content: string) {
+        if (editor) {
+            var oldModel = editor.getModel() //获取旧模型
+            let file = judgeFile(name)
+            let model: monaco.editor.ITextModel = monaco.editor.createModel(content ?? "", file?.language ?? "txt")
+            if (oldModel) {
+                oldModel.dispose()
+            }
+            editor.setModel(model)
+        }
+    }
+    // 文件内容改变，更新需要语言
+    watch(
+        () => props.modelValue,
+        async (modelValue) => {
+            if (editor && props.modelValue !== editor.getValue()) {
+                updateModel(props.name, modelValue)
+            }
+        },
+        { immediate: true },
+    )
+    // 文件名改变，需要更新语言
     watch(
         () => props.name,
-        async name => {
-            if (editorRef.value && !editor) {
-                editor = monaco.editor.create(editorRef.value, {
-                    theme: "vs-light",
-                    fontFamily: 'Cascadia Mono, Consolas, "Courier New", monospace',
-                }) as monaco.editor.IStandaloneCodeEditor
-                editor.onDidChangeModelContent(e => {
-                    if (editor) {
-                        let code = editor.getValue()
-                        emit("update:modelValue", code)
-                    }
-                })
-            }
+        async (name) => {
             if (editor) {
-                var oldModel = editor.getModel() //获取旧模型
-                let file = judgeFile(name)
-                let model: monaco.editor.ITextModel = monaco.editor.createModel(props.modelValue ?? "", file?.language ?? "txt")
-                if (oldModel) {
-                    oldModel.dispose()
-                }
-                editor.setModel(model)
+                updateModel(name, props.modelValue)
             }
         },
         { immediate: true },

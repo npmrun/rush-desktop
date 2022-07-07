@@ -38,7 +38,7 @@ import Toastify from 'toastify-js'
 import { PopupMenu } from "@/bridge/PopupMenu"
 import { INiuTreeData, INiuTreeKey } from "princess-ui"
 import { v4 } from "uuid"
-import { ISnip } from "./type"
+import type { ISnip } from "./type"
 import Left from "./_ui/left.vue"
 import Right from "./_ui/right.vue"
 

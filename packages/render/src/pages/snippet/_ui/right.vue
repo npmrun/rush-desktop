@@ -106,7 +106,7 @@
 <script lang="ts" setup>
 import { PopupMenu } from "@/bridge/PopupMenu"
 import { judgeFile } from "@/components/CodeEditor/util"
-import { ISnip, ISnipCode } from "../type"
+import type { ISnip, ISnipCode } from "../type"
 import CodeEditor from "@/components/CodeEditor/CodeEditor.vue"
 import MdEditor from "@/components/MdEditor/MdEditor.vue"
 import { cloneDeep } from "lodash"

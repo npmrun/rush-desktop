@@ -57,7 +57,7 @@
                         :value="data.title"
                     />
                 </form>
-                <!-- <div class="ml-5px">运行</div> -->
+                <div class="ml-5px text-size-12px text-gray-400">{{data.children?.length?data.children?.length:''}}</div>
                 <svg-icon
                     v-if="openKey === data.key"
                     name="code-active"

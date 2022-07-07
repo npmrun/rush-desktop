@@ -2,5 +2,5 @@
     "compilerOptions": {
         "declaration": true
     },
-    "include": ["**/*", "../common/**/*.ts"]
+    "include": ["**/*", "../common/**/*.ts", "../setting.ts"]
 }
