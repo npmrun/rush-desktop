@@ -222,8 +222,11 @@ function contextmenuFile(item: ISnipCode, index: number) {
     })
     menusArray.push({
         label: "删除",
-        click() {
-            removeFile(item, index)
+        async click() {
+            const res = await _agent.call("dialog.confrim", {title: "删除", message: "是否删除？"})
+            if(res==1){
+                removeFile(item, index)
+            }
         },
     })
     const menus = new PopupMenu(menusArray)

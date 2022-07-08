@@ -59,12 +59,12 @@ export let windowsMenu = [
     {
         label: "功能",
         submenu: [
-            {
-                label: "悬浮窗",
-                click: function (item: any, focusedWindow: BrowserWindow) {
+            // {
+            //     label: "悬浮窗",
+            //     click: function (item: any, focusedWindow: BrowserWindow) {
 
-                },
-            },
+            //     },
+            // },
             {
                 label: "最小化到托盘",
                 click: function (item: any, focusedWindow: BrowserWindow) {
@@ -114,23 +114,23 @@ export let windowsMenu = [
             },
         ],
     },
-    {
-        label: "帮助",
-        submenu: [
-            {
-                label: "设置",
-                click: function (item: any, focusedWindow: BrowserWindow) {
-                    broadcast("ev:opensetting")
-                },
-            },
-            {
-                label: "检查更新",
-                click: function (item: any, focusedWindow: BrowserWindow) {
+    // {
+    //     label: "帮助",
+    //     submenu: [
+    //         {
+    //             label: "设置",
+    //             click: function (item: any, focusedWindow: BrowserWindow) {
+    //                 broadcast("ev:opensetting")
+    //             },
+    //         },
+    //         {
+    //             label: "检查更新",
+    //             click: function (item: any, focusedWindow: BrowserWindow) {
 
-                },
-            },
-        ],
-    },
+    //             },
+    //         },
+    //     ],
+    // },
     // {
     //   label: '重新启动',
     //   click: function(item: any, focusedWindow: BrowserWindow) {
