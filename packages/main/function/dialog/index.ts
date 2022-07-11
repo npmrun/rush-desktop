@@ -1,12 +1,12 @@
 import { dialog } from 'electron'
-
+import Shared from "@/share"
 /**
  * 选择本地文件夹地址
  */
 export function chooseDir(title: string, defaultPath: string) {
     return new Promise((resolve, reject)=>{
         dialog
-        .showOpenDialog({
+        .showOpenDialog(Shared.data.focusWindow, {
             title: title,
             defaultPath: defaultPath,
             properties: ['openDirectory', 'openFile'],
@@ -34,7 +34,7 @@ export function error(title: string, message: string) {
 export function confrim(opt: any) {
     return new Promise((resolve, reject)=>{
         dialog
-        .showMessageBox({
+        .showMessageBox(Shared.data.focusWindow, {
             title: opt.title || "",
             message: opt.message,
             type: "question",

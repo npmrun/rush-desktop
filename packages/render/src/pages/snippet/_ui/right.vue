@@ -9,13 +9,13 @@
                     type="text"
                 />
             </div>
-            <div class="border flex items-center ml-8px rounded-10px">
-                <button class="h-1/1 px-15px flex items-center" @click="createFile">新增文件</button>
+            <div class="ml-8px button cursor-pointer" @click="createFile">
+                <button class="h-1/1 px-15px">新增文件</button>
             </div>
         </div>
         <div class="my-8px mx-5px">
             <textarea
-                class="border w-1/1 max-h-80px min-h-80px outline-0 p-6px rounded-6px"
+                class="border w-1/1 max-h-80px min-h-80px outline-0 p-6px rounded-3px"
                 resize="none"
                 v-model="currentNote.desc"
                 placeholder="请输入描述"
@@ -182,12 +182,16 @@ function clickFile(item: ISnipCode, index: number) {
     if (!currentNote.value) return
     currentNote.value.activeFileIndex = index
 }
-function removeFile(item: ISnipCode, index: number) {
+async function removeFile(item: ISnipCode, index: number) {
     if (!currentNote.value) return
-    currentNote.value.files.splice(index, 1)
-    if (index - 1 >= 0 && !currentNote.value.files[index]) {
-        currentNote.value.activeFileIndex = index - 1
+    const res = await _agent.call("dialog.confrim", {title: "删除", message: "是否删除？"})
+    if(res==1){
+        currentNote.value.files.splice(index, 1)
+        if (index - 1 >= 0 && !currentNote.value.files[index]) {
+            currentNote.value.activeFileIndex = index - 1
+        }
     }
+    
 }
 const vFocus = {
     beforeUnmount(el: HTMLInputElement, binding: any) {
@@ -223,10 +227,7 @@ function contextmenuFile(item: ISnipCode, index: number) {
     menusArray.push({
         label: "删除",
         async click() {
-            const res = await _agent.call("dialog.confrim", {title: "删除", message: "是否删除？"})
-            if(res==1){
-                removeFile(item, index)
-            }
+            removeFile(item, index)
         },
     })
     const menus = new PopupMenu(menusArray)
@@ -239,4 +240,25 @@ export default defineComponent({
 })
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.button {
+  text-align: center;
+  font-size:15px;
+  font-family:Arial;
+  padding: 8px;
+  border-width:1px;
+  color:#fff;
+  border-color:#18ab29;
+  font-weight:bold;
+  border-top-left-radius:28px;
+  border-top-right-radius:28px;
+  border-bottom-left-radius:28px;
+  border-bottom-right-radius:28px;
+  text-shadow: 1px 1px 0px #2f6627;
+  background:#44c767;
+}
+
+.button:hover {
+  background: #5cbf2a
+}      
+</style>

@@ -1,6 +1,7 @@
 import { Mitt } from "@rush-desktop/main-tool/mitt"
 import { initMenu } from "./menu"
 import { initBackupJob } from "./schedule"
+import "./filechange";
 
 export function init(oldMainConfig?: TConfig) {
     initMenu(oldMainConfig)

@@ -19,10 +19,10 @@ export function showAboutWindow() {
         icon: appIconPath,
         // parent: Shared.data.mainWindow as BrowserWindow,
         webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false,
+            nodeIntegration: false,
+            contextIsolation: true,
         },
-        // parent: focusedWindow // win是主窗口
+        parent: Shared.data.focusWindow // win是主窗口
     })
     // 隐藏菜单
     aboutWindow.setMenuBarVisibility(false)

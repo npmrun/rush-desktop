@@ -32,7 +32,7 @@ export async function backup(storagePath) {
         if (fs.existsSync(sourceDir) && !fs.existsSync(t)) {
             fs.ensureDirSync(backupDir)
             let files = fs.readdirSync(backupDir)
-            if (files.length >= 48) {
+            if (files.length >= 10) {
                 console.log("remove " + files[0])
                 fs.removeSync(path.resolve(backupDir, files[0]))
             }
