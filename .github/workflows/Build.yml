@@ -23,9 +23,12 @@ jobs:
         with:
           node-version: 16.5.0
       # 安装python
-      - uses: actions/setup-python@v2
+      - name: Use Python 3.9.13
+        uses: actions/setup-python@v3
         with:
-          python-version: "2.x"
+          python-version: 3.9.13
+        env:
+          PYTHON_VERSION: 3.9.13
       # https://pnpm.io/zh/continuous-integration/#github-actions
       - uses: pnpm/action-setup@v2.2.2
         name: Install pnpm
@@ -46,6 +49,8 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+      - name: Install windows-build-tools
+        run: npm install --global --production windows-build-tools --vs2017
       # 步骤一的名称：
       - name: Build
         # 该步骤运行的终端命令，运行编译命令
