@@ -12,6 +12,7 @@
                 </div>
             </form>
         </div>
+        <img src="rush-file://oval.svg">
     </div>
 </template>
 <script lang="ts" setup>

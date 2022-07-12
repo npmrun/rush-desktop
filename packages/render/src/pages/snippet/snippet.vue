@@ -152,7 +152,7 @@ function handleContextMenu(item: ISnip) {
                     toast("笔记本已清空")
                 }
             },
-        },
+        }
     ]
     const menus = new PopupMenu(list)
     menus.show()

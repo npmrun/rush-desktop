@@ -18,7 +18,6 @@ const files: IFile[] = [
     { language: "jsx", ext: ".jsx" },
     { language: "typescript", ext: ".ts" },
     { language: "markdown", ext: ".md" },
-    { language: "dot", pre: "." },
 ]
 
 export function judgeFile(filename: string) {
@@ -39,6 +38,10 @@ export function judgeFile(filename: string) {
             cur = e
             break
         }
+    }
+    const index = filename.lastIndexOf('.')
+    if(!cur && index!=-1 && filename[0]!='.'){
+        cur = { language: filename.slice(index+1), ext: filename.slice(index), index: index }
     }
     return cur
 }

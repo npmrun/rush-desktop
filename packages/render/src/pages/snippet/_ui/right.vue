@@ -15,7 +15,7 @@
         </div>
         <div class="my-8px mx-5px">
             <textarea
-                class="border w-1/1 max-h-80px min-h-80px outline-0 p-6px rounded-3px"
+                class="border resize-none w-1/1 max-h-80px min-h-80px outline-0 p-6px rounded-3px"
                 resize="none"
                 v-model="currentNote.desc"
                 placeholder="请输入描述"
@@ -27,7 +27,7 @@
         <!-- <div class="my-8px mx-5px">
             <n-dynamic-tags v-model:value="currentNote.label" />
         </div> -->
-        <div class="my-8px flex border-b border-t app-code">
+        <div class="my-8px flex border-t" :class="[currentNote.files.length?'border-b':'']">
             <div
                 class="group flex-1 pl-8px py-3px border-l border-r cursor-pointer flex max-w-200px"
                 v-for="(item, index) in currentNote.files"
@@ -65,7 +65,7 @@
                 </div>
             </div>
         </div>
-        <div class="flex-1 h-0 app-code">
+        <div class="flex-1 h-0">
             <CodeEditor
                 :key="currentNote.key"
                 v-if="
@@ -191,7 +191,7 @@ async function removeFile(item: ISnipCode, index: number) {
             currentNote.value.activeFileIndex = index - 1
         }
     }
-    
+
 }
 const vFocus = {
     beforeUnmount(el: HTMLInputElement, binding: any) {
@@ -260,5 +260,5 @@ export default defineComponent({
 
 .button:hover {
   background: #5cbf2a
-}      
+}
 </style>
