@@ -7,6 +7,9 @@ interface IFile {
 
 const files: IFile[] = [
     { language: "vue", ext: ".vue" },
+    { language: "scss", ext: ".scss" },
+    { language: "sass", ext: ".sass" },
+    { language: "less", ext: ".less" },
     { language: "java", ext: ".java" },
     { language: "javascript", ext: ".js" },
     { language: "css", ext: ".css" },

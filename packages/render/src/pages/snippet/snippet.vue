@@ -111,6 +111,7 @@ function handleSnipContextMenu() {
                         files: [],
                     }
                     await _agent.call("api.snippet.snip.add", snip)
+                    curSnip.value = snip.key
                     snippetList.value.push(snip)
                 }
             },
@@ -118,9 +119,12 @@ function handleSnipContextMenu() {
         {
             label: "清空片段",
             async click() {
-                await _agent.call("api.snippet.snip.delByFrom", openData.value?.key)
-                snippetList.value = []
-                toast("笔记本已清空")
+                const res = await _agent.call("dialog.confrim", {title: "是否清空？", message: "将删除其所有碎片"})
+                if(res==1){
+                    await _agent.call("api.snippet.snip.delByFrom", openData.value?.key)
+                    snippetList.value = []
+                    toast("笔记本已清空")
+                }
             },
         },
     ]
@@ -136,6 +140,17 @@ function handleContextMenu(item: ISnip) {
                 await _agent.call("api.snippet.snip.del", item.key)
                 snippetList.value = snippetList.value.filter(v => v.key !== item.key)
                 toast("删除片段成功")
+            },
+        },
+        {
+            label: "清空片段",
+            async click() {
+                const res = await _agent.call("dialog.confrim", {title: "是否清空？", message: "将删除其所有碎片"})
+                if(res==1){
+                    await _agent.call("api.snippet.snip.delByFrom", openData.value?.key)
+                    snippetList.value = []
+                    toast("笔记本已清空")
+                }
             },
         },
     ]
@@ -202,8 +217,9 @@ async function onClearSnip(key: INiuTreeKey, data: INiuTreeData, state: any) {
     toast("笔记本已清空")
 }
 async function onCreateSnip(key: INiuTreeKey, data: INiuTreeData, state: any) {
+    const k = v4()
     const snip: ISnip = {
-        key: v4(),
+        key: k,
         title: "无标题",
         activeFileIndex: 0,
         from: data.key,
@@ -213,6 +229,7 @@ async function onCreateSnip(key: INiuTreeKey, data: INiuTreeData, state: any) {
     await _agent.call("api.snippet.snip.add", snip)
     state.openKey = key
     state.activeKeys = [key]
+    curSnip.value = k
     snippetList.value.push(snip)
 }
 async function onLeftChange(key?: INiuTreeKey, data?: INiuTreeData) {
