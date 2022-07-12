@@ -49,6 +49,8 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+      # https://docs.microsoft.com/zh-cn/visualstudio/releases/2017/vs2017-system-requirements-vs
+      # 将windows设置成windows-2016,2016要取消支持了,可换成2022
       - name: set msvs
         run: npm config set msvs_version 2017
       # 步骤一的名称：
