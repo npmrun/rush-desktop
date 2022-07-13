@@ -67,7 +67,7 @@
         </div>
         <div class="flex-1 h-0">
             <CodeEditor
-                :key="currentNote.key"
+                :key="currentNote.activeFileIndex"
                 v-if="
                     curLanugage != 'markdown' &&
                     currentNote &&
@@ -78,6 +78,7 @@
                 v-model="currentNote.files[currentNote.activeFileIndex].content"
             ></CodeEditor>
             <MdEditor
+                :key="currentNote.activeFileIndex"
                 class="h-1/1"
                 v-if="
                     currentNote &&

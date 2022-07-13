@@ -25,6 +25,9 @@ onMounted(() => {
         language: "zh-hans",
         hooks: { // 钩子函数
             addImageBlobHook: (fileOrBlob, callback) => {
+                //  1. 从本地赋值到剪切板的
+                //  2. 拖拽过来的
+                //  3. 网址
                 console.log(fileOrBlob);
                 callback("", 'T_T，出错了');
                 // this.uploadImgApi(fileOrBlob).then(path => {
@@ -33,11 +36,11 @@ onMounted(() => {
             },
         }
     });
-    watch(()=>props.modelValue, ()=>{
-        if(props.modelValue !== instance?.getMarkdown()){
-            instance?.setMarkdown(props.modelValue)
-        }
-    })
+    // watch(()=>props.modelValue, ()=>{
+    //     if(props.modelValue !== instance?.getMarkdown()){
+    //         instance?.setMarkdown(props.modelValue)
+    //     }
+    // })
     instance.on("keyup", (e, b) => {
         emits("update:modelValue", instance?.getMarkdown())
     })

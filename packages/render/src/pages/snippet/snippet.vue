@@ -22,7 +22,7 @@
                     :class="[curSnip === item.key ? 'bg-light-800' : '']"
                     class="leading-25px px-5px py-5px border-b cursor-pointer"
                 >
-                    <div class="overflow-hidden whitespace-nowrap overflow-ellipsis">{{ item.title }}</div>
+                    <div class="overflow-hidden whitespace-nowrap overflow-ellipsis">{{ item.title || "无标题" }}</div>
                     <div class="text-size-12px text-gray-400">{{ item.fromText }}</div>
                 </div>
             </template>
@@ -41,6 +41,7 @@ import { v4 } from "uuid"
 import type { ISnip } from "./type"
 import Left from "./_ui/left.vue"
 import Right from "./_ui/right.vue"
+import { throttle } from 'lodash'
 
 const LeftEl = ref()
 const RightEl = ref()
@@ -80,14 +81,17 @@ watch(
     },
     { immediate: true, deep: true },
 )
-
-async function onSave(data: ISnip) {
+// 节流
+const func = throttle(async (data: ISnip)=>{
     await _agent.call("api.snippet.snip.modify", data.key, data)
     snippetList.value.forEach(v => {
         if (v.key === data.key) {
             Object.assign(v, data)
         }
     })
+}, 200)
+async function onSave(data: ISnip) {
+    func(toRaw(data))
 }
 
 function handleClick(item: ISnip) {
@@ -104,7 +108,7 @@ function handleSnipContextMenu() {
                     console.log(openData.value);
                     const snip: ISnip = {
                         key: v4(),
-                        title: "无标题",
+                        title: "",
                         activeFileIndex: 0,
                         from: openData.value.key,
                         fromText: openData.value.title,
@@ -220,7 +224,7 @@ async function onCreateSnip(key: INiuTreeKey, data: INiuTreeData, state: any) {
     const k = v4()
     const snip: ISnip = {
         key: k,
-        title: "无标题",
+        title: "",
         activeFileIndex: 0,
         from: data.key,
         fromText: data.title,

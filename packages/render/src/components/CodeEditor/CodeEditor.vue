@@ -56,15 +56,15 @@ onMounted(() => {
         }
     }
     // 文件内容改变，更新需要语言
-    watch(
-        () => props.modelValue,
-        async (modelValue) => {
-            if (editor && props.modelValue !== editor.getValue()) {
-                updateModel(props.name, modelValue)
-            }
-        },
-        { immediate: true },
-    )
+    // watch(
+    //     () => props.modelValue,
+    //     async (modelValue) => {
+    //         if (editor && props.modelValue !== editor.getValue()) {
+    //             updateModel(props.name, modelValue)
+    //         }
+    //     },
+    //     { immediate: true },
+    // )
     // 文件名改变，需要更新语言
     watch(
         () => props.name,

@@ -6,6 +6,7 @@ import "./filechange"
 import { protocol, app } from "electron"
 import path from "path"
 import fs from "fs"
+import { mainConfig } from "@/config"
 
 export function init(oldMainConfig?: TConfig) {
     initMenu(oldMainConfig)
@@ -17,13 +18,12 @@ export function init(oldMainConfig?: TConfig) {
     // })
     // 文件协议
     // https://vastiny.com/post/tech/electron-protocol
+    protocol.unregisterProtocol("rush-file")
     protocol.registerFileProtocol(
         "rush-file",
         (request, callback) => {
-            console.log(request);
-            const url = request.url.slice(11)
-            // callback({ path: path.normalize(`'C:\\Users\\15494\\Pictures\\bg.jpg'`) })
-            callback('C:\\Users\\15494\\Pictures\\bg.jpg')
+            const url = request.url.slice(12)
+            callback(path.resolve(mainConfig.storagePath, "./file", url))
         }
     )
 }
