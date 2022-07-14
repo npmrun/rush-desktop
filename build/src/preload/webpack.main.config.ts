@@ -7,7 +7,7 @@ import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin"
 
 let mainConfig = {
     entry: perloadWebpack.entry,
-    devtool: process.env.NODE_ENV !== "production"?'source-map':'none',
+    devtool: process.env.NODE_ENV !== "production"?'source-map':false,
     externals: perloadWebpack.externals,
     module: {
         rules: [
