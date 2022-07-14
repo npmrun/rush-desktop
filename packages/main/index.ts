@@ -1,12 +1,12 @@
 import "./init"
 
-import { isPromise, readCommand } from "@rush-desktop/main-tool"
+import { isPromise, readCommand } from "@rush/main-tool"
 import { ipcMain, app } from "electron"
 import Shared from "@/share"
 import { showMainWindow } from "@/function/window/main"
 import { setupTray } from "@/function/window/tray"
 import { parseCommand } from "./util"
-import updater from "@rush-desktop/main-tool/updater"
+import updater from "@rush/main-tool/updater"
 /**
  * 超级命令,用字符串直接调用方法
  */

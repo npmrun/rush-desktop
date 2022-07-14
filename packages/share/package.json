@@ -1,5 +1,5 @@
 {
-  "name": "@rush-desktop/share",
+  "name": "@rush/share",
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",

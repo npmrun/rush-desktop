@@ -1,6 +1,6 @@
 import * as builder from "electron-builder"
-import setting from "@rush-desktop/share/setting"
-import { rootPath } from "@rush-desktop/share"
+import setting from "@rush/share/setting"
+import { rootPath } from "@rush/share"
 import path from "path"
 import fs from "fs-extra"
 import { homedir } from "os"

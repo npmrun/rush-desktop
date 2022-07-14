@@ -1,8 +1,8 @@
 import { app, BrowserWindow, dialog, ipcMain } from "electron"
 import Shared from "@/share"
-import { getFileUrl } from "@rush-desktop/main-tool"
+import { getFileUrl } from "@rush/main-tool"
 import { quit } from "."
-import { appIconPath } from "@rush-desktop/main-tool"
+import { appIconPath } from "@rush/main-tool"
 
 export function hideMainWindow() {
     if (!Shared.data.mainWindow || Shared.data.mainWindow?.isDestroyed()) {

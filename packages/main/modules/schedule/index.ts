@@ -1,5 +1,5 @@
-import { validateCron } from "@rush-desktop/common/util"
-import { backup } from "@rush-desktop/main-tool/backup"
+import { validateCron } from "@rush/common/util"
+import { backup } from "@rush/main-tool/backup"
 import { mainConfig } from "@/config"
 import schedule, { Job } from "node-schedule"
 // import watcher, { AsyncSubscription } from "@parcel/watcher"

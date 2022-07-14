@@ -2,7 +2,7 @@
 
 const webpack = require("webpack")
 import { perloadWebpack } from "@/config"
-import { preloadTsConfig } from "@rush-desktop/share"
+import { preloadTsConfig } from "@rush/share"
 import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin"
 
 let mainConfig = {

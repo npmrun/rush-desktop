@@ -1,6 +1,6 @@
 import { BrowserWindow, ipcMain, app } from 'electron'
 import { NsisUpdater, ProgressInfo, UpdateInfo } from 'electron-updater'
-import setting from '@rush-desktop/share/setting'
+import setting from '@rush/share/setting'
 
 export default (window: BrowserWindow): void => {
   if(!app.isPackaged) return

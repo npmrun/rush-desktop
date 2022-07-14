@@ -1,5 +1,5 @@
 {
-  "name": "@rush-desktop/render",
+  "name": "@rush/render",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

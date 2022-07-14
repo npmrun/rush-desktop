@@ -7,6 +7,7 @@
     "license": "ISC",
     "dependencies": {
         "electron-store": "^8.0.1",
+        "electron-log": "^4.4.8",
         "live-server": "^1.2.2",
         "mitt": "^3.0.0",
         "@commonify/lowdb": "^3.0.0",
@@ -16,7 +17,8 @@
         "lodash": "^4.17.21",
         "fs-extra": "^10.0.0",
         "node-schedule": "^2.1.0",
-        "electron-updater": "^5.0.5"
+        "electron-updater": "^5.0.5",
+        "crypto-js": "^4.1.1"
     },
     "version": "0.0.7-beta.4"
 }

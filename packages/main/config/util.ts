@@ -1,7 +1,7 @@
 import fs from "fs-extra"
 import Shared from "@/share"
 import { mainConfig, PathMgr } from "./index"
-import { Mitt } from "@rush-desktop/main-tool/mitt"
+import { Mitt } from "@rush/main-tool/mitt"
 
 /**
  * 保存配置文件到本地

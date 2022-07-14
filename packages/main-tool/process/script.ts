@@ -1,5 +1,5 @@
-import { isDev, isProd } from "@rush-desktop/main-tool"
-import { rootPath, distPath } from "@rush-desktop/share"
+import { isDev, isProd } from "@rush/main-tool"
+import { rootPath, distPath } from "@rush/share"
 import { app } from "electron"
 import path from "path"
 

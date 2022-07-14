@@ -2,7 +2,7 @@ import Shared from "@/share"
 import path from "path"
 import { app, Menu, Tray } from "electron"
 import { hideMainWindow, showMainWindow } from "./main"
-import { appTrayPath } from "@rush-desktop/main-tool"
+import { appTrayPath } from "@rush/main-tool"
 
 let textHolder = {
     openWindow: "打开窗口",

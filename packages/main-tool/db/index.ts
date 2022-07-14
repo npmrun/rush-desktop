@@ -1,5 +1,5 @@
 import { Low, JSONFile, Adapter } from '@commonify/lowdb'
-import { mainConfig } from '@rush-desktop/main/config'
+import { mainConfig } from '@rush/main/config'
 import path from 'path'
 import fs from 'fs-extra'
 

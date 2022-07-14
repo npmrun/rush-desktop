@@ -1,5 +1,5 @@
 import * as MenuFunc from "./func"
-import setting from "@rush-desktop/share/setting"
+import setting from "@rush/share/setting"
 
 MenuFunc.setMenuListData([
     {

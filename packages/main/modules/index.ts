@@ -1,7 +1,7 @@
-import { Mitt } from "@rush-desktop/main-tool/mitt"
+import { Mitt } from "@rush/main-tool/mitt"
 import { initMenu } from "./menu"
 import { initBackupJob } from "./schedule"
-import "./filechange"
+import "@/modules/filechange"
 
 import { protocol, app } from "electron"
 import path from "path"

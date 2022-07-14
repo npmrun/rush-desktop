@@ -18,7 +18,7 @@ import monacoEditorPlugin from "vite-plugin-monaco-editor"
 import ViteRestart from 'vite-plugin-restart'
 
 import PrincessResolver from "princess-ui/PrincessResolver"
-// import setting from "@rush-desktop/share/setting"
+// import setting from "@rush/share/setting"
 
 // console.log(setting)
 

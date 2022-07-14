@@ -6,20 +6,23 @@ importers:
     specifiers:
       '@commonify/lowdb': ^3.0.0
       '@parcel/watcher': ^2.0.5
-      '@rush-desktop/build': workspace:*
-      '@rush-desktop/common': workspace:*
-      '@rush-desktop/main': workspace:*
-      '@rush-desktop/main-script': workspace:*
-      '@rush-desktop/main-tool': workspace:*
-      '@rush-desktop/preload': workspace:*
-      '@rush-desktop/render': workspace:*
-      '@rush-desktop/share': workspace:*
+      '@rush/build': workspace:*
+      '@rush/common': workspace:*
+      '@rush/main': workspace:*
+      '@rush/main-script': workspace:*
+      '@rush/main-tool': workspace:*
+      '@rush/preload': workspace:*
+      '@rush/render': workspace:*
+      '@rush/share': workspace:*
+      '@types/crypto-js': ^4.1.1
       '@types/fs-extra': ^9.0.13
       '@types/lodash': ^4.14.182
       '@types/node': ^16.11.39
       compressing: ^1.5.1
       cross-spawn: ^7.0.3
+      crypto-js: ^4.1.1
       electron: 18.0.3
+      electron-log: ^4.4.8
       electron-store: ^8.0.1
       electron-updater: ^5.0.5
       fs-extra: ^10.0.0
@@ -35,6 +38,8 @@ importers:
       '@parcel/watcher': 2.0.5
       compressing: 1.6.0
       cross-spawn: 7.0.3
+      crypto-js: 4.1.1
+      electron-log: 4.4.8
       electron-store: 8.0.2
       electron-updater: 5.0.5
       fs-extra: 10.1.0
@@ -43,14 +48,15 @@ importers:
       mitt: 3.0.0
       node-schedule: 2.1.0
     devDependencies:
-      '@rush-desktop/build': link:build
-      '@rush-desktop/common': link:packages/common
-      '@rush-desktop/main': link:packages/main
-      '@rush-desktop/main-script': link:packages/main-script
-      '@rush-desktop/main-tool': link:packages/main-tool
-      '@rush-desktop/preload': link:packages/preload
-      '@rush-desktop/render': link:packages/render
-      '@rush-desktop/share': link:packages/share
+      '@rush/build': link:build
+      '@rush/common': link:packages/common
+      '@rush/main': link:packages/main
+      '@rush/main-script': link:packages/main-script
+      '@rush/main-tool': link:packages/main-tool
+      '@rush/preload': link:packages/preload
+      '@rush/render': link:packages/render
+      '@rush/share': link:packages/share
+      '@types/crypto-js': 4.1.1
       '@types/fs-extra': 9.0.13
       '@types/lodash': 4.14.182
       '@types/node': 16.11.39
@@ -2156,6 +2162,10 @@ packages:
       '@types/node': 16.11.39
     dev: true
 
+  /@types/crypto-js/4.1.1:
+    resolution: {integrity: sha512-BG7fQKZ689HIoc5h+6D2Dgq1fABRa0RbBWKBd9SP/MVRVXROflpm5fhwyATX5duFmbStzyzyycPB8qUYKDH3NA==}
+    dev: true
+
   /@types/debug/4.1.7:
     resolution: {integrity: sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg==}
     dependencies:
@@ -4159,6 +4169,10 @@ packages:
       shebang-command: 2.0.0
       which: 2.0.2
 
+  /crypto-js/4.1.1:
+    resolution: {integrity: sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==}
+    dev: false
+
   /crypto-random-string/2.0.0:
     resolution: {integrity: sha512-v1plID3y9r/lPhviJ1wrXpLeyUIGAZ2SHNYTEapm7/8A9nLPoyvVp3RK/EPFqn5kEznyWgYZNsRtYYIWbuG8KA==}
     engines: {node: '>=8'}
@@ -4671,6 +4685,10 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /electron-log/4.4.8:
+    resolution: {integrity: sha512-QQ4GvrXO+HkgqqEOYbi+DHL7hj5JM+nHi/j+qrN9zeeXVKy8ZABgbu4CnG+BBqDZ2+tbeq9tUC4DZfIWFU5AZA==}
+    dev: false
 
   /electron-osx-sign/0.6.0:
     resolution: {integrity: sha512-+hiIEb2Xxk6eDKJ2FFlpofCnemCbjbT5jz+BKGpVBrRNT3kWTGs4DfNX6IzGwgi33hUcXF+kFs9JW+r6Wc1LRg==}

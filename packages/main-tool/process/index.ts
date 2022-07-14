@@ -2,9 +2,9 @@ import { ChildProcessWithoutNullStreams } from "child_process"
 import { execa } from "./execa"
 import { forkFn } from "./fork"
 import kill from "./kill"
-import { iGetInnerText } from "@rush-desktop/common/util"
-import { EProcessStatus } from "@rush-desktop/common/process"
-import { broadcast } from "@rush-desktop/main-tool"
+import { iGetInnerText } from "@rush/common/util"
+import { EProcessStatus } from "@rush/common/process"
+import { broadcast } from "@rush/main-tool"
 import { checkCommand } from "./script"
 
 interface IProcessChild {

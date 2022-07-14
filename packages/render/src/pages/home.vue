@@ -16,7 +16,7 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { EProcessStatus } from '@rush-desktop/common/process';
+import { EProcessStatus } from '@rush/common/process';
 
 const messages = ref<any[]>([])
 onBeforeMount(() => {

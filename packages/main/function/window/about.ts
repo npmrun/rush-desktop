@@ -1,7 +1,7 @@
 import { BrowserWindow } from "electron"
 import Shared from "@/share"
-import { getFileUrl } from "@rush-desktop/main-tool"
-import { appIconPath } from "@rush-desktop/main-tool"
+import { getFileUrl } from "@rush/main-tool"
+import { appIconPath } from "@rush/main-tool"
 
 export function showAboutWindow() {
     if (Shared.data.aboutWindow) {

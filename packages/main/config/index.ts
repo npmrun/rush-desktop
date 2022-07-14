@@ -2,7 +2,9 @@ import path from 'path'
 import { app } from 'electron'
 import fs from 'fs-extra'
 import Shared from '@/share'
-import setting from "@rush-desktop/share/setting"
+import setting from "@rush/share/setting"
+
+export * from "./util"
 
 // 判断是否是空文件夹
 function isEmptyDir(fPath: string) {
@@ -43,6 +45,15 @@ export const PathMgr = {
         return path.join(
             mainConfig.storagePath,
             './db/_config.json'
+        )
+    },
+    /**
+     * 日志存储位置
+     */
+    get logPath(): string {
+        return path.join(
+            mainConfig.storagePath,
+            './logs'
         )
     },
 }

@@ -1,4 +1,4 @@
-import { broadcast } from '@rush-desktop/main-tool'
+import { broadcast } from '@rush/main-tool'
 import { ipcMain, Menu, MenuItem, webContents } from 'electron'
 
 ipcMain.on('x_popup_menu', (e, options: IPopupMenuOption) => {

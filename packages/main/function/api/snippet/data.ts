@@ -1,4 +1,4 @@
-import { getData, saveData } from "@rush-desktop/main-tool/db"
+import { getData, saveData } from "@rush/main-tool/db"
 
 let allData = {
     allSnippet: [],

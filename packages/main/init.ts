@@ -5,7 +5,7 @@ import fs from "fs-extra"
 import path from "path"
 import { readConfig, walkConfig } from "./config/util"
 import Shared from "@/share"
-import processManager from "@rush-desktop/main-tool/process"
+import processManager from "@rush/main-tool/process"
 // import updateElectronApp from "update-electron-app"
 
 // updateElectronApp({
