@@ -9,7 +9,11 @@ importers:
       '@rush/build': workspace:*
       '@rush/common': workspace:*
       '@rush/main': workspace:*
+      '@rush/main-config': workspace:*
+      '@rush/main-func': workspace:*
+      '@rush/main-module': workspace:*
       '@rush/main-script': workspace:*
+      '@rush/main-share': workspace:*
       '@rush/main-tool': workspace:*
       '@rush/preload': workspace:*
       '@rush/render': workspace:*
@@ -51,7 +55,11 @@ importers:
       '@rush/build': link:build
       '@rush/common': link:packages/common
       '@rush/main': link:packages/main
+      '@rush/main-config': link:packages/main-config
+      '@rush/main-func': link:packages/main-func
+      '@rush/main-module': link:packages/main-module
       '@rush/main-script': link:packages/main-script
+      '@rush/main-share': link:packages/main-share
       '@rush/main-tool': link:packages/main-tool
       '@rush/preload': link:packages/preload
       '@rush/render': link:packages/render
@@ -201,7 +209,19 @@ importers:
       '@types/webpack-env': 1.17.0
       electron-debug: 3.2.0
 
+  packages/main-config:
+    specifiers: {}
+
+  packages/main-func:
+    specifiers: {}
+
+  packages/main-module:
+    specifiers: {}
+
   packages/main-script:
+    specifiers: {}
+
+  packages/main-share:
     specifiers: {}
 
   packages/main-tool:
