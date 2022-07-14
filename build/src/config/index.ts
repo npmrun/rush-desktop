@@ -15,7 +15,7 @@ import {
     mainWebpackOutput,
     buildExternals,
     pkgPath,
-} from "@rush-desktop/share"
+} from "@rush/share"
 
 const config = {
     rootPath: rootPath,

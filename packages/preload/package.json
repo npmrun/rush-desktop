@@ -1,5 +1,5 @@
 {
-  "name": "@rush-desktop/preload",
+  "name": "@rush/preload",
   "version": "1.0.0",
   "description": "",
   "main": "preload.ts",

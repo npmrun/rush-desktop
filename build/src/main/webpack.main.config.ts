@@ -5,11 +5,12 @@ process.env.BABEL_ENV = "main"
 const path = require("path")
 const webpack = require("webpack")
 import { mainWebpack } from "@/config"
-import { mainTsConfig } from "@rush-desktop/share"
+import { mainTsConfig } from "@rush/share"
 import TsconfigPathsPlugin from "tsconfig-paths-webpack-plugin"
 
 let mainConfig = {
     entry: {},
+    devtool: process.env.NODE_ENV !== "production"?'source-map':false,
     externals: mainWebpack.externals,
     module: {
         rules: [

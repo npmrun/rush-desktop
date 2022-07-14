@@ -1,5 +1,5 @@
 {
-  "name": "@rush-desktop/common",
+  "name": "@rush/common",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

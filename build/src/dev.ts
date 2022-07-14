@@ -9,7 +9,7 @@ import startPreload from "./preload/run"
 
 import path from "path"
 import config from "./config"
-import { isVite } from "@rush-desktop/share"
+import { isVite } from "@rush/share"
 
 const txtPath = path.resolve(config.rootPath, "./electron-pid.txt")
 
