@@ -1,6 +1,7 @@
 import { Mitt } from "@rush/main-tool/mitt"
 import { initMenu } from "./menu"
 import { initBackupJob } from "./schedule"
+import { initGlobalLog } from "./log"
 import "./filechange"
 
 import { protocol, app } from "electron"
@@ -9,9 +10,9 @@ import fs from "fs"
 import { mainConfig } from "@rush/main-config"
 
 export function init(oldMainConfig?: TConfig) {
+    initGlobalLog(oldMainConfig)
     initMenu(oldMainConfig)
     initBackupJob(oldMainConfig)
-
     // protocol.registerFileProtocol("rush", function (request, callback) {
     //     console.log(request);
     //     // callback({ path: path.normalize(__dirname + "/" + url) })

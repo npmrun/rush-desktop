@@ -38,6 +38,12 @@ const _logs: TLog = {}
 // export async function stopReacordNetLog(){
 //     await netLog.stopLogging()
 // }
+// 扩展模块
+declare module "electron-log" {
+    export interface ElectronLog {
+        _createLog(name: any): { path: string; log: logger.ElectronLog }
+    }
+}
 
 export function initGlobalLog(oldMainConfig?: TConfig) {
     if (oldMainConfig && oldMainConfig.storagePath === mainConfig.storagePath) return
@@ -46,6 +52,7 @@ export function initGlobalLog(oldMainConfig?: TConfig) {
     logger.transports.file.resolvePath = () => logFilePath
     logger.debug("日志路径:" + logFilePath)
     logger.debug("日志路径配置成功")
+    logger._createLog = createLog
     // ;(async () => {
     //     await netLog.stopLogging()
     //     await netLog.startLogging(path.resolve(mainConfig.storagePath, "./logs", "__net__" + ".txt"))

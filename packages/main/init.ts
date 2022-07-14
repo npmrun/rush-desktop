@@ -6,21 +6,20 @@ import path from "path"
 import { readConfig, walkConfig } from "@rush/main-config"
 import { Shared } from "@rush/main-share"
 import processManager from "@rush/main-tool/process"
-// import updateElectronApp from "update-electron-app"
-
-// updateElectronApp({
-//     repo: 'npmrun/rush-desktop',
-//     updateInterval: '1 hour',
-//     // logger: require('electron-log')
-// })
+import { Settings } from "@rush/main-config/config"
 
 crashReporter.start({
-    uploadToServer: false
-});
+    uploadToServer: false,
+})
 
 // sotre
 Store.initRenderer()
 Shared.store = new Store()
+
+Settings.init()
+Settings.n.set("storagePath", "C:\\Users\\Administrator\\Documents\\aac")
+console.log(Settings.n.config());
+
 
 // config
 const storePath = Shared.store?.get("appStorePathKey") as string
