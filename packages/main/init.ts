@@ -16,11 +16,6 @@ crashReporter.start({
 Store.initRenderer()
 Shared.store = new Store()
 
-Settings.init()
-Settings.n.set("storagePath", "C:\\Users\\Administrator\\Documents\\aac")
-console.log(Settings.n.config());
-
-
 // config
 const storePath = Shared.store?.get("appStorePathKey") as string
 

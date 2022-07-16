@@ -1,5 +1,5 @@
 <template>
-    <div v-if="currentNote" class="h-1/1 w-1/1 flex flex-col">
+    <div v-if="currentNote" class="h-1/1 w-1/1 flex flex-col" :key="currentNote.key">
         <div class="mt-8px mx-5px flex">
             <div class="group flex-1 w-0 border rounded-6px px-10px bg-white flex items-center">
                 <input
@@ -74,6 +74,7 @@
                     currentNote.activeFileIndex > -1 &&
                     currentNote.files[currentNote.activeFileIndex]
                 "
+                logo="https://w.wallhaven.cc/full/p8/wallhaven-p8gvvp.jpg"
                 :name="currentNote.files[currentNote.activeFileIndex].title"
                 v-model="currentNote.files[currentNote.activeFileIndex].content"
             ></CodeEditor>
