@@ -13,6 +13,7 @@ interface IPopupMenuOption {
 type TConfig = {
     language: "zh" | "en"
     backup_rule: string
+    editor_logo: boolean | string
     get storagePath(): string
     set storagePath(value: string)
 }

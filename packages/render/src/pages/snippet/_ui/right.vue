@@ -2,62 +2,37 @@
     <div v-if="currentNote" class="h-1/1 w-1/1 flex flex-col" :key="currentNote.key">
         <div class="mt-8px mx-5px flex">
             <div class="group flex-1 w-0 border rounded-6px px-10px bg-white flex items-center">
-                <input
-                    v-model="currentNote.title"
-                    placeholder="请输入片段标题"
-                    class="w-1/1 h-30px leading-30px outline-0"
-                    type="text"
-                />
+                <input v-model="currentNote.title" placeholder="请输入片段标题" class="w-1/1 h-30px leading-30px outline-0"
+                    type="text" />
             </div>
             <div class="ml-8px button cursor-pointer" @click="createFile">
                 <button class="h-1/1 px-15px">新增文件</button>
             </div>
         </div>
         <div class="my-8px mx-5px">
-            <textarea
-                class="border resize-none w-1/1 max-h-80px min-h-80px outline-0 p-6px rounded-3px"
-                resize="none"
-                v-model="currentNote.desc"
-                placeholder="请输入描述"
-                cols="30"
-                rows="10"
-            ></textarea>
+            <textarea class="border resize-none w-1/1 max-h-80px min-h-80px outline-0 p-6px rounded-3px" resize="none"
+                v-model="currentNote.desc" placeholder="请输入描述" cols="30" rows="10"></textarea>
             <!-- <n-input v-model:value="currentNote.desc"  type="textarea" placeholder="请输入描述"></n-input> -->
         </div>
         <!-- <div class="my-8px mx-5px">
             <n-dynamic-tags v-model:value="currentNote.label" />
         </div> -->
-        <div class="my-8px flex border-t" :class="[currentNote.files.length?'border-b':'']">
-            <div
-                class="group flex-1 pl-8px py-3px border-l border-r cursor-pointer flex max-w-200px"
-                v-for="(item, index) in currentNote.files"
-                :key="index"
-                @click="clickFile(item, index)"
-                @contextmenu="contextmenuFile(item, index)"
-                :style="{
+        <div class="flex border-t" :class="[currentNote.files.length ? 'border-b' : '']">
+            <div class="group flex-1 pl-8px py-3px border-l border-r cursor-pointer flex max-w-200px"
+                v-for="(item, index) in currentNote.files" :key="index" @click="clickFile(item, index)"
+                @contextmenu="contextmenuFile(item, index)" :style="{
                     backgroundColor: currentNote?.activeFileIndex === index ? '' : '#ebebeb87',
-                }"
-            >
+                }">
                 <div class="flex-1 w-0">
                     <div v-if="editTitleIndex !== index">{{ item.title }}</div>
                     <form action="#" class="w-1/1" @submit.prevent="editTitleIndex = -1">
-                        <input
-                            @click.stop
-                            class="w-1/1"
-                            @blur.prevent="editTitleIndex = -1"
-                            v-focus="item"
-                            v-if="editTitleIndex === index"
-                            type="text"
-                            :value="item.title"
-                            :placeholder="item.title"
-                        />
+                        <input @click.stop class="w-1/1" @blur.prevent="editTitleIndex = -1" v-focus="item"
+                            v-if="editTitleIndex === index" type="text" :value="item.title" :placeholder="item.title" />
                     </form>
                 </div>
-                <div
-                    v-if="editTitleIndex == -1"
+                <div v-if="editTitleIndex == -1"
                     class="ml-15px h-14px w-14px inline text-size-12px group-hover:inline hidden"
-                    @click.stop="onCopy(currentNote && currentNote.files[index])"
-                >
+                    @click.stop="onCopy(currentNote && currentNote.files[index])">
                     <svg-icon name="copy" class="h-1/1 w-1/1"></svg-icon>
                 </div>
                 <div class="h-1/1 w-25px px-10px">
@@ -66,40 +41,28 @@
             </div>
         </div>
         <div class="flex-1 h-0">
-            <CodeEditor
-                :key="currentNote.activeFileIndex"
-                v-if="
-                    curLanugage != 'markdown' &&
-                    currentNote &&
-                    currentNote.activeFileIndex > -1 &&
-                    currentNote.files[currentNote.activeFileIndex]
-                "
-                logo="https://w.wallhaven.cc/full/p8/wallhaven-p8gvvp.jpg"
+            <CodeEditor :key="currentNote.activeFileIndex" v-if="
+                curLanugage != 'markdown' &&
+                currentNote &&
+                currentNote.activeFileIndex > -1 &&
+                currentNote.files[currentNote.activeFileIndex]
+            " :logo="(configStore.editor_logo as string)"
                 :name="currentNote.files[currentNote.activeFileIndex].title"
-                v-model="currentNote.files[currentNote.activeFileIndex].content"
-            ></CodeEditor>
-            <MdEditor
-                :key="currentNote.activeFileIndex"
-                class="h-1/1"
-                v-if="
-                    currentNote &&
-                    currentNote.activeFileIndex > -1 &&
-                    currentNote.files[currentNote.activeFileIndex] &&
-                    curLanugage == 'markdown'
-                "
-                v-model="currentNote.files[currentNote.activeFileIndex].content"
-            />
+                v-model="currentNote.files[currentNote.activeFileIndex].content"></CodeEditor>
+            <MdEditor :key="currentNote.activeFileIndex" class="h-1/1" v-if="
+                currentNote &&
+                currentNote.activeFileIndex > -1 &&
+                currentNote.files[currentNote.activeFileIndex] &&
+                curLanugage == 'markdown'
+            " v-model="currentNote.files[currentNote.activeFileIndex].content" />
         </div>
-        <div
-            class="py-5px flex text-gray-400 items-center px-10px border-l text-14px"
-            :class="[curLanugage != 'markdown' ? 'border-t' : '']"
-        >
+        <div class="py-5px flex text-gray-400 items-center px-10px border-l text-14px"
+            :class="[curLanugage != 'markdown' ? 'border-t' : '']">
             <div class="flex-1 w-0" :title="curLanugage">
                 <div>{{ curLanugage }}</div>
             </div>
             <div
-                v-if="currentNote && currentNote.activeFileIndex > -1 && currentNote.files[currentNote.activeFileIndex]"
-            >
+                v-if="currentNote && currentNote.activeFileIndex > -1 && currentNote.files[currentNote.activeFileIndex]">
                 words: {{ currentNote.files[currentNote.activeFileIndex].content.length }}
             </div>
         </div>
@@ -113,6 +76,9 @@ import CodeEditor from "@/components/CodeEditor/CodeEditor.vue"
 import MdEditor from "@/components/MdEditor/MdEditor.vue"
 import { cloneDeep } from "lodash"
 import Toastify from "toastify-js"
+import ConfigStore from "@/store/module/config"
+
+const configStore = ConfigStore()
 
 function toast(text: string) {
     Toastify({
@@ -186,8 +152,8 @@ function clickFile(item: ISnipCode, index: number) {
 }
 async function removeFile(item: ISnipCode, index: number) {
     if (!currentNote.value) return
-    const res = await _agent.call("dialog.confrim", {title: "删除", message: "是否删除？"})
-    if(res==1){
+    const res = await _agent.call("dialog.confrim", { title: "删除", message: "是否删除？" })
+    if (res == 1) {
         currentNote.value.files.splice(index, 1)
         if (index - 1 >= 0 && !currentNote.value.files[index]) {
             currentNote.value.activeFileIndex = index - 1
@@ -244,23 +210,23 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .button {
-  text-align: center;
-  font-size:15px;
-  font-family:Arial;
-  padding: 8px;
-  border-width:1px;
-  color:#fff;
-  border-color:#18ab29;
-  font-weight:bold;
-  border-top-left-radius:28px;
-  border-top-right-radius:28px;
-  border-bottom-left-radius:28px;
-  border-bottom-right-radius:28px;
-  text-shadow: 1px 1px 0px #2f6627;
-  background:#44c767;
+    text-align: center;
+    font-size: 15px;
+    font-family: Arial;
+    padding: 8px;
+    border-width: 1px;
+    color: #fff;
+    border-color: #18ab29;
+    font-weight: bold;
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
+    border-bottom-left-radius: 28px;
+    border-bottom-right-radius: 28px;
+    text-shadow: 1px 1px 0px #2f6627;
+    background: #44c767;
 }
 
 .button:hover {
-  background: #5cbf2a
+    background: #5cbf2a
 }
 </style>

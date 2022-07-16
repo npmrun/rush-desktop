@@ -23,7 +23,9 @@
                     class="leading-25px px-5px py-5px border-b cursor-pointer"
                 >
                     <div class="overflow-hidden whitespace-nowrap overflow-ellipsis">{{ item.title || "无标题" }}</div>
-                    <div class="text-size-12px text-gray-400">{{ item.fromText }}</div>
+                    <div class="flex items-center text-size-12px text-gray-400">
+                        <div class="flex-1">{{ item.fromText }}</div>
+                    </div>
                 </div>
             </template>
         </div>

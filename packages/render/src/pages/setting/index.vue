@@ -4,15 +4,19 @@
         <div class="flex-1 h-0 mx-auto w-650px mt-15px text-size-18px leading-35px">
             <form action="£" @submit="onSubmit">
                 <div class="flex items-center justify-center">
-                    <input class="block flex-1 w-0 border leading-35px rounded-5px px-5px" :value="configStore.storagePath" @click="click" readonly @keydown.enter.prevent />
+                    <input class="block flex-1 w-0 border leading-35px rounded-5px px-5px cursor-pointer" :value="configStore.storagePath" readonly @keydown.enter.prevent />
                     <button class="ml-10px" @click="chooseLoc">选择地址</button>
+                </div>
+                <div class="flex items-center justify-center mt-15px">
+                    <span class="mr-15px">编辑器背景: </span>
+                    <input class="block flex-1 w-0 border leading-35px rounded-5px px-5px cursor-pointer" @input="(e:any)=>configStore.setEditorLogo(e.target.value)" :value="configStore.editor_logo?configStore.editor_logo:'默认'" @keydown.enter.prevent />
                 </div>
                 <div :style="{ color: configStore.isSame ? '' : 'red' }" class="float-right mt-15px">
                     <button class="border rounded-5px px-15px text-size-16px py-8px" @click="save" type="submit">保存</button>
                 </div>
             </form>
         </div>
-        <img src="rush-file://1111.jpg">
+        <img class="hidden" src="rush-file://1111.jpg">
     </div>
 </template>
 <script lang="ts" setup>

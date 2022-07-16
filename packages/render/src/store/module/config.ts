@@ -25,6 +25,9 @@ export default defineStore("config", {
         setStorePath(storagePath: TC["storagePath"]) {
             this.storagePath = storagePath
         },
+        setEditorLogo(editor_logo: TC["editor_logo"]) {
+            this.editor_logo = editor_logo
+        },
         setBackupRule(backup_rule: TC["backup_rule"]) {
             this.backup_rule = backup_rule
         },

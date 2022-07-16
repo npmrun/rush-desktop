@@ -1,10 +1,16 @@
 <template>
     <div class="h-1/1 relative">
         <div class="h-1/1" ref="editorRef"></div>
-        <div
-            class="absolute top-1/2 left-1/2 transform  -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-10 h-1/1 w-1/1">
-            <img class="h-1/1 w-auto" v-if="logo" :src="logo" alt="">
-            <img class="h-1/1 w-auto" v-else src="./120x120.png" alt="">
+        <div class="absolute top-0 left-0 right-0 bottom-0 pointer-events-none opacity-20" :style="logo ? {
+            backgroundImage: `url(${logo})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'center center'
+        } : {}">
+            <!-- <img class="absolute top-1/2 left-1/2 transform  -translate-x-1/2 -translate-y-1/2 h-1/1" v-if="logo"
+                :src="logo" alt=""> -->
+            <img v-if="!logo" class="absolute top-1/2 left-1/2 transform  -translate-x-1/2 -translate-y-1/2"
+                src="./120x120.png" alt="">
         </div>
     </div>
 </template>

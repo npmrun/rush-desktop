@@ -23,6 +23,7 @@ let storagePath = path.join(app.getPath('documents'), setting.app_title)
 export let mainConfig: TConfig = {
     language: 'zh',
     backup_rule: "0 0/30 * * * ?",
+    editor_logo: false,
     get storagePath() {
         return storagePath
     },
