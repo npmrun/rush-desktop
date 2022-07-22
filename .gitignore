@@ -28,6 +28,7 @@ out/.icon-ico
 out/win-ia32-unpacked
 out/win-unpacked
 out/builder-debug.yml
+out/builder-effective-config.yaml
 .idea
 dist/electron
 dist/scripts
