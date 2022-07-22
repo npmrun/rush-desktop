@@ -1,0 +1,14 @@
+version: 0.0.7-beta.5
+files:
+  - url: rush-desktop_installer_0.0.7-beta.5(0.0.7-beta.5).exe
+    sha512: ZN35e9FEezQmIGn7vAK9ejW+6wJbBkjE48gTp90C63z7TmncfDN8DDDJKHUtFdus7NBwOKGNXqZ9sixSXozX2g==
+    size: 129517344
+  - url: rush-desktop_installer_ia32_0.0.7-beta.5(0.0.7-beta.5).exe
+    sha512: 6doe4ulBtxuFYos9lZMxxITnnnUGVpld4KDl08X7tOtVSNZxPyzZNbqOR/4HwukpIlTsjxbd+xOoNPwTXAz0lw==
+    size: 60024428
+  - url: rush-desktop_installer_x64_0.0.7-beta.5(0.0.7-beta.5).exe
+    sha512: dJKLxSaKaIKrb7ckeAY+vZy4NtP00mO9HvzXVnABbobQBEsP9OrL4x8+hFdMepO6GOIGhLYSixN9kd9DQYJ07Q==
+    size: 70041164
+path: rush-desktop_installer_0.0.7-beta.5(0.0.7-beta.5).exe
+sha512: ZN35e9FEezQmIGn7vAK9ejW+6wJbBkjE48gTp90C63z7TmncfDN8DDDJKHUtFdus7NBwOKGNXqZ9sixSXozX2g==
+releaseDate: '2022-07-14T03:05:53.596Z'

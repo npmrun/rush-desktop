@@ -1,0 +1,2 @@
+out/*.exe filter=lfs diff=lfs merge=lfs -text
+out/*.exe.blockmap filter=lfs diff=lfs merge=lfs -text

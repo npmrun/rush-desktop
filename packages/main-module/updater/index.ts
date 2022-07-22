@@ -7,7 +7,8 @@ export default (window: BrowserWindow): void => {
   // 实例化 autoUpdater
   const autoUpdater = new NsisUpdater({
     provider: 'generic',
-    url: 'http://update.xieyaxin.top/electron',
+    // url: 'http://update.xieyaxin.top/electron',
+    url: 'https://gitee.com/foxdash/rush-desktop/raw/develop/out',
     channel: setting.app_version.includes("beta")? 'beta' : 'latest'
   })
 

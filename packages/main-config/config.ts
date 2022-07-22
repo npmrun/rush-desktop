@@ -103,7 +103,7 @@ class Settings {
         }
         if (isChange) {
             this.#sync()
-            Mitt.emit("config-changed", oldMainConfig)
+            // Mitt.emit("config-changed", oldMainConfig)
         }
     }
     values(key: keyof IConfig) {

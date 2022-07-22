@@ -2,8 +2,9 @@ import { broadcast, platform } from "@rush/main-tool"
 import { showAboutWindow } from "@rush/main-func/window/about"
 import { setupTray } from "@rush/main-func/window/tray"
 import { Shared } from "@rush/main-share"
-import { BrowserWindow, Menu, app, ipcMain } from "electron"
+import { BrowserWindow, Menu, app, ipcMain, MenuItem } from "electron"
 import { cloneDeep } from "lodash"
+import setting from "@rush/share/setting"
 
 function updateMenu(id: string, key: string, value: any) {
     const menus = cloneDeep(windowsMenu)
@@ -25,7 +26,7 @@ function updateMenu(id: string, key: string, value: any) {
     Menu.setApplicationMenu(menuTemp)
 }
 
-export let windowsMenu = [
+export let windowsMenu: IMenuItemOption[] = [
     {
         label: "置顶",
         id: "alwaysTopID",
@@ -147,4 +148,8 @@ export let windowsMenu = [
             showAboutWindow()
         },
     },
+    {
+        label: `当前版本:${setting.app_version}`,
+        type: "normal"
+    }
 ]

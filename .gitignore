@@ -24,7 +24,10 @@ dist-ssr
 *.sw?
 
 electron-pid.txt
-out
+out/.icon-ico
+out/win-ia32-unpacked
+out/win-unpacked
+out/builder-debug.yml
 .idea
 dist/electron
 dist/scripts
