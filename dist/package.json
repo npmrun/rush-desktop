@@ -20,5 +20,5 @@
         "mitt": "^3.0.0",
         "node-schedule": "^2.1.0"
     },
-    "version": "0.0.7-beta.5"
+    "version": "0.0.7-beta.6"
 }
