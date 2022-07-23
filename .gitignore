@@ -27,6 +27,7 @@ electron-pid.txt
 out/.icon-ico
 out/win-ia32-unpacked
 out/win-unpacked
+out/linux-unpacked
 out/builder-debug.yml
 out/builder-effective-config.yaml
 .idea

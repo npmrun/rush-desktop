@@ -26,7 +26,7 @@ const props = withDefaults(
     defineProps<{
         modelValue?: string
         name?: string
-        logo?: string
+        logo?: string | boolean
     }>(),
     {
         modelValue: "",

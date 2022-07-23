@@ -1,0 +1,9 @@
+version: 0.0.7-beta.6
+files:
+  - url: rush-desktop_linux_x86_64_0.0.7-beta.6(0.0.7-beta.6).AppImage
+    sha512: 1hG8VvaVVdFli1dx3XeEzUcJKWxDU78qESXNjXokhzZp//5wolWGWRAIUmfZ8HsA1QCaaiYCqKhq+efzGViCfA==
+    size: 92242100
+    blockMapSize: 98504
+path: rush-desktop_linux_x86_64_0.0.7-beta.6(0.0.7-beta.6).AppImage
+sha512: 1hG8VvaVVdFli1dx3XeEzUcJKWxDU78qESXNjXokhzZp//5wolWGWRAIUmfZ8HsA1QCaaiYCqKhq+efzGViCfA==
+releaseDate: '2022-07-23T11:38:28.828Z'

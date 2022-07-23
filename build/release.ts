@@ -17,14 +17,22 @@ const TARGET_PLATFORMS_configs = {
     win: {
         win: ["nsis:ia32", "nsis:x64", "portable:ia32"],
     },
+    linux: {
+        linux: ["AppImage:x64"],
+    },
     all: {
         mac: ["dmg:x64", "dmg:arm64", "dmg:universal"],
         linux: ["AppImage:x64", "deb:x64"],
         win: ["nsis:ia32", "nsis:x64", "portable:ia32"],
     },
 }
-
 let targets: Record<string, string[]> = TARGET_PLATFORMS_configs.win
+if (process.platform == "linux") {
+    targets = TARGET_PLATFORMS_configs.linux
+}
+if (process.platform == "darwin") {
+    targets = TARGET_PLATFORMS_configs.mac
+}
 if (process.env.MAKE_FOR === "dev") {
     targets = TARGET_PLATFORMS_configs.macs
 } else if (process.env.MAKE_FOR === "mac") {
@@ -66,7 +74,7 @@ builder.build({
         publish: [
             {
                 provider: "generic",
-                url: "http://update.xieyaxin.top/electron/",//隐藏版本服务器地址
+                url: "https://media.githubusercontent.com/media/npmrun/rush-desktop/develop/out",//隐藏版本服务器地址
             }
         ],
         // mac: {
