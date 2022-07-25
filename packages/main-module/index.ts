@@ -2,6 +2,7 @@ import { Mitt } from "@rush/main-tool/mitt"
 import { initMenu } from "./menu"
 import { initBackupJob } from "./schedule"
 import { initGlobalLog } from "./log"
+import { init as initShortcut } from "./shortcut"
 import "./filechange"
 
 import { protocol, app } from "electron"
@@ -10,6 +11,7 @@ import fs from "fs"
 import { mainConfig } from "@rush/main-config"
 
 export function init(oldMainConfig?: TConfig) {
+    initShortcut(oldMainConfig)
     initGlobalLog(oldMainConfig)
     initMenu(oldMainConfig)
     initBackupJob(oldMainConfig)

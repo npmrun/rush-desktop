@@ -6,7 +6,12 @@ import path from "path"
 import { readConfig, walkConfig } from "@rush/main-config"
 import { Shared } from "@rush/main-share"
 import processManager from "@rush/main-tool/process"
-import { Settings } from "@rush/main-config/config"
+import { Mitt } from "@rush/main-tool/mitt"
+// import { Settings } from "@rush/main-config/config"
+
+Mitt.on('app-message', ()=>{
+    // 处理全局消息, 可以自行处理以及发送到前端处理
+})
 
 crashReporter.start({
     uploadToServer: false,

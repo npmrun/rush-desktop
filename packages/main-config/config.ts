@@ -10,6 +10,7 @@ interface IConfig {
     backup_rule: string
     storagePath: string
 }
+type IOnFunc = (c: IConfig)=>void
 
 // 判断是否是空文件夹
 function isEmptyDir(fPath: string) {
@@ -34,6 +35,18 @@ class Settings {
     static get n() {
         return Settings.instance
     }
+
+    #cb: IOnFunc[] = []
+    onChange(fn: IOnFunc, that: any = null){
+        this.#cb.push(fn.bind(that))
+    }
+    #runCB(c: IConfig){
+        for (let i = 0; i < this.#cb.length; i++) {
+            const fn = this.#cb[i];
+            fn(c)
+        }
+    }
+
     #pathFile: string = path.resolve(app.getPath("userData"), "./config_path")
     #config: IConfig = {
         language: "zh",
@@ -103,7 +116,7 @@ class Settings {
         }
         if (isChange) {
             this.#sync()
-            // Mitt.emit("config-changed", oldMainConfig)
+            this.#runCB(oldMainConfig)
         }
     }
     values(key: keyof IConfig) {
