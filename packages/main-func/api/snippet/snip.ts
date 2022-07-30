@@ -1,6 +1,7 @@
 import { cloneDeep } from "lodash"
 import { autoRetry } from "."
 import { allData, flushData, storeData } from "./data"
+import Fuse from 'fuse.js'
 
 export let tempSnippet = [] // 临时操作
 
@@ -22,9 +23,44 @@ async function _storageData(tempFolder) {
 }
 export { storageData }
 
-export async function readData(key) {
+export async function readData(key, search?: string) {
     await flushData()
     tempSnippet = cloneDeep(allData.allSnippet) || []
+    if(search){
+        const options = {
+            // isCaseSensitive: false,
+            // includeScore: false,
+            // shouldSort: true,
+            // includeMatches: false,
+            // findAllMatches: false,
+            // minMatchCharLength: 1,
+            // location: 0,
+            // threshold: 0.6,
+            // distance: 100,
+            // useExtendedSearch: false,
+            // ignoreLocation: false,
+            // ignoreFieldNorm: false,
+            // fieldNormWeight: 1,
+            keys: [
+              "title"
+            ]
+        };
+        
+        const fuse = new Fuse(tempSnippet, options);
+        const r = fuse.search(search)
+        if(r) {
+            const res = r.map(v=>{
+                return v.item
+            })
+            if (key) {
+                return res.filter(v => {
+                    return v.from === key
+                })
+            } else {
+                return res
+            }
+        } 
+    }
     if (key) {
         return tempSnippet.filter(v => {
             return v.from === key

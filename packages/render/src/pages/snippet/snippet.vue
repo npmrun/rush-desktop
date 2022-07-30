@@ -13,6 +13,14 @@
             <niu-adjust-width :target="LeftEl"></niu-adjust-width>
         </Left>
         <div @contextmenu="handleSnipContextMenu" class="w-250px min-w-250px bg-light-400 overflow-x-hidden overflow-y-auto scrollbar">
+            <form action="#" class="flex items-center relative" @contextmenu.stop @submit.prevent>
+                <div class="flex-1 group m-8px p-5px border h-25px rounded-5px flex items-center bg-white overflow-hidden">
+                    <input type="text" @keypress="" v-model="search" class="outline-0 h-1/1 flex-1 w-0">
+                    <div @click="handleClear" v-if="!!search" class="px-8px group-hover:block hidden cursor-pointer align-middle text-size-12px">x</div>
+                </div>
+                <button type="submit" class="h-25px px-5px" @click="handleSearch">搜索</button>
+                <button class="h-25px px-5px mr-3px" @click="handleCreate">创建</button>
+            </form>
             <template v-for="(item, index) in snippetList" :key="index">
                 <div
                     draggable="true"
@@ -98,6 +106,37 @@ async function onSave(data: ISnip) {
 
 function handleClick(item: ISnip) {
     curSnip.value = item.key
+}
+
+const search = ref('')
+async function handleClear() {
+    search.value = ''
+    handleSearch()
+}
+async function handleSearch() {
+    let key: any = ''
+    if(openData.value){
+        key = openData.value.key
+    }
+    console.log(search.value);
+    const res = await _agent.call("api.snippet.snip.readData", key, search.value)
+    snippetList.value = res
+}
+async function handleCreate() {
+    if(openData.value){
+        console.log(openData.value);
+        const snip: ISnip = {
+            key: v4(),
+            title: "",
+            activeFileIndex: 0,
+            from: openData.value.key,
+            fromText: openData.value.title,
+            files: [],
+            }
+        await _agent.call("api.snippet.snip.add", snip)
+        curSnip.value = snip.key
+        snippetList.value.push(snip)
+    }
 }
 
 const openData = ref<INiuTreeData>()
