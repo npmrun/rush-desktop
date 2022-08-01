@@ -25,7 +25,11 @@ export function init(oldMainConfig?: TConfig) {
     protocol.registerFileProtocol(
         "rush-file",
         (request, callback) => {
-            const url = request.url.slice(12)
+            let url = request.url.slice(12)
+            const index = url.indexOf("?")
+            if(index != -1){
+                url = url.slice(0, index)
+            }
             callback(path.resolve(mainConfig.storagePath, "./file", url))
         }
     )

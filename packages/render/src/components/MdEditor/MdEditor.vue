@@ -5,6 +5,8 @@
 <script lang="ts" setup>
 import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
+import { MD5 } from 'crypto-js';
+import { uniqueId, trim } from 'lodash';
 
 const props = defineProps<{
     modelValue: string
@@ -17,7 +19,7 @@ let instance: Editor | null = null
 onMounted(() => {
     instance = new Editor({
         el: editorEl.value,
-        initialEditType: "wysiwyg",
+        initialEditType: "markdown",
         initialValue: props.modelValue,
         previewStyle: 'tab',
         height: '100%',
@@ -28,12 +30,43 @@ onMounted(() => {
                 //  1. 从本地赋值到剪切板的
                 //  2. 拖拽过来的
                 //  3. 网址
+                // File-->ArrayBuffer-->Uint8Array
                 console.log(fileOrBlob);
-                callback("", 'T_T，出错了');
-                // this.uploadImgApi(fileOrBlob).then(path => {
-                //     callback(path, 'T_T，出错了');
-                // });
+
+                var reader = new FileReader();
+                reader.readAsArrayBuffer(fileOrBlob)
+                reader.onload = async function (e) {
+                    var buf = new Uint8Array(reader.result as ArrayBuffer);
+
+                    const path = await _agent.call("api.config.keys", "storagePath")
+                    const t = new Date().getTime() as unknown as string
+                    // @ts-ignore
+                    const file = fileOrBlob.name as string
+                    let ext = file.split(".")[file.split(".").length - 1]
+                    const name = uniqueId() + "_T_" + MD5(t) + "." + ext
+                    await _agent.file.savaFileByData(path + `/file/asset/image/${name}`, buf)
+                    callback(`rush-file://asset/image/${name}`, 'T_T，出错了');
+                }
             },
+        },
+        customHTMLRenderer: {
+
+            image(node, context, convertors) {
+                // @ts-ignore
+                const { destination } = node;
+                const { getChildrenText, skipChildren } = context;
+                
+                skipChildren();
+                return {
+                        type: 'openTag',
+                        tagName: 'img',
+                        attributes: {
+                            style: "max-width: 70%;display: inline-block;", 
+                            src: decodeURIComponent(destination) + `?time=${new Date().getTime()}`,
+                            alt: getChildrenText(node)
+                        },
+                    }
+            }
         }
     });
     // watch(()=>props.modelValue, ()=>{
