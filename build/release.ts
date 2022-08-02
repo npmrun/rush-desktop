@@ -43,6 +43,7 @@ if (process.env.MAKE_FOR === "dev") {
     targets = TARGET_PLATFORMS_configs.all
 }
 
+fs.ensureFileSync(path.resolve(rootPath, `./changelog/${setting.app_version}.md`))
 const workInfo = fs.readJSONSync(path.resolve(rootPath, "./package.json"))
 const pkgInfo = fs.readJSONSync(path.resolve(rootPath, "dist/package.json"))
 pkgInfo.name = setting.app_title
@@ -101,10 +102,10 @@ builder.build({
             createStartMenuShortcut: true,
             allowToChangeInstallationDirectory: true,
             perMachine: true,
-            artifactName: "${productName}_installer_${arch}_${version}(${buildVersion}).${ext}",
+            artifactName: "${productName}_installer_${arch}_${version}.${ext}",
         },
         portable: {
-            artifactName: "${productName}_portable_${arch}_${version}(${buildVersion}).${ext}",
+            artifactName: "${productName}_portable_${arch}_${version}.${ext}",
         },
         dmg: {
             contents: [
@@ -121,7 +122,7 @@ builder.build({
                 },
             ],
             sign: false,
-            artifactName: "${productName}_mac_${arch}_${version}(${buildVersion}).${ext}",
+            artifactName: "${productName}_mac_${arch}_${version}.${ext}",
         },
         extraResources: {
             from: path.resolve(rootPath, "extra"),
@@ -135,7 +136,7 @@ builder.build({
         },
         linux: {
             icon: path.resolve(rootPath, "extra/icons/1024x1024.png"),
-            artifactName: "${productName}_linux_${arch}_${version}(${buildVersion}).${ext}",
+            artifactName: "${productName}_linux_${arch}_${version}.${ext}",
             category: "Utility",
             synopsis: "效率工具，懒人必备",
             desktop: {
