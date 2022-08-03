@@ -1,16 +1,16 @@
 import { BrowserWindow, ipcMain, app } from 'electron'
-import { NsisUpdater, ProgressInfo, UpdateInfo } from 'electron-updater'
+import { NsisUpdater, ProgressInfo, UpdateInfo, autoUpdater } from 'electron-updater'
 import setting from '@rush/share/setting'
 
 export default (window: BrowserWindow): void => {
   if(!app.isPackaged) return
   // 实例化 autoUpdater
-  const autoUpdater = new NsisUpdater({
-    provider: 'generic',
-    // url: 'http://update.xieyaxin.top/electron',
-    url: 'https://media.githubusercontent.com/media/npmrun/rush-desktop/develop/out/',
-    channel: setting.app_version.includes("beta")? 'beta' : 'latest'
-  })
+//   const autoUpdater = new NsisUpdater({
+//     provider: 'generic',
+//     // url: 'http://update.xieyaxin.top/electron',
+//     url: 'https://media.githubusercontent.com/media/npmrun/rush-desktop/develop/out/',
+//     channel: setting.app_version.includes("beta")? 'beta' : 'latest'
+//   })
 
   // 开始检查更新
   autoUpdater.on('checking-for-update', () => {

@@ -72,12 +72,13 @@ builder.build({
             cache: path.join(homedir(), ".electron"),
             mirror: "https://npm.taobao.org/mirrors/electron/",
         },
-        publish: [
-            {
-                provider: "generic",
-                url: "https://media.githubusercontent.com/media/npmrun/rush-desktop/develop/out",//隐藏版本服务器地址
-            }
-        ],
+        publish: ['github'],
+        // publish: [
+        //     {
+        //         provider: "generic",
+        //         url: "https://media.githubusercontent.com/media/npmrun/rush-desktop/develop/out",//隐藏版本服务器地址
+        //     }
+        // ],
         // mac: {
         //     type: "distribution",
         //     category: "public.app-category.productivity",

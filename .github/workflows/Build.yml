@@ -17,6 +17,8 @@ jobs:
   build:
     # 运行的操作系统 windows
     runs-on: ${{ matrix.os }}
+    env:
+      GH_TOKEN: ${{ secrets.ELECTRON_TOKEN }}
     strategy:
       matrix:
         # https://www.likecs.com/ask-314443.html
