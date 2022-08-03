@@ -72,7 +72,14 @@ builder.build({
             cache: path.join(homedir(), ".electron"),
             mirror: "https://npm.taobao.org/mirrors/electron/",
         },
-        publish: ['github'],
+        publish: [
+            {
+                provider: 'github',
+                repo: 'rush-desktop',
+                owner: 'npmrun',
+                releaseType: "release"
+            }
+        ],
         // publish: [
         //     {
         //         provider: "generic",

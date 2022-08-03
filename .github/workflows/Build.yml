@@ -106,6 +106,6 @@ jobs:
           files: "out/*exe,out/*dmg,out/*AppImage"
           body: ${{steps.description.outputs.content}}
           draft: false
-          prerelease: true
+          prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.ELECTRON_TOKEN }}
