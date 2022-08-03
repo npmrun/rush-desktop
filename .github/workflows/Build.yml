@@ -103,7 +103,7 @@ jobs:
         with:
           tag_name: ${{ steps.tag.outputs.release_tag }}
           name: ${{ steps.tag.outputs.release_tag }}
-          files: "out/*exe,out/*dmg,out/*AppImage"
+          # files: "out/*exe,out/*dmg,out/*AppImage"
           body: ${{steps.description.outputs.content}}
           draft: false
           prerelease: false
