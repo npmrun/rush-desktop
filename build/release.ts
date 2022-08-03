@@ -56,6 +56,7 @@ fs.writeJSONSync(path.resolve(rootPath, "dist/package.json"), pkgInfo, {
 
 builder.build({
     ...targets,
+    publish: "never", // 从不发布,用action发布
     config: {
         npmRebuild: true, // 是否在打包应用程序之前rebuild本地依赖
         nodeGypRebuild: false, // 是否在开始打包应用程序之前执行,用electron-builder node-gyp-rebuild 来代替
@@ -77,6 +78,7 @@ builder.build({
                 provider: 'github',
                 repo: 'rush-desktop',
                 owner: 'npmrun',
+                
                 releaseType: "release"
             }
         ],
