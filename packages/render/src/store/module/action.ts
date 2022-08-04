@@ -31,6 +31,11 @@ const initTop = [
         icon: "code",
         title: "笔记本",
         path: "/snippet/snippet",
+    },
+    {
+        icon: "code",
+        title: "测试",
+        path: "/test",
     }
     // {
     //     icon: 'code', // 'files'
