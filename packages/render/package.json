@@ -23,6 +23,7 @@
     "toastify-js": "^1.11.2",
     "unplugin-auto-import": "^0.8.6",
     "uuid": "^8.3.2",
+    "vditor": "^3.8.16",
     "vite-plugin-html": "3.0.6",
     "vite-plugin-mock": "^2.9.6",
     "vite-plugin-monaco-editor": "link:plugins\\vite-plugin-monaco-editor",
