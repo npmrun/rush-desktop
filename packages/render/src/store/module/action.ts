@@ -32,11 +32,11 @@ const initTop = [
         title: "笔记本",
         path: "/snippet/snippet",
     },
-    {
-        icon: "code",
-        title: "测试",
-        path: "/test",
-    }
+    // {
+    //     icon: "code",
+    //     title: "测试",
+    //     path: "/test",
+    // }
     // {
     //     icon: 'code', // 'files'
     //     title: '编辑器',
