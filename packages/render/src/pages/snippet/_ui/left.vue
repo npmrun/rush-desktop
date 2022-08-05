@@ -329,7 +329,6 @@ const list = ref<INiuTreeData[]>([])
 onBeforeMount(() => {
     ;(async () => {
         let _list = await _agent.call("api.snippet.readData")
-        console.log(_list)
         if (Array.isArray(_list)) {
             list.value = convertTreeData(_list)
         }
