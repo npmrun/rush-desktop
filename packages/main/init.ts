@@ -1,9 +1,9 @@
 import { init, watch } from "@rush/main-module"
 import Store from "electron-store"
-import { app, dialog, crashReporter } from "electron"
+import { app, dialog, crashReporter, shell } from "electron"
 import fs from "fs-extra"
 import path from "path"
-import { readConfig, walkConfig } from "@rush/main-config"
+import { mainConfig, readConfig, walkConfig } from "@rush/main-config"
 import { Shared } from "@rush/main-share"
 import processManager from "@rush/main-tool/process"
 import { Mitt } from "@rush/main-tool/mitt"
@@ -52,6 +52,25 @@ if (storePath) {
         watch()
     })
 }
+
+/**
+ * a标签使用默认程序打开
+ * https://blog.csdn.net/qq_33583069/article/details/108056729
+ */
+app.on('web-contents-created', (e, webContents) => {
+    webContents.addListener('new-window', (event, urla) => {
+        event.preventDefault();
+        console.log(urla);
+        let url = urla.slice(12)
+        const index = url.indexOf("?")
+        if(index != -1){
+            url = url.slice(0, index)
+        }
+        const p = path.resolve(mainConfig.storagePath, "./file", url)
+        console.log(p);
+        shell.openExternal(p);
+    });
+});
 
 process
 

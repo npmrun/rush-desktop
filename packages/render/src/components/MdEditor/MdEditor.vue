@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { MD5 } from 'crypto-js';
+import MD5 from 'md5';
 import { uniqueId } from 'lodash-es';
 import Vditor from 'vditor'
 import "vditor/dist/index.css"
@@ -48,15 +48,20 @@ onMounted(() => {
                             // @ts-ignore
                             const fileName = file.name as string
                             let ext = fileName.split(".")[fileName.split(".").length - 1]
-                            const name = uniqueId() + "_T_" + MD5(t) + "." + ext
-                            await _agent.file.savaFileByData(path + `/file/asset/image/${name}`, buf)
-                            contextEditor?.insertValue(`![](rush-file://asset/image/${name})`)
+                            const name = uniqueId() + "_T_" + MD5(t).toString().toUpperCase() + "." + ext
+                            if(ext.toLowerCase() === "jpg" || ext.toLowerCase() === "png" || ext.toLowerCase() === "jpeg"){
+                                await _agent.file.savaFileByData(path + `/file/asset/image/${name}`, buf)
+                                contextEditor?.insertValue(`![](rush-file://asset/image/${name})`)
+                            }else{
+                                await _agent.file.savaFileByData(path + `/file/asset/file/${name}`, buf)
+                                contextEditor?.insertValue(`[${fileName}](rush-file://asset/file/${name})`)
+                            }
                             resolve(null);
                         }
                     }))
                 }
                 Promise.allSettled(uploadPromise)
-                return ""
+                return null
             }
         }
     })

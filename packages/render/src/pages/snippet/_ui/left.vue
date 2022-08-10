@@ -1,5 +1,5 @@
 <template>
-    <div class="w-250px min-w-250px h-1/1 flex flex-col relative bg-light-600" v-loading="_isLoading == 2">
+    <div class="h-1/1 overflow-hidden flex flex-col relative bg-light-600" v-loading="_isLoading == 2">
         <div v-if="_isLoading == 1" class="absolute left-0 right-0 top-0 bottom-0 opacity-0 z-999"></div>
         <div class="border-b px-8px py-5px">
             <span>笔记本</span>

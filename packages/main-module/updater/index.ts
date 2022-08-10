@@ -1,9 +1,13 @@
 import { BrowserWindow, ipcMain, app } from 'electron'
 import { NsisUpdater, ProgressInfo, UpdateInfo, autoUpdater } from 'electron-updater'
 import setting from '@rush/share/setting'
+import logger from "electron-log"
 
 export default (window: BrowserWindow): void => {
   if(!app.isPackaged) return
+
+  const log = logger._createLog("updater").log
+  autoUpdater.logger = log
   // 实例化 autoUpdater
 //   const autoUpdater = new NsisUpdater({
 //     provider: 'generic',
@@ -11,7 +15,7 @@ export default (window: BrowserWindow): void => {
 //     url: 'https://media.githubusercontent.com/media/npmrun/rush-desktop/develop/out/',
 //     channel: setting.app_version.includes("beta")? 'beta' : 'latest'
 //   })
-
+  autoUpdater.fullChangelog = true
   // 开始检查更新
   autoUpdater.on('checking-for-update', () => {
     window.webContents.send("checking-for-update", {
@@ -28,15 +32,19 @@ export default (window: BrowserWindow): void => {
 
   // 检查到新版本
   autoUpdater.on('update-available', (info: UpdateInfo) => {
+    log.debug(info)
     window.webContents.send("updater:avaliable", {
-      message: `检查到新版本 v ${info.version}，开始下载`
+      message: `检查到新版本 v ${info.version}，开始下载`,
+      changelog: info.releaseNotes
     })
   })
 
   // 已经是新版本
   autoUpdater.on('update-not-available', (info: UpdateInfo) => {
+    log.debug(info)
     window.webContents.send("updater:notavaliable", {
-      message: `当前版本已经是最新 v ${info.version}`
+      message: `当前版本已经是最新 v ${info.version}`,
+      changelog: info.releaseNotes
     })
   })
 
