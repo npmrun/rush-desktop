@@ -1,18 +1,19 @@
 <template>
     <div class="h-1/1 flex">
-        <Left
-            ref="LeftEl"
-            @change="onLeftChange"
-            @create-snip="onCreateSnip"
-            @clear-snip="onClearSnip"
-            @del="onDel"
-            @rename="onRename"
-            @all="onAll"
-            @drop-snip="onDropSnip"
-        >
-            <niu-adjust-width :target="LeftEl"></niu-adjust-width>
-        </Left>
-        <div @contextmenu="handleSnipContextMenu" class="w-250px min-w-250px bg-light-400 overflow-x-hidden overflow-y-auto scrollbar">
+        <div class="h-1/1 w-250px min-w-100px relative" ref="LeftEl">
+            <Left
+                @change="onLeftChange"
+                @create-snip="onCreateSnip"
+                @clear-snip="onClearSnip"
+                @del="onDel"
+                @rename="onRename"
+                @all="onAll"
+                @drop-snip="onDropSnip"
+            >
+            </Left>
+            <niu-adjust-width mid="2" :target="LeftEl"></niu-adjust-width>
+        </div>
+        <div @contextmenu="handleSnipContextMenu" class="w-250px min-w-100px bg-light-400 scrollbar relative" ref="RightEl">
             <form action="#" class="flex items-center relative" @contextmenu.stop @submit.prevent>
                 <div class="flex-1 group m-8px p-5px border h-25px rounded-5px flex items-center bg-white overflow-hidden">
                     <input type="text" @keypress="" v-model="search" class="outline-0 h-1/1 flex-1 w-0">
@@ -28,7 +29,7 @@
                     @contextmenu.stop="handleContextMenu(item)"
                     @dragstart="onDragStart($event, item)"
                     :class="[curSnip === item.key ? 'bg-light-800' : '']"
-                    class="leading-25px px-5px py-5px border-b cursor-pointer"
+                    class="leading-25px px-5px py-5px border-b cursor-pointer overflow-x-hidden"
                 >
                     <div class="overflow-hidden whitespace-nowrap overflow-ellipsis">{{ item.title || "无标题" }}</div>
                     <div class="flex items-center text-size-12px text-gray-400">
@@ -36,10 +37,10 @@
                     </div>
                 </div>
             </template>
+            <niu-adjust-width mid="1" :target="RightEl"></niu-adjust-width>
         </div>
-        <div ref="RightEl" class="flex-1 relative w-0">
+        <div class="flex-grow relative w-0">
             <Right @save="onSave" :current-note="curSnipData"></Right>
-            <niu-adjust-width direction="left" :target="RightEl"></niu-adjust-width>
         </div>
     </div>
 </template>

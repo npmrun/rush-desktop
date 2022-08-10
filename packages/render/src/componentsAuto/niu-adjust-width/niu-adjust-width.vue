@@ -79,7 +79,7 @@ watch(
                     if (props.direction == 'right') {
                         w = width + nowX - startX
                     }
-                    if (Math.abs(w - owidth / 2) <= 5) {
+                    if (Math.abs(w - owidth / 2) <= 15) {
                         w = owidth / 2
                     }
                     if (w >= owidth) {
@@ -89,11 +89,22 @@ watch(
                         w = 0
                     }
                     if (Math.abs(w - owidth) < 50) {
-                        w = owidth - 50
+                        w = owidth
+                    }
+                    if (Math.abs(w) < 50) {
+                        w = 0
                     }
                     document.body.style.pointerEvents = 'none'
                     document.body.style.userSelect = 'none'
-                    container.style.width = w + 'px'
+                    if(container===nextContainer){
+                        container.style.width = w + 'px'
+                        // container.style.minWidth = w + 'px'
+                        container.style.flexBasis = w + 'px'
+                    }else{
+                        nextContainer.style.width = (owidth-w) + 'px'
+                        // nextContainer.style.minWidth = (owidth-w) + 'px'
+                        nextContainer.style.flexBasis = (owidth-w) + 'px'
+                    }
                 }
                 document.onmouseup = function (e) {
                     document.onmousemove = lastOnmousemove

@@ -28,7 +28,7 @@ const initTop = [
     //     path: "/about",
     // },
     {
-        icon: "code",
+        icon: "files",
         title: "笔记本",
         path: "/snippet/snippet",
     },
@@ -37,11 +37,11 @@ const initTop = [
     //     title: "测试",
     //     path: "/test",
     // }
-    // {
-    //     icon: 'code', // 'files'
-    //     title: '编辑器',
-    //     path: '/editor/editor',
-    // },
+    {
+        icon: 'code', // 'files'
+        title: '编辑器',
+        path: '/editor/editor',
+    },
     // {
     //     icon: 'quadrant',
     //     title: '四象限学习法',
