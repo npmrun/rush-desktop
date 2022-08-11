@@ -78,7 +78,6 @@ builder.build({
                 provider: 'github',
                 repo: 'rush-desktop',
                 owner: 'npmrun',
-                
                 releaseType: "release"
             }
         ],
@@ -145,7 +144,7 @@ builder.build({
             icon: path.resolve(rootPath, "extra/icons/1024x1024.png"),
         },
         linux: {
-            icon: path.resolve(rootPath, "extra/icons/1024x1024.png"),
+            icon: path.resolve(rootPath, "extra/icons/256x256.png"),
             artifactName: "${productName}_linux_${arch}_${version}.${ext}",
             category: "Utility",
             synopsis: "效率工具，懒人必备",
