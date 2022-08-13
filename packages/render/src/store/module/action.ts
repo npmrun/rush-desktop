@@ -42,6 +42,11 @@ const initTop = [
         title: '编辑器',
         path: '/editor/editor',
     },
+    {
+        icon: 'quadrant', // 'files'
+        title: '导航',
+        path: '/nav/nav',
+    },
     // {
     //     icon: 'quadrant',
     //     title: '四象限学习法',

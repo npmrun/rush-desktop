@@ -29,7 +29,7 @@ export function showMainWindow(opts = {}) {
             transparent: false, // 背景透明, 会导致窗体没有阴影
             alwaysOnTop: false,
             webPreferences: {
-                webviewTag: false,
+                webviewTag: true,
                 nodeIntegration: true,
                 contextIsolation: true,
                 preload: __appStatic + "/preload.js", // 预加载项
