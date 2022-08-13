@@ -20,6 +20,11 @@ let contextEditor: Vditor | null = null
 onMounted(() => {
     contextEditor = new Vditor("editor", {
         height: '100%',
+        preview: {
+            markdown: {
+                codeBlockPreview: false
+            }
+        },
         mode: "wysiwyg",
         toolbarConfig: {
             pin: true,

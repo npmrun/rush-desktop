@@ -64,7 +64,14 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
             }),
             PkgConfig(),
             OptimizationPersist(),
-            vue(),
+            vue({
+                template:{
+                  // 添加以下内容
+                  compilerOptions:{
+                    isCustomElement: tag => tag.startsWith('webview')
+                  }
+                }
+              }),
             vueJsx(),
             Inspector(),
             WindiCSS({
