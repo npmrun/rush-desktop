@@ -1,8 +1,9 @@
-import { app, BrowserWindow, dialog, ipcMain } from "electron"
+import { app, BrowserWindow, dialog, ipcMain, session } from "electron"
 import { Shared } from "@rush/main-share"
 import { getFileUrl } from "@rush/main-tool"
 import { quit } from "."
 import { appIconPath } from "@rush/main-tool"
+import path from "path"
 
 export function hideMainWindow() {
     if (!Shared.data.mainWindow || Shared.data.mainWindow?.isDestroyed()) {
@@ -29,6 +30,7 @@ export function showMainWindow(opts = {}) {
             transparent: false, // 背景透明, 会导致窗体没有阴影
             alwaysOnTop: false,
             webPreferences: {
+                partition: "persist:main",
                 webviewTag: true,
                 nodeIntegration: true,
                 contextIsolation: true,
