@@ -33,7 +33,7 @@ export async function readData(key, search?: string) {
             // shouldSort: true,
             // includeMatches: false,
             // findAllMatches: false,
-            // minMatchCharLength: 1,
+            minMatchCharLength: 2,
             // location: 0,
             // threshold: 0.6,
             // distance: 100,
@@ -42,7 +42,9 @@ export async function readData(key, search?: string) {
             // ignoreFieldNorm: false,
             // fieldNormWeight: 1,
             keys: [
-              "title"
+              "title",
+              "files.title",
+              "files.content"
             ]
         };
         
