@@ -11,9 +11,9 @@
 </template>
 <script lang="ts" setup>
 import { PopupMenu } from "@/bridge/PopupMenu"
-import { convert, INiuTreeData } from "princess-ui";
+import { convert, INiuTreeData, removeByKey } from "princess-ui";
 import { v4 } from "uuid";
-import { IState } from "../nav.vue";
+import { IState } from "../token"
 import filetree from "../_components/filetree.vue"
 
 function onGlobalContextmenu(e: MouseEvent) {
@@ -87,6 +87,12 @@ function onContextmenu(data: INiuTreeData) {
                 )
             },
         },
+        {
+            label: "删除",
+            click() {
+                removeByKey(data.key, state.list)
+            },
+        },
     ]
     const menu = new PopupMenu(menuList)
     menu.show()
@@ -101,6 +107,7 @@ async function handleRename(data: INiuTreeData, done: (status?: boolean) => void
 }
 async function handleCreateOne(data: INiuTreeData, parent: INiuTreeData | undefined, done: (status: boolean) => void) {
     state.isFocus = true
+    state.openKey = data.key
     state.activeKeys = [data.key]
     done(true)
 }
