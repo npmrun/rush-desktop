@@ -10,9 +10,6 @@
         "lib": ["ES2018", "DOM", "DOM.Iterable"],
         "allowSyntheticDefaultImports": true
     },
-    "vueCompilerOptions": {
-        "experimentalSuppressInvalidJsxElementTypeErrors": true
-    },
     "include": ["packages"],
     "exclude": ["node_modules", "**/dist", "**/__tests__/**/*", "**/test/**", "**/tests/**"]
 }
