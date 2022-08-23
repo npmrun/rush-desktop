@@ -15,31 +15,17 @@
 <style lang="less" scoped>
 </style>
 <script lang="ts">
-import { InjectionKey } from 'vue';
-import { convert, INiuTreeData, INiuTreeKey } from 'princess-ui';
+import { convert } from 'princess-ui';
 import { v4 } from 'uuid';
-type TState = { 
-    activeKeys: INiuTreeKey[],
-    openKey?: INiuTreeKey,
-    focusKey?: INiuTreeKey,
-    isFocus?: boolean,
-    list: INiuTreeData[]
-}
-export const IState: InjectionKey<TState> = Symbol()
+import { IState, TState } from './token';
 </script>
 <script lang="ts" setup>
-
 import Left from './_ui/left.vue';
 const state = reactive<TState>({
     activeKeys: [],
-    list: [
-        convert({
-            key: v4(),
-            title: "1231",
-            isEdit: false,
-        })
-    ]
+    list: []
 })
+
 provide(IState, state)
 
 const webview = ref<WebviewTag>()
