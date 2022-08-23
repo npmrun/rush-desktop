@@ -27,7 +27,7 @@ import path from "path"
 
 // https://vitejs.dev/config/
 export default ({ command, mode }: ConfigEnv): UserConfigExport => {
-    const env = <ImportMetaEnv>loadEnv(mode, __dirname)
+    const env = <ImportMetaEnv><unknown>loadEnv(mode, __dirname)
     let isProd = mode === "production"
     let isDev = mode === "development"
     let prodMock = false

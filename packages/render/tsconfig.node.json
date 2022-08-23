@@ -9,5 +9,5 @@
         "moduleResolution": "node",
         "allowSyntheticDefaultImports": true
     },
-    "include": ["vite.config.ts", "typings"]
+    "include": ["vite.config.ts", "./vite.node.d.ts"]
 }
