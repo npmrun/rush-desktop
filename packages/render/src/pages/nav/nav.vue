@@ -15,8 +15,6 @@
 <style lang="less" scoped>
 </style>
 <script lang="ts">
-import { convert } from 'princess-ui';
-import { v4 } from 'uuid';
 import { IState, TState } from './token';
 </script>
 <script lang="ts" setup>
