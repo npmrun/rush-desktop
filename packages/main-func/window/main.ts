@@ -30,7 +30,7 @@ export function showMainWindow(opts = {}) {
             transparent: false, // 背景透明, 会导致窗体没有阴影
             alwaysOnTop: false,
             webPreferences: {
-                partition: "persist:main",
+                // partition: "persist:main",
                 webviewTag: true,
                 nodeIntegration: true,
                 contextIsolation: true,

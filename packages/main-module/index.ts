@@ -5,10 +5,14 @@ import { initGlobalLog } from "./log"
 import { init as initShortcut } from "./shortcut"
 import "./filechange"
 
-import { protocol, app } from "electron"
+import { protocol, app, session } from "electron"
 import path from "path"
 import fs from "fs"
 import { mainConfig } from "@rush/main-config"
+
+protocol.registerSchemesAsPrivileged([
+    { scheme: 'rush-file', privileges: { standard: true } },
+])
 
 export function init(oldMainConfig?: TConfig) {
     initShortcut(oldMainConfig)
@@ -21,7 +25,9 @@ export function init(oldMainConfig?: TConfig) {
     // })
     // 文件协议
     // https://vastiny.com/post/tech/electron-protocol
-    protocol.unregisterProtocol("rush-file")
+    if (protocol.isProtocolRegistered("rush-file")) {
+        protocol.unregisterProtocol("rush-file")
+    }
     protocol.registerFileProtocol(
         "rush-file",
         (request, callback) => {
@@ -30,7 +36,9 @@ export function init(oldMainConfig?: TConfig) {
             if(index != -1){
                 url = url.slice(0, index)
             }
-            callback(path.resolve(mainConfig.storagePath, "./file", url))
+            callback({
+                path: path.resolve(mainConfig.storagePath, "./file", url)
+            })
         }
     )
 }
