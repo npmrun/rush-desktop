@@ -1,13 +1,13 @@
 <template>
     <div class="h-1/1 flex">
-        <div class="h-1/1 w-250px min-w-100px relative" ref="LeftEl">
+        <!-- <div class="h-1/1 w-250px min-w-100px relative" ref="LeftEl">
             <Left></Left>
-        </div>
+        </div> -->
         <div class="flex-1 w-0">
-            <button @click="aa">前往</button>
-            <div>https://planetscale.com/</div>
+            <!-- <button @click="aa">前往</button>
+            <div>https://planetscale.com/</div> -->
             <!-- <div class="mask absolute top-0 left-0 right-0 bottom-0 bg-light-900 opacity-10"></div> -->
-            <webview ref="webview" src="https://baidu.com" style="display:inline-flex; width:100%; height:480px">
+            <webview ref="webview" src="https://webmaker.app/app/" style="display:inline-flex; width:100%; height:100%">
             </webview>
         </div>
     </div>

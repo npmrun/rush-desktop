@@ -13,7 +13,7 @@
             </Left>
             <niu-adjust-width mid="2" :target="LeftEl"></niu-adjust-width>
         </div>
-        <div @contextmenu="handleSnipContextMenu" class="w-250px min-w-100px bg-light-400 scrollbar relative" ref="RightEl">
+        <div @contextmenu="handleSnipContextMenu" class="w-250px min-w-100px bg-light-400 scrollbar relative flex flex-col" ref="RightEl">
             <form action="#" class="flex items-center relative" @contextmenu.stop @submit.prevent>
                 <div class="flex-1 group m-8px p-5px border h-25px rounded-5px flex items-center bg-white overflow-hidden">
                     <input type="text" @keypress="" v-model="search" class="outline-0 h-1/1 flex-1 w-0">
@@ -22,21 +22,23 @@
                 <button type="submit" class="h-25px px-5px" @click="handleSearch">搜索</button>
                 <button class="h-25px px-5px mr-3px" @click="handleCreate">创建</button>
             </form>
-            <template v-for="(item, index) in snippetList" :key="index">
-                <div
-                    draggable="true"
-                    @click="handleClick(item)"
-                    @contextmenu.stop="handleContextMenu(item)"
-                    @dragstart="onDragStart($event, item)"
-                    :class="[curSnip === item.key ? 'bg-light-800' : '']"
-                    class="leading-25px px-5px py-5px border-b cursor-pointer overflow-x-hidden"
-                >
-                    <div class="overflow-hidden whitespace-nowrap overflow-ellipsis">{{ item.title || "无标题" }}</div>
-                    <div class="flex items-center text-size-12px text-gray-400">
-                        <div class="flex-1">{{ item.fromText }}</div>
+            <div class="flex-1 h-0 overflow-y-auto scrollbar">
+                <template v-for="(item, index) in snippetList" :key="index">
+                    <div
+                        draggable="true"
+                        @click="handleClick(item)"
+                        @contextmenu.stop="handleContextMenu(item)"
+                        @dragstart="onDragStart($event, item)"
+                        :class="[curSnip === item.key ? 'bg-light-800' : '']"
+                        class="leading-25px px-5px py-5px border-b cursor-pointer overflow-x-hidden"
+                    >
+                        <div class="overflow-hidden whitespace-nowrap overflow-ellipsis">{{ item.title || "无标题" }}</div>
+                        <div class="flex items-center text-size-12px text-gray-400">
+                            <div class="flex-1">{{ item.fromText }}</div>
+                        </div>
                     </div>
-                </div>
-            </template>
+                </template>
+            </div>
             <niu-adjust-width mid="1" :target="RightEl"></niu-adjust-width>
         </div>
         <div class="flex-grow relative w-0">
