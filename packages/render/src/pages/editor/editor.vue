@@ -4,9 +4,13 @@
             <CodeEditor v-model="code" name="a.ts" :logo="(configStore.editor_logo as string)"></CodeEditor>
             <niu-adjust-width :target="targetEl"></niu-adjust-width>
         </div>
-        <div ref="targetEl" class="w-250px flex flex-col border-l">
-            <div class="flex-1 h-0">{{ code }}</div>
-            <div class="border-t">Console</div>
+        <div ref="targetEl" class="w-1/2 flex flex-col border-l">
+            <div class="flex-1 h-0">
+                {{code}}
+            </div>
+            <div class="border-t scrollbar overflow-auto">
+                <xterm></xterm>  
+            </div>
         </div>
     </div>
 </template>
@@ -14,6 +18,7 @@
 </style>
 <script lang="ts" setup>
 import CodeEditor from '@/components/CodeEditor/CodeEditor.vue';
+import xterm from '@/components/xterm/xterm.vue';
 import ConfigStore from "@/store/module/config"
 
 const targetEl = ref()

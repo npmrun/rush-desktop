@@ -25,7 +25,7 @@ export const preloadWebpackName = "[name].js"
 export const preloadWebpackOutput = resolve(rootPath, "dist/electron")
 export const preloadTsConfig = resolve(pkgPath, "preload/tsconfig.json")
 
-export const buildExternals = resolve(rootPath, "dist/package.json")
+export const buildExternals = resolve(rootPath, "package.json")
 
 
 export function genPathRoot(...argu: string[]): string {
