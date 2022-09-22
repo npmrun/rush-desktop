@@ -54,6 +54,7 @@ export default ({ command, mode }: ConfigEnv): UserConfigExport => {
             },
         },
         build: {
+            sourcemap: true,
             outDir: path.resolve(__dirname, "../../dist/electron"),
         },
         plugins: [

@@ -42,6 +42,7 @@
     "vue-router": "4",
     "windicss": "^3.5.4",
     "xterm": "^5.0.0",
+    "xterm-addon-canvas": "^0.2.0",
     "xterm-addon-fit": "^0.6.0"
   },
   "devDependencies": {

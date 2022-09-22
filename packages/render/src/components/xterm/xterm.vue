@@ -7,7 +7,8 @@
 <script lang="ts" setup>
 import 'xterm/css/xterm.css';
 import { FitAddon } from 'xterm-addon-fit';
-import {ResizeObserver} from '@juggle/resize-observer';
+import { ResizeObserver } from '@juggle/resize-observer';
+import { CanvasAddon } from 'xterm-addon-canvas';
 
 import {
     Terminal
@@ -17,13 +18,26 @@ const wrapperEl = ref<HTMLDivElement>()
 let term: Terminal
 let fitAddon: FitAddon
 let pid = -1
-const resizeObserver = new ResizeObserver(entries => {
-    console.log("111");
-    if(fitAddon){
+
+const fangdou = function (fn: Function, duration: number) {
+    let timeid: ReturnType<typeof setTimeout>
+    return function () {
+        clearTimeout(timeid)
+        // @ts-ignore
+        let that = this
+        timeid = setTimeout(function () {
+            fn.call(that, ...arguments)
+        }, duration)
+    }
+}
+const resize = fangdou(function () {
+    if (fitAddon) {
         //回调
         fitAddon.fit();
     }
-});
+}, 200)
+useResizeObserver(wrapperEl, resize)
+
 onMounted(async () => {
     const res = await _agent.call("pty.init")
     console.log(res);
@@ -59,19 +73,13 @@ onMounted(async () => {
             brightWhite: '#ffffff'
         }
     });
+
+    term.open(document.getElementById('terminal') as HTMLDivElement);
     fitAddon = new FitAddon();
     term.loadAddon(fitAddon);
-    term.open(document.getElementById('terminal') as HTMLDivElement);
+    term.loadAddon(new CanvasAddon());
     fitAddon.fit();
 
-    //监听对应的dom
-    resizeObserver.observe(wrapperEl.value as HTMLDivElement);
-
-    wrapperEl.value?.addEventListener("resize", function(){
-        console.log(2342);
-        
-        fitAddon.fit();
-    })
     const channels = ["terminal-incomingData-" + pid, "terminal-keystroke-" + pid, "terminal-resize-" + pid, "terminal-close-" + pid];
     term.onData((data) => {
         _agent.send(channels[1], data);
@@ -84,11 +92,11 @@ onMounted(async () => {
     });
 })
 onBeforeUnmount(() => {
-    window.onresize = null
     if (pid != -1 && term) {
+        fitAddon.dispose()
+        term.dispose()
         _agent.send("terminal-close-" + pid);
     }
-    resizeObserver.disconnect()
 })
 
 </script>

@@ -4,7 +4,7 @@ import * as pty from "node-pty"
 import os from "os"
 
 // var shell = os.platform() === "win32" ? "powershell.exe" : "bash"
-var shell = os.platform() === "win32" ? "cmd.exe" : "bash"
+var shell = os.platform() === "win32" ? "cmd.exe" : "zsh"
 
 let pid = -1
 const historyData = {}
@@ -22,7 +22,7 @@ export function init() {
         env: process.env,
     })
     // console.log(process.env.PWD);
-    
+
     pid = term.pid
     historyData[pid] = ""
 
