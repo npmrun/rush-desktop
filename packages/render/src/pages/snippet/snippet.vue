@@ -190,17 +190,17 @@ function handleContextMenu(item: ISnip) {
                 toast("删除片段成功")
             },
         },
-        {
-            label: "清空片段",
-            async click() {
-                const res = await _agent.call("dialog.confrim", {title: "是否清空？", message: "将删除其所有碎片"})
-                if(res==1){
-                    await _agent.call("api.snippet.snip.delByFrom", openData.value?.key)
-                    snippetList.value = []
-                    toast("笔记本已清空")
-                }
-            },
-        }
+        // {
+        //     label: "清空片段",
+        //     async click() {
+        //         const res = await _agent.call("dialog.confrim", {title: "是否清空？", message: "将删除其所有碎片"})
+        //         if(res==1){
+        //             await _agent.call("api.snippet.snip.delByFrom", openData.value?.key)
+        //             snippetList.value = []
+        //             toast("笔记本已清空")
+        //         }
+        //     },
+        // }
     ]
     const menus = new PopupMenu(list)
     menus.show()
