@@ -3,3 +3,4 @@
 https://github.com/nukeop/nuclear
 https://github.com/Godsleeper/sleepIDE
 https://github.com/microsoft/vscode/tree/78397428676e15782e253261358b0398c2a1149e/src/vs/workbench/browser/parts/titlebar
+https://github.com/FormalSnake/kaiium/blob/master/FrontEnd/index.js

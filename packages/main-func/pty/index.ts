@@ -2,6 +2,7 @@ import { broadcast } from "@rush/main-tool"
 import { ipcMain, webContents } from "electron"
 import * as pty from "node-pty"
 import os from "os"
+import fs from "fs-extra"
 import { mainConfig } from "@rush/main-config"
 
 // var shell = os.platform() === "win32" ? "powershell.exe" : "bash"
@@ -10,8 +11,9 @@ var shell = os.platform() === "win32" ? "cmd.exe" : "zsh"
 let term: pty.IPty
 const historyData = {}
 
-export function init() {
+export function init(cols, rows) {
     if(term != undefined) {
+        // fs.readlinkSync('')
         setTimeout(() => {
             broadcast("terminal-incomingData-" + term.pid, historyData[term.pid])
         }, 20);
@@ -19,6 +21,8 @@ export function init() {
     }
     term = pty.spawn(shell, ['--login'], {
         name: "xterm-color",
+        cols: cols,
+        rows: rows,
         cwd: mainConfig.storagePath,
         env: process.env,
     })
