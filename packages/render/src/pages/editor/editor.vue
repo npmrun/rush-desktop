@@ -5,11 +5,12 @@
             <niu-adjust-width :target="targetEl"></niu-adjust-width>
         </div>
         <div ref="targetEl" class="w-1/2 flex flex-col border-l">
-            <div class="flex-1 h-0">
+            <div class="h-3/5" ref="topEl">
                 {{code}}
             </div>
-            <div class="border-t scrollbar overflow-auto">
+            <div class="border-t scrollbar relative flex-grow h-0 p-5px" style="background-color: #fafafa;">
                 <xterm></xterm>  
+                <niu-adjust-width :target="topEl" direction="top"></niu-adjust-width>
             </div>
         </div>
     </div>
@@ -22,6 +23,7 @@ import xterm from '@/components/xterm/xterm.vue';
 import ConfigStore from "@/store/module/config"
 
 const targetEl = ref()
+const topEl = ref()
 
 const configStore = ConfigStore()
 const code = ref("")

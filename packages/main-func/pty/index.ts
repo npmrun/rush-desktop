@@ -2,29 +2,30 @@ import { broadcast } from "@rush/main-tool"
 import { ipcMain, webContents } from "electron"
 import * as pty from "node-pty"
 import os from "os"
+import { mainConfig } from "@rush/main-config"
 
 // var shell = os.platform() === "win32" ? "powershell.exe" : "bash"
 var shell = os.platform() === "win32" ? "cmd.exe" : "zsh"
 
-let pid = -1
+let term: pty.IPty
 const historyData = {}
 
 export function init() {
-    if(pid != -1) {
+    if(term != undefined) {
         setTimeout(() => {
-            broadcast("terminal-incomingData-" + pid, historyData[pid])
+            broadcast("terminal-incomingData-" + term.pid, historyData[term.pid])
         }, 20);
-        return pid
+        return term.pid
     }
-    let term = pty.spawn(shell, [], {
+    term = pty.spawn(shell, ['--login'], {
         name: "xterm-color",
-        // cwd: "D:\\1XYX\\work",
+        cwd: mainConfig.storagePath,
         env: process.env,
     })
     // console.log(process.env.PWD);
 
-    pid = term.pid
-    historyData[pid] = ""
+    let pid = term.pid
+    historyData[term.pid] = ""
 
     const channels = [
         "terminal-incomingData-" + pid,
@@ -50,6 +51,7 @@ export function init() {
         console.log("kill "+ pid);
         delete historyData[pid]
         term.kill()
+        term = undefined
         // @ts-ignore
         ipcMain.removeAllListeners([channels[1], channels[2], channels[3]])
         pid = -1

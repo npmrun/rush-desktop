@@ -1,13 +1,12 @@
 <template>
-    <div class="xterm-wrapper" ref="wrapperEl">
-        <div id="terminal"></div>
+    <div class="xterm-wrapper h-full" ref="wrapperEl">
+        <div id="terminal" class="h-full relative"></div>
     </div>
 </template>
 
 <script lang="ts" setup>
 import 'xterm/css/xterm.css';
 import { FitAddon } from 'xterm-addon-fit';
-import { ResizeObserver } from '@juggle/resize-observer';
 import { CanvasAddon } from 'xterm-addon-canvas';
 
 import {
@@ -17,6 +16,7 @@ const wrapperEl = ref<HTMLDivElement>()
 
 let term: Terminal
 let fitAddon: FitAddon
+let canvas: CanvasAddon
 let pid = -1
 
 const fangdou = function (fn: Function, duration: number) {
@@ -35,7 +35,7 @@ const resize = fangdou(function () {
         //回调
         fitAddon.fit();
     }
-}, 200)
+}, 500)
 useResizeObserver(wrapperEl, resize)
 
 onMounted(async () => {
@@ -43,6 +43,9 @@ onMounted(async () => {
     console.log(res);
     pid = res
     term = new Terminal({
+        fontFamily: `Consolas, 'Courier New', monospace`,
+        // fontFamily: `'DroidSansMono Nerd Font','Droid Sans Mono'`,
+        fontSize: 14,
         theme: {
             foreground: '#383a42',
             background: '#fafafa',
@@ -73,11 +76,11 @@ onMounted(async () => {
             brightWhite: '#ffffff'
         }
     });
-
     term.open(document.getElementById('terminal') as HTMLDivElement);
     fitAddon = new FitAddon();
     term.loadAddon(fitAddon);
-    term.loadAddon(new CanvasAddon());
+    canvas = new CanvasAddon()
+    term.loadAddon(canvas);
     fitAddon.fit();
 
     const channels = ["terminal-incomingData-" + pid, "terminal-keystroke-" + pid, "terminal-resize-" + pid, "terminal-close-" + pid];
@@ -88,11 +91,14 @@ onMounted(async () => {
         _agent.send(channels[2], size.cols, size.rows);
     })
     _agent.on(channels[0], (event, data) => {
+        console.log(data);
+        
         term.write(data);
     });
 })
 onBeforeUnmount(() => {
     if (pid != -1 && term) {
+        canvas.dispose()
         fitAddon.dispose()
         term.dispose()
         _agent.send("terminal-close-" + pid);
