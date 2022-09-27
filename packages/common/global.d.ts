@@ -20,6 +20,12 @@ type TConfig = {
 
 
 type TAgent<T = (event: Electron.IpcRendererEvent, ...args: any[]) => void> = {
+    info: {
+        platform: "IBM AIX" | "MacOS" | "FreeBSD" | "Linux" | "OpenBSD" | "SunOS" | "windows" | "unknown",
+        chrome: string,
+        node: string,
+        electron: string,
+    },
     preloadPath: string;
     iframePath: string;
     extraPath: string;
