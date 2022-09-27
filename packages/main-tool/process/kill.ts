@@ -1,4 +1,4 @@
-import { platform } from "@rush/main-tool"
+import { platform } from "@rush/common"
 import { ChildProcess, ChildProcessWithoutNullStreams, execSync } from "child_process"
 import { spawn } from "child_process"
 

@@ -18,29 +18,6 @@ export function getFileUrl(app: string = "", route: string = "") {
     return winURL
 }
 
-function whichPlatform() {
-    var platform = process.platform
-    switch (platform) {
-        case "aix":
-            return "IBM AIX"
-        case "darwin":
-            return "MacOS"
-        case "freebsd":
-            return "FreeBSD"
-        case "linux":
-            return "Linux"
-        case "openbsd":
-            return "OpenBSD"
-        case "sunos":
-            return "SunOS"
-        case "win32":
-            return "windows"
-        default:
-            return "unknown"
-    }
-}
-export const platform = whichPlatform()
-
 // 超级命令：从对象中解析出函数
 export function readCommand(func: Record<any, any>, command: string): Function | undefined {
     let commands = command.split(".")

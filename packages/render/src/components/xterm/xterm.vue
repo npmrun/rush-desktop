@@ -38,8 +38,11 @@ const resize = fangdou(function () {
 }, 500)
 useResizeObserver(wrapperEl, resize)
 
-function onContextMenu() {
-    console.log(term.getSelection());
+async function onContextMenu() {
+    const text = term.getSelection()
+    if (text) {
+        _agent.call("func.copyText", text)
+    }
 }
 
 onMounted(async () => {

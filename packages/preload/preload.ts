@@ -2,7 +2,7 @@ import { contextBridge, ipcRenderer, IpcRendererEvent } from "electron"
 import { callMethod, callMethodLong, callMethodSync } from "./call"
 import path from "path"
 import * as file from "./file"
-import { platform } from "@rush/main-tool"
+import { platform } from "@rush/common"
 
 let preloadPath = path.join(__dirname, "preload.js")
 let iframePath = `http://localhost:${process.env.PORT}/iframe.html`

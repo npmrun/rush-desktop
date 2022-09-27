@@ -1,4 +1,4 @@
-import { broadcast, platform } from "@rush/main-tool"
+import { platform } from "@rush/common"
 import { showAboutWindow } from "@rush/main-func/window/about"
 import { setupTray } from "@rush/main-func/window/tray"
 import { Shared } from "@rush/main-share"
