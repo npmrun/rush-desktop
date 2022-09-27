@@ -102,7 +102,9 @@ onMounted(async () => {
     fitAddon.fit()
 
     // This writes the version number into the terminal window
-    term.write("Kaiium V1.1.0 ");
+    term.writeln("<<<<<<<<<<<>>>>>>>>>>");
+    term.writeln("   Kaiium V1.1.0");
+    term.writeln("<<<<<<<<<<<>>>>>>>>>>");
     // This handles the copy and paste for the pty process
     // term.attachCustomKeyEventHandler((arg) => {
     // if (arg.ctrlKey && arg.code === "KeyV" && arg.type === "keydown") {
