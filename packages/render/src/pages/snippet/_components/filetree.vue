@@ -1,18 +1,10 @@
 <template>
-    <div ref="filetree">
+    <div ref="filetree" style="height: 100%;">
         <ps-tree v-bind="props" @expand="$attrs.onExpand as any" @itemDragstart="onItemDragstart" auto-expand>
             <template #default="data">
-                <item
-                    @click.stop="clickNode($event, data.data)"
-                    @change="() => emit('change')"
-                    @contextmenu.stop="onContextMenu($event, data.data)"
-                    :active-keys="activeKeys"
-                    :open-key="openKey"
-                    v-bind="{ ...data, ...$attrs }"
-                    :list="list"
-                    v-model:focus-key="focusKey"
-                    :isFocus="isFocus"
-                ></item>
+                <item @click.stop="clickNode($event, data.data)" @change="() => emit('change')"
+                    @contextmenu.stop="onContextMenu($event, data.data)" :active-keys="activeKeys" :open-key="openKey"
+                    v-bind="{ ...data, ...$attrs }" :list="list" v-model:focus-key="focusKey" :isFocus="isFocus"></item>
             </template>
         </ps-tree>
     </div>

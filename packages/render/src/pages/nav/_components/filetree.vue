@@ -1,6 +1,6 @@
 <template>
-    <div ref="filetree">
-        <ps-tree v-bind="props" @expand="$attrs.onExpand as any" @itemDragstart="onItemDragstart" auto-expand>
+    <div ref="filetree" style="height: 100%;">
+        <ps-tree sort v-bind="props" @expand="$attrs.onExpand as any" @itemDragstart="onItemDragstart" auto-expand>
             <template #default="data">
                 <item
                     @click.stop="clickNode($event, data.data)"
