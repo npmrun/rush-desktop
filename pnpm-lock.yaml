@@ -255,7 +255,7 @@ importers:
       mockjs: ^1.1.0
       monaco-editor: ^0.33.0
       pinia: ^2.0.14
-      princess-ui: 0.0.8-beta.13
+      princess-ui: 0.0.8-beta.14
       rollup: ^2.57.0
       sass: ^1.52.1
       toastify-js: ^1.11.2
@@ -297,7 +297,7 @@ importers:
       mockjs: 1.1.0
       monaco-editor: 0.33.0
       pinia: 2.0.16_vcmyupim4cga7k7f5hngmth5py
-      princess-ui: 0.0.8-beta.13_vue@3.2.37
+      princess-ui: 0.0.8-beta.14_vue@3.2.37
       rollup: 2.75.5
       toastify-js: 1.12.0
       unplugin-auto-import: 0.8.8_kmtby4aiak53otah6jlk4c6bhe
@@ -8793,8 +8793,8 @@ packages:
     engines: {node: '>=6'}
     dev: true
 
-  /princess-ui/0.0.8-beta.13_vue@3.2.37:
-    resolution: {integrity: sha512-9gHDxMm5XJSYHK12sNpYzbaWpsX+2iRetcu5ABtQYo0YfksUi8+7utZINfRUGbExD6VuY+Kjyv4RkIzE44GdRQ==}
+  /princess-ui/0.0.8-beta.14_vue@3.2.37:
+    resolution: {integrity: sha512-LgOIxXfK6LoTrGWovF/qPiWRnwCaBPBvqRwmdsIwNDdCNpgmp+p/630RbwI6c4nNAOWtJtl8oEycCnJDYlSN9g==}
     peerDependencies:
       vue: '>=3.2.0 <4.0.0'
     dependencies:

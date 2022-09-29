@@ -17,20 +17,37 @@
 </style>
 <script lang="ts">
 import { IState, TState } from './token';
-import { convert, convertTreeData } from 'princess-ui';
+import { convert, convertTreeData, findByKey } from 'princess-ui';
+import Toastify from 'toastify-js';
 </script>
 <script lang="ts" setup>
 import Left from './_ui/left.vue';
 
-async function _getData() {
-    const res = await _agent.call("api.getData")
-    state.list = res ? convertTreeData(res) : [
-        convert({ key: 222, title: "https://webmaker.app/app/" }),
-        convert({ key: 333, title: "https://github.com" }),
-    ]
+function toast(text: string) {
+    Toastify({
+        text: text,
+        style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+        }
+    }).showToast();
 }
 
-onMounted(()=>{
+async function _getData() {
+    const res = await _agent.call("api.getData")
+    state.list = res ? convertTreeData(res) : []
+    watch(() => state.list, () => {
+        saveData()
+    }, {
+        deep: true
+    })
+
+}
+
+async function saveData() {
+    await _agent.call("api.saveData", toRaw(state.list))
+}
+
+onMounted(() => {
     _getData()
 })
 
@@ -40,9 +57,12 @@ const state = reactive<TState>({
     list: []
 })
 
-watchEffect(()=>{
-    if(state.openKey){
-        console.log(111);
+watchEffect(() => {
+    if (state.openKey) {
+        const data = findByKey(state.openKey, state.list)
+        if(data){
+            webview.value?.loadURL(data.title)
+        }
     }
 })
 

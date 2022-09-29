@@ -1,6 +1,6 @@
 <template>
     <div ref="filetree" style="height: 100%;">
-        <ps-tree sort v-bind="props" @expand="$attrs.onExpand as any" @itemDragstart="onItemDragstart" auto-expand>
+        <ps-tree sort v-bind="props" @expand="$attrs.onExpand as any" @itemDragstart="onItemDragstart" @itemDragend="onItemDragend" auto-expand>
             <template #default="data">
                 <item
                     @click.stop="clickNode($event, data.data)"
@@ -29,6 +29,7 @@ import item from "./item.vue"
 import { INiuTreeData, INiuTreeKey } from "princess-ui"
 import { removeByKey, findByKey } from "princess-ui"
 import { UnwrapRef } from "vue"
+import { cloneDeep } from "lodash";
 
 const props = withDefaults(
     defineProps<{
@@ -93,8 +94,19 @@ const activeKeys = usePropsUpdate<INiuTreeKey[]>("activeKeys", [])
 const focusKey = usePropsUpdate<INiuTreeKey | undefined>("focusKey", undefined)
 const isFocus = usePropsUpdate<boolean>("isFocus", false)
 
+let oldActiveKeys: INiuTreeKey[] = []
+let oldFocusKey: INiuTreeKey | undefined = undefined
 function onItemDragstart() {
     isFocus.value = false
+    oldActiveKeys = cloneDeep(activeKeys.value)
+    oldFocusKey = focusKey.value
+    activeKeys.value = []
+    focusKey.value = undefined
+}
+
+function onItemDragend() {
+    activeKeys.value = oldActiveKeys
+    focusKey.value = oldFocusKey
 }
 
 watch(
