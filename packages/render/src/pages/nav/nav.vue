@@ -1,8 +1,8 @@
 <template>
     <div class="h-1/1 flex">
-        <!-- <div class="h-1/1 w-250px min-w-100px relative" ref="LeftEl">
+        <div class="h-1/1 w-250px min-w-100px relative" ref="LeftEl">
             <Left></Left>
-        </div> -->
+        </div>
         <div class="flex-1 w-0">
             <!-- <button @click="aa">前往</button>
             <div>https://planetscale.com/</div> -->
