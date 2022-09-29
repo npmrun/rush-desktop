@@ -13,15 +13,37 @@
     </div>
 </template>
 <style lang="less" scoped>
+
 </style>
 <script lang="ts">
 import { IState, TState } from './token';
+import { convert, convertTreeData } from 'princess-ui';
 </script>
 <script lang="ts" setup>
 import Left from './_ui/left.vue';
+
+async function _getData() {
+    const res = await _agent.call("api.getData")
+    state.list = res ? convertTreeData(res) : [
+        convert({ key: 222, title: "https://webmaker.app/app/" }),
+        convert({ key: 333, title: "https://github.com" }),
+    ]
+}
+
+onMounted(()=>{
+    _getData()
+})
+
 const state = reactive<TState>({
     activeKeys: [],
+    openKey: undefined,
     list: []
+})
+
+watchEffect(()=>{
+    if(state.openKey){
+        console.log(111);
+    }
 })
 
 provide(IState, state)
