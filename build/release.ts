@@ -15,7 +15,7 @@ const TARGET_PLATFORMS_configs = {
         mac: ["dmg:x64", "dmg:arm64"],
     },
     win: {
-        win: ["nsis:ia32", "nsis:x64", "portable:ia32"],
+        win: ["nsis:ia32", "nsis:x64", "portable:ia32", "portable:x64"],
     },
     linux: {
         linux: ["AppImage:x64"],
@@ -23,7 +23,7 @@ const TARGET_PLATFORMS_configs = {
     all: {
         mac: ["dmg:x64", "dmg:arm64", "dmg:universal"],
         linux: ["AppImage:x64", "deb:x64"],
-        win: ["nsis:ia32", "nsis:x64", "portable:ia32"],
+        win: ["nsis:ia32", "nsis:x64", "portable:ia32", "portable:x64"],
     },
 }
 let targets: Record<string, string[]> = TARGET_PLATFORMS_configs.win
@@ -65,6 +65,9 @@ builder.build({
         appId: "com.dash." + setting.app_title,
         copyright: `Copyright © ${new Date().getFullYear()} Dash.All Rights Reserved.`,
         // asarUnpack: ["**/node_modules/live-server/**/*"],
+        asar: {
+            smartUnpack: true
+        },
         directories: {
             output: path.resolve(rootPath, "out"),
             app: path.resolve(rootPath, "dist"),

@@ -22,5 +22,5 @@
         "node-pty": "^0.10.1",
         "node-schedule": "^2.1.0"
     },
-    "version": "0.0.7-beta.14"
+    "version": "0.0.7-beta.15"
 }

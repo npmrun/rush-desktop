@@ -44,6 +44,7 @@
         "electron-updater": "^5.0.5",
         "fs-extra": "^10.0.0",
         "fuse.js": "^6.6.2",
+        "iconv-lite": "^0.6.3",
         "live-server": "^1.2.2",
         "lodash": "^4.17.21",
         "mitt": "^3.0.0",

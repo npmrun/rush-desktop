@@ -55,6 +55,34 @@ class ProcessManager {
             return obj
         }
     }
+    
+    async run(command: string){
+        const commandArray = command.split(" ")
+        let execCommand = checkCommand(commandArray[0])
+        let exec = forkFn
+        if(!execCommand){
+            exec = execa
+            execCommand = commandArray[0]
+        }
+        let args = commandArray.slice(1)
+        let logs = []
+        await (async () => {
+            await (new Promise((resolve)=>{
+                exec(execCommand, args, (err, data, isComplete) => {
+                    if (isComplete) {
+                        resolve(null)
+                        return
+                    }
+                    if (err) {
+                        logs.push(err)
+                    } else {
+                        logs.push(iGetInnerText(data))
+                    }
+                })
+            }))
+        })()
+        return logs.join('\n')
+    }
 
     createProcess(key: string | number, command: string): boolean {
         let pro = this._processlist.filter(v => v.key === key)[0]
@@ -63,7 +91,11 @@ class ProcessManager {
         }
         const commandArray = command.split(" ")
         let execCommand = checkCommand(commandArray[0])
-        let exec = !!execCommand ? forkFn : execa
+        let exec = forkFn
+        if(!execCommand){
+            exec = execa
+            execCommand = commandArray[0]
+        }
         let args = commandArray.slice(1)
         let oneProcess: IProcessChild = {
             key: -1,
@@ -78,6 +110,7 @@ class ProcessManager {
         }
         oneProcess.status = EProcessStatus.Starting
         this.send(key, oneProcess.status)
+
         let p = exec(execCommand, args, (err, data, isComplete) => {
             if (isComplete) {
                 oneProcess.status = EProcessStatus.Exit
